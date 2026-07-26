@@ -1,0 +1,534 @@
+TAREFA 01 — Criação do Projeto
+
+Objetivo
+
+Criar toda a estrutura inicial do projeto utilizando Next.js com App Router, TypeScript e React-Bootstrap.
+
+Deve conter
+Configuração do projeto
+ESLint
+Prettier
+Estrutura de pastas
+Bootstrap
+Bootstrap Icons
+Variáveis de ambiente
+Configuração inicial do Prisma
+Configuração do PostgreSQL
+
+TAREFA 03 — Tema Global
+
+Criar identidade visual completa.
+
+Tema Escuro
+
+Fundo
+
+Cards
+
+Botões
+
+Inputs
+
+Modais
+
+Navbar
+
+Sidebar
+
+Tipografia
+
+Sistema de cores
+
+Dark / Light Mode
+
+Salvar preferência no LocalStorage.
+
+TAREFA 04 — Layout Principal
+
+Criar layout responsivo contendo
+
+Navbar
+
+Sidebar
+
+Área Principal
+
+Footer
+
+Toast
+
+Modal Provider
+
+Loading Global
+
+TAREFA 05 — Sistema de Autenticação
+
+Criar autenticação completa.
+
+Funcionalidades
+
+Login
+
+Cadastro
+
+Logout
+
+Recuperar senha
+
+Lembrar usuário
+
+Proteção de Rotas
+
+Sessão
+
+Middleware
+
+Hash de senha
+
+JWT
+
+TAREFA 06 — Banco de Dados
+
+Criar todo o banco utilizando Prisma.
+
+Tabelas
+
+Usuário
+
+Projeto
+
+Coluna
+
+Tarefa
+
+Etiqueta
+
+Checklist
+
+Comentário
+
+Anexo
+
+Histórico
+
+Notificação
+
+Relacionamentos completos.
+
+TAREFA 07 — Dashboard
+
+Criar Dashboard moderno.
+
+Exibir
+
+Quantidade de Projetos
+
+Quantidade de Tarefas
+
+Tarefas Concluídas
+
+Pendentes
+
+Atrasadas
+
+Gráficos
+
+Atividades Recentes
+
+TAREFA 08 — CRUD de Projetos
+
+Criar gerenciamento completo.
+
+Criar Projeto
+
+Editar
+
+Excluir
+
+Pesquisar
+
+Favoritar
+
+Arquivar
+
+Duplicar
+
+Cor personalizada
+
+Ícone
+
+Descrição
+
+TAREFA 09 — Colunas Kanban
+
+Criar sistema de colunas.
+
+Padrão
+
+A Fazer
+
+Em Desenvolvimento
+
+Em Revisão
+
+Concluído
+
+Permitir
+
+Adicionar
+
+Editar
+
+Excluir
+
+Reordenar
+
+Cor personalizada
+
+TAREFA 10 — CRUD de Tarefas
+
+Sistema completo.
+
+Cada tarefa deverá possuir
+
+Título
+
+Descrição
+
+Responsável
+
+Projeto
+
+Coluna
+
+Data Inicial
+
+Prazo
+
+Prioridade
+
+Status
+
+Cor
+
+Etiqueta
+
+Checklist
+
+Comentários
+
+Anexos
+
+Tempo gasto
+
+Tempo previsto
+
+TAREFA 11 — Drag and Drop
+
+Mover tarefas utilizando Drag and Drop.
+
+Atualizar automaticamente.
+
+Salvar posição.
+
+Persistir no banco.
+
+Animações suaves.
+
+TAREFA 12 — Modal da Tarefa
+
+Modal extremamente completo.
+
+Abas
+
+Informações
+
+Checklist
+
+Comentários
+
+Arquivos
+
+Histórico
+
+Atividade
+
+TAREFA 13 — Checklist
+
+Adicionar checklist.
+
+Criar
+
+Editar
+
+Excluir
+
+Marcar concluído
+
+Porcentagem automática.
+
+TAREFA 14 — Comentários
+
+Sistema semelhante ao Trello.
+
+Responder comentários.
+
+Editar.
+
+Excluir.
+
+Data.
+
+Usuário.
+
+TAREFA 15 — Upload
+
+Upload de arquivos.
+
+Imagens
+
+PDF
+
+ZIP
+
+Vídeos
+
+Documentos
+
+Preview
+
+Download
+
+Excluir
+
+TAREFA 16 — Etiquetas
+
+Criar etiquetas.
+
+Nome
+
+Cor
+
+Ícone
+
+Pesquisar
+
+TAREFA 17 — Pesquisa
+
+Pesquisar
+
+Projetos
+
+Tarefas
+
+Etiquetas
+
+Usuários
+
+Descrição
+
+Tudo em tempo real.
+
+TAREFA 18 — Filtros
+
+Filtrar por
+
+Status
+
+Prioridade
+
+Responsável
+
+Projeto
+
+Etiqueta
+
+Data
+
+TAREFA 19 — Ordenação
+
+Ordenar por
+
+Nome
+
+Data
+
+Prioridade
+
+Última alteração
+
+Criação
+
+TAREFA 20 — Perfil
+
+Editar
+
+Nome
+
+Foto
+
+Email
+
+Senha
+
+Tema
+
+Idioma
+
+TAREFA 21 — Configurações
+
+Idioma
+
+Tema
+
+Notificações
+
+Privacidade
+
+TAREFA 22 — Responsividade
+
+Desktop
+
+Notebook
+
+Tablet
+
+Celular
+
+TAREFA 23 — Componentes
+
+Criar componentes reutilizáveis.
+
+Button
+
+Input
+
+Textarea
+
+Modal
+
+Badge
+
+Avatar
+
+Dropdown
+
+Tooltip
+
+Navbar
+
+Sidebar
+
+Card
+
+Loading
+
+Empty
+
+Pagination
+
+Search
+
+Filter
+
+Toast
+
+TAREFA 24 — API
+
+Criar API REST.
+
+Usuários
+
+Projetos
+
+Colunas
+
+Tarefas
+
+Comentários
+
+Checklist
+
+Etiquetas
+
+Anexos
+
+Histórico
+
+TAREFA 25 — Validação
+
+React Hook Form
+
+Zod
+
+Mensagens
+
+Máscaras
+
+Sanitização
+
+TAREFA 26 — Performance
+
+Lazy Loading
+
+Code Splitting
+
+Memoização
+
+Paginação
+
+Otimização de imagens
+
+TAREFA 27 — Segurança
+
+Middleware
+
+Proteção de Rotas
+
+JWT
+
+Hash de senha
+
+Validação Backend
+
+Rate Limit
+
+TAREFA 28 — UX/UI
+
+Animações suaves
+
+Loading
+
+Skeleton
+
+Estados vazios
+
+Confirmações
+
+Feedback visual
+
+Hover
+
+Transições
+
+TAREFA 29 — Testes
+
+Validação
+
+CRUD
+
+Autenticação
+
+API
+
+TAREFA 30 — Deploy
+
+Variáveis de ambiente
+
+Banco PostgreSQL
+
+Prisma Migrate
+
+Build de Produção
+
+Deploy na Vercel
