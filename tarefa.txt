@@ -1,169 +1,309 @@
-TAREFA 01 — Criação do Projeto
+# KANBAN PRO - Sistema Profissional de Gerenciamento de Projetos
 
-Objetivo
+## Objetivo
 
-Criar toda a estrutura inicial do projeto utilizando Next.js com App Router, TypeScript e React-Bootstrap.
+Desenvolver um sistema web completo de gerenciamento de projetos no estilo SaaS, inspirado em Linear, Jira, ClickUp, Monday.com, Asana e Notion, porém com identidade visual própria.
 
-Deve conter
-Configuração do projeto
-ESLint
-Prettier
-Estrutura de pastas
-Bootstrap
-Bootstrap Icons
-Variáveis de ambiente
-Configuração inicial do Prisma
-Configuração do PostgreSQL
+O sistema deve transmitir a sensação de um software comercial premium, desenvolvido por uma empresa de tecnologia moderna.
 
-TAREFA 03 — Tema Global
+Utilizar:
 
-Criar identidade visual completa.
+- Next.js 15 (App Router)
+- React 19
+- TypeScript
+- React-Bootstrap
+- Bootstrap Icons
+- Prisma ORM
+- PostgreSQL
+- pgAdmin
+- React Hook Form
+- Zod
+- Axios
+- Framer Motion
 
-Tema Escuro
+Toda a aplicação deverá ser componentizada, reutilizável, organizada e preparada para crescimento.
 
-Fundo
+------------------------------------------------------------
+
+IDENTIDADE VISUAL
+
+O sistema deverá possuir aparência moderna, elegante e minimalista.
+
+Inspirado em:
+
+• Linear
+• Atlassian
+• Jira
+• ClickUp
+• Vercel
+
+Evitar excesso de cores.
+
+Evitar gradientes exagerados.
+
+Utilizar bastante espaço em branco (ou espaço negativo no tema escuro).
+
+Todos os componentes deverão possuir bordas arredondadas.
+
+Todos os cartões deverão possuir sombras suaves.
+
+Todas as animações deverão ser discretas.
+
+------------------------------------------------------------
+
+PALETA DE CORES
+
+Tema Escuro (Padrão)
+
+Fundo Principal
+
+#0F172A
+
+Fundo Secundário
+
+#111827
+
+Sidebar
+
+#0B1120
+
+Navbar
+
+#111827 com Blur
 
 Cards
 
-Botões
+#1E293B
 
-Inputs
+Cards Hover
 
-Modais
+#263548
 
-Navbar
+Bordas
 
-Sidebar
+#334155
 
-Tipografia
+Texto Principal
 
-Sistema de cores
+#F8FAFC
 
-Dark / Light Mode
+Texto Secundário
 
-Salvar preferência no LocalStorage.
+#94A3B8
 
-TAREFA 04 — Layout Principal
+Cor Primária
 
-Criar layout responsivo contendo
+Azul Safira
 
-Navbar
+Hover Azul
 
-Sidebar
+Azul Claro
 
-Área Principal
+Sucesso
 
-Footer
+Verde
 
-Toast
+Erro
 
-Modal Provider
+Vermelho
 
-Loading Global
+Aviso
 
-TAREFA 05 — Sistema de Autenticação
+Amarelo
 
-Criar autenticação completa.
+------------------------------------------------------------
 
-Funcionalidades
+TIPOGRAFIA
 
-Login
+Fonte:
 
-Cadastro
+Inter
 
-Logout
+Pesos
 
-Recuperar senha
+400
 
-Lembrar usuário
+500
 
-Proteção de Rotas
+600
 
-Sessão
+700
 
-Middleware
+Títulos grandes
 
-Hash de senha
+Sem exagero.
 
-JWT
+Visual limpo.
 
-TAREFA 06 — Banco de Dados
+------------------------------------------------------------
 
-Criar todo o banco utilizando Prisma.
+LAYOUT
 
-Tabelas
+A aplicação deverá ocupar toda largura da tela.
 
-Usuário
+Estrutura:
 
-Projeto
+Navbar Superior
 
-Coluna
+Sidebar Esquerda
 
-Tarefa
+Conteúdo Principal
 
-Etiqueta
+Painel Direito (opcional)
 
-Checklist
+Responsiva.
 
-Comentário
+------------------------------------------------------------
 
-Anexo
+NAVBAR
 
-Histórico
+Navbar fixa.
 
-Notificação
+Altura de aproximadamente 70px.
 
-Relacionamentos completos.
+Conter:
 
-TAREFA 07 — Dashboard
+Logo
 
-Criar Dashboard moderno.
+Campo de Pesquisa Global
 
-Exibir
+Botão Nova Tarefa
 
-Quantidade de Projetos
+Notificações
 
-Quantidade de Tarefas
+Ajuda
 
-Tarefas Concluídas
+Tema Claro/Escuro
 
-Pendentes
+Avatar do usuário
 
-Atrasadas
+Dropdown Perfil
 
-Gráficos
+Blur
 
-Atividades Recentes
+Shadow
 
-TAREFA 08 — CRUD de Projetos
+------------------------------------------------------------
 
-Criar gerenciamento completo.
+SIDEBAR
 
-Criar Projeto
+Largura aproximada:
 
-Editar
+260px
 
-Excluir
+Itens:
 
-Pesquisar
+Dashboard
 
-Favoritar
+Projetos
 
-Arquivar
+Kanban
 
-Duplicar
+Calendário
 
-Cor personalizada
+Equipe
+
+Relatórios
+
+Favoritos
+
+Arquivados
+
+Configurações
+
+Cada item deverá possuir:
 
 Ícone
 
+Texto
+
+Hover
+
+Indicador ativo
+
+Tooltip
+
+Badge quando necessário.
+
+------------------------------------------------------------
+
+DASHBOARD
+
+Logo abaixo da Navbar.
+
+Mostrar:
+
+Projeto Atual
+
 Descrição
 
-TAREFA 09 — Colunas Kanban
+Equipe
 
-Criar sistema de colunas.
+Número de tarefas
 
-Padrão
+Progresso
+
+Botão Compartilhar
+
+Botão Configurações
+
+Botão Novo Projeto
+
+------------------------------------------------------------
+
+CARDS DE ESTATÍSTICAS
+
+4 Cards.
+
+Projetos
+
+Tarefas
+
+Pendentes
+
+Concluídas
+
+Cada Card deverá conter:
+
+Ícone
+
+Título
+
+Número
+
+Mini gráfico
+
+Indicador percentual
+
+Hover
+
+------------------------------------------------------------
+
+BARRA DE FERRAMENTAS
+
+Pesquisar
+
+Filtros
+
+Ordenação
+
+Etiquetas
+
+Responsável
+
+Prioridade
+
+Calendário
+
+Visualização
+
+Nova Tarefa
+
+------------------------------------------------------------
+
+KANBAN
+
+Criar quatro colunas.
 
 A Fazer
 
@@ -173,73 +313,73 @@ Em Revisão
 
 Concluído
 
-Permitir
+Cada coluna deverá possuir:
 
-Adicionar
+Nome
 
-Editar
+Quantidade
 
-Excluir
+Botão +
 
-Reordenar
+Menu
 
-Cor personalizada
+Scroll independente
 
-TAREFA 10 — CRUD de Tarefas
+------------------------------------------------------------
 
-Sistema completo.
+TASK CARD
 
-Cada tarefa deverá possuir
+Cada tarefa deverá possuir:
 
 Título
 
 Descrição
 
-Responsável
-
-Projeto
-
-Coluna
-
-Data Inicial
-
-Prazo
+Etiqueta
 
 Prioridade
 
-Status
+Responsável
 
-Cor
+Avatar
 
-Etiqueta
-
-Checklist
+Data
 
 Comentários
 
-Anexos
+Arquivos
 
-Tempo gasto
+Checklist
 
-Tempo previsto
+Tempo restante
 
-TAREFA 11 — Drag and Drop
+Status
 
-Mover tarefas utilizando Drag and Drop.
+Sombra
 
-Atualizar automaticamente.
+Hover
 
-Salvar posição.
+Escala
 
-Persistir no banco.
+Cursor Drag
+
+------------------------------------------------------------
+
+DRAG AND DROP
+
+Mover tarefas.
+
+Salvar automaticamente.
+
+Atualizar banco.
 
 Animações suaves.
 
-TAREFA 12 — Modal da Tarefa
+------------------------------------------------------------
 
-Modal extremamente completo.
+MODAL DA TAREFA
 
-Abas
+Dividido em Tabs.
 
 Informações
 
@@ -251,39 +391,39 @@ Arquivos
 
 Histórico
 
-Atividade
+------------------------------------------------------------
 
-TAREFA 13 — Checklist
+CHECKLIST
 
-Adicionar checklist.
-
-Criar
-
-Editar
-
-Excluir
-
-Marcar concluído
-
-Porcentagem automática.
-
-TAREFA 14 — Comentários
-
-Sistema semelhante ao Trello.
-
-Responder comentários.
+Criar.
 
 Editar.
 
 Excluir.
 
-Data.
+Marcar concluído.
 
-Usuário.
+Barra de progresso automática.
 
-TAREFA 15 — Upload
+------------------------------------------------------------
 
-Upload de arquivos.
+COMENTÁRIOS
+
+Criar.
+
+Editar.
+
+Excluir.
+
+Responder.
+
+Mostrar usuário.
+
+Mostrar horário.
+
+------------------------------------------------------------
+
+UPLOAD
 
 Imagens
 
@@ -291,9 +431,9 @@ PDF
 
 ZIP
 
-Vídeos
+DOCX
 
-Documentos
+Vídeo
 
 Preview
 
@@ -301,91 +441,117 @@ Download
 
 Excluir
 
-TAREFA 16 — Etiquetas
+------------------------------------------------------------
 
-Criar etiquetas.
+PROJETOS
+
+CRUD completo.
+
+Criar.
+
+Editar.
+
+Duplicar.
+
+Arquivar.
+
+Favoritar.
+
+Excluir.
+
+------------------------------------------------------------
+
+USUÁRIOS
+
+Foto
 
 Nome
 
-Cor
+Cargo
 
-Ícone
+Email
 
-Pesquisar
+Projetos
 
-TAREFA 17 — Pesquisa
+Permissões
 
-Pesquisar
+------------------------------------------------------------
+
+NOTIFICAÇÕES
+
+Nova tarefa
+
+Comentário
+
+Prazo
+
+Convite
+
+Alterações
+
+------------------------------------------------------------
+
+CALENDÁRIO
+
+Mensal
+
+Semanal
+
+Diário
+
+Eventos
+
+Prazos
+
+------------------------------------------------------------
+
+RELATÓRIOS
+
+Gráficos
+
+Produtividade
+
+Tempo gasto
+
+Projetos
+
+Equipe
+
+------------------------------------------------------------
+
+PESQUISA
+
+Pesquisar:
 
 Projetos
 
 Tarefas
 
-Etiquetas
-
 Usuários
 
-Descrição
+Etiquetas
 
 Tudo em tempo real.
 
-TAREFA 18 — Filtros
+------------------------------------------------------------
 
-Filtrar por
+FILTROS
 
 Status
 
 Prioridade
 
-Responsável
-
 Projeto
+
+Responsável
 
 Etiqueta
 
-Data
+Datas
 
-TAREFA 19 — Ordenação
+------------------------------------------------------------
 
-Ordenar por
-
-Nome
-
-Data
-
-Prioridade
-
-Última alteração
-
-Criação
-
-TAREFA 20 — Perfil
-
-Editar
-
-Nome
-
-Foto
-
-Email
-
-Senha
-
-Tema
-
-Idioma
-
-TAREFA 21 — Configurações
-
-Idioma
-
-Tema
-
-Notificações
-
-Privacidade
-
-TAREFA 22 — Responsividade
+RESPONSIVIDADE
 
 Desktop
 
@@ -395,47 +561,113 @@ Tablet
 
 Celular
 
-TAREFA 23 — Componentes
+Sidebar recolhível.
 
-Criar componentes reutilizáveis.
+Kanban com Scroll Horizontal.
 
-Button
+------------------------------------------------------------
 
-Input
+ANIMAÇÕES
 
-Textarea
+Fade In
 
-Modal
+Slide Up
 
-Badge
+Hover
 
-Avatar
+Scale
 
-Dropdown
+Floating
 
-Tooltip
+Loading Skeleton
+
+------------------------------------------------------------
+
+COMPONENTES
 
 Navbar
 
 Sidebar
 
-Card
+Dashboard
 
-Loading
+StatisticCard
 
-Empty
+KanbanBoard
 
-Pagination
+KanbanColumn
 
-Search
+TaskCard
 
-Filter
+TaskModal
+
+SearchBar
+
+FilterBar
+
+Avatar
+
+Badge
+
+Button
+
+Dropdown
+
+Tooltip
 
 Toast
 
-TAREFA 24 — API
+Loading
 
-Criar API REST.
+EmptyState
+
+ConfirmDialog
+
+Pagination
+
+ThemeSwitcher
+
+------------------------------------------------------------
+
+ESTRUTURA
+
+src
+
+app
+
+components
+
+layouts
+
+hooks
+
+contexts
+
+providers
+
+lib
+
+services
+
+utils
+
+types
+
+interfaces
+
+validators
+
+styles
+
+constants
+
+prisma
+
+assets
+
+------------------------------------------------------------
+
+BANCO DE DADOS
 
 Usuários
 
@@ -445,90 +677,26 @@ Colunas
 
 Tarefas
 
-Comentários
-
 Checklist
+
+Comentários
 
 Etiquetas
 
-Anexos
+Arquivos
 
 Histórico
 
-TAREFA 25 — Validação
+Notificações
 
-React Hook Form
+------------------------------------------------------------
 
-Zod
+EXPERIÊNCIA DO USUÁRIO
 
-Mensagens
+A interface deverá transmitir imediatamente a sensação de um software premium utilizado por empresas de tecnologia.
 
-Máscaras
+A navegação deve ser extremamente intuitiva, com foco em produtividade, rapidez e organização.
 
-Sanitização
+Os componentes devem seguir um padrão visual consistente, utilizando React-Bootstrap como base, mas personalizados para criar uma identidade própria. Os elementos devem possuir espaçamentos generosos, tipografia moderna, animações discretas, excelente contraste e responsividade completa.
 
-TAREFA 26 — Performance
-
-Lazy Loading
-
-Code Splitting
-
-Memoização
-
-Paginação
-
-Otimização de imagens
-
-TAREFA 27 — Segurança
-
-Middleware
-
-Proteção de Rotas
-
-JWT
-
-Hash de senha
-
-Validação Backend
-
-Rate Limit
-
-TAREFA 28 — UX/UI
-
-Animações suaves
-
-Loading
-
-Skeleton
-
-Estados vazios
-
-Confirmações
-
-Feedback visual
-
-Hover
-
-Transições
-
-TAREFA 29 — Testes
-
-Validação
-
-CRUD
-
-Autenticação
-
-API
-
-TAREFA 30 — Deploy
-
-Variáveis de ambiente
-
-Banco PostgreSQL
-
-Prisma Migrate
-
-Build de Produção
-
-Deploy na Vercel
+O resultado final não deve parecer um clone do Trello ou Jira, mas sim um produto original, sofisticado, elegante e pronto para uso em ambiente corporativo, digno de compor um portfólio profissional.
