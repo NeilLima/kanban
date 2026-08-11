@@ -1,0 +1,4 @@
+﻿
+# scripts locais de setup (contem credenciais locais)
+setup-banco.bat
+setup-banco.ps1
