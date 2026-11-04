@@ -39,7 +39,8 @@ const canReachApi = async (apiUrl: string): Promise<boolean> => {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 3000);
 
-    await fetch(`${apiUrl}/api`, {
+    // baseURL já termina em /api — testa a raiz da API (Swagger responde 200)
+    await fetch(`${apiUrl.replace(/\/+$/, '')}`, {
       method: 'GET',
       signal: controller.signal,
     });
@@ -55,28 +56,41 @@ const canReachApi = async (apiUrl: string): Promise<boolean> => {
 const LOCAL_API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002';
 const PRODUCTION_API_URL = process.env.NEXT_PUBLIC_API_URL_PRODUCTION || 'https://backend-nine-snowy-sn0nvdilry.vercel.app';
 
-// Estratégia DEFINITIVA:
+// O backend usa prefixo global /api (setGlobalPrefix) — todo baseURL termina em /api
+function ensureApiSuffix(url: string): string {
+  return url.replace(/\/+$/, '').endsWith('/api') ? url : `${url.replace(/\/+$/, '')}/api`;
+}
+
+// Estratégia DEFINITIVA (padrão Lumen):
 // - Em produção (Vercel): usa SEMPRE a URL de produção
-// - Em desenvolvimento: usa o próprio frontend como proxy
+// - Em desenvolvimento no PC (localhost): usa NEXT_PUBLIC_API_URL (http://localhost:3002/api)
+// - Em desenvolvimento no celular (Wi-Fi): usa o próprio frontend como proxy
 //   O Next.js redireciona /api/* para o backend via rewrites()
 //   Assim funciona tanto no PC quanto no celular sem precisar de IP fixo
 const isProduction = process.env.NODE_ENV === 'production';
 
-function getInitialBaseURL(): string {
-  if (isProduction) return PRODUCTION_API_URL;
+function isLocalhost(): boolean {
+  if (typeof window === 'undefined') return true;
+  const hostname = window.location.hostname;
+  return hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '::1';
+}
 
-  // Se definiu explicitamente a env, usar ela
-  if (process.env.NEXT_PUBLIC_API_URL) {
-    return process.env.NEXT_PUBLIC_API_URL;
+function getInitialBaseURL(): string {
+  if (isProduction) return ensureApiSuffix(PRODUCTION_API_URL);
+
+  // Se estiver no PC (localhost) e definiu a env, usar ela
+  if (isLocalhost() && process.env.NEXT_PUBLIC_API_URL) {
+    return ensureApiSuffix(process.env.NEXT_PUBLIC_API_URL);
   }
 
   // Usar o próprio frontend como proxy (funciona em PC e celular)
   // O Next.js redireciona /api/* para o backend
+  // Por isso, adicionamos /api ao final do baseURL para o proxy funcionar
   if (typeof window !== 'undefined') {
-    return `${window.location.protocol}//${window.location.host}`;
+    return `${window.location.protocol}//${window.location.host}/api`;
   }
 
-  return LOCAL_API_URL;
+  return ensureApiSuffix(LOCAL_API_URL);
 }
 
 const initialBaseURL = getInitialBaseURL();
@@ -149,7 +163,7 @@ api.interceptors.request.use(
     }
     
     if (!isAuthRoute) {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('kanban-token');
 
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;

@@ -8,7 +8,6 @@ export const StyledCard = styled.div<{ $isDragging: boolean; $color?: string }>`
   transition: all 0.2s ease;
   opacity: ${props => props.$isDragging ? 0.5 : 1};
   border: 1px solid rgba(255, 255, 255, 0.06);
-  border-left: 3px solid ${props => props.$color || '#3b82f6'};
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
@@ -45,6 +44,14 @@ export const StyledCardFooter = styled.div`
   gap: 8px;
 `;
 
+export const StyledCardBottom = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 6px;
+  gap: 8px;
+`;
+
 export const StyledPriorityBadge = styled.span<{ $priority: string }>`
   font-size: 11px;
   font-weight: 500;
@@ -65,7 +72,12 @@ export const StyledPriorityBadge = styled.span<{ $priority: string }>`
 export const StyledDueDate = styled.span<{ $overdue: boolean }>`
   font-size: 11px;
   color: ${props => props.$overdue ? '#ef4444' : 'rgba(255, 255, 255, 0.5)'};
-  margin-left: auto;
+`;
+
+export const StyledProgressLabel = styled.span`
+  font-size: 11px;
+  font-weight: 500;
+  color: #3b82f6;
 `;
 
 export const StyledCategoryBadge = styled.span<{ $category: string }>`

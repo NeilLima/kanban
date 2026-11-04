@@ -119,8 +119,9 @@ export const validateMedia = (
 export const processImage = async (base64String: string): Promise<string> => {
   try {
     // Importação dinâmica - só carrega sharp quando necessário
-    const sharp = (await import('sharp')).default;
-    
+    const sharpModule = 'sharp';
+    const sharp = (await import(sharpModule)).default;
+
     const svgMatch = base64String.match(/^data:image\/svg\+xml;base64,/);
     if (svgMatch) {
       return base64String;
@@ -152,8 +153,10 @@ export const processImage = async (base64String: string): Promise<string> => {
 export const processVideo = async (base64String: string): Promise<string> => {
   try {
     // Importação dinâmica - só carrega ffmpeg quando necessário
-    const ffmpeg = (await import('fluent-ffmpeg')).default;
-    const ffmpegInstaller = (await import('@ffmpeg-installer/ffmpeg')).default;
+    const ffmpegModule = 'fluent-ffmpeg';
+    const installerModule = '@ffmpeg-installer/ffmpeg';
+    const ffmpeg = (await import(ffmpegModule)).default;
+    const ffmpegInstaller = (await import(installerModule)).default;
     ffmpeg.setFfmpegPath(ffmpegInstaller.path);
 
     const base64Data = base64String.replace(/^data:video\/[^;]+;base64,/, '');
@@ -192,8 +195,10 @@ export const processVideo = async (base64String: string): Promise<string> => {
 export const processAudio = async (base64String: string): Promise<string> => {
   try {
     // Importação dinâmica - só carrega ffmpeg quando necessário
-    const ffmpeg = (await import('fluent-ffmpeg')).default;
-    const ffmpegInstaller = (await import('@ffmpeg-installer/ffmpeg')).default;
+    const ffmpegModule = 'fluent-ffmpeg';
+    const installerModule = '@ffmpeg-installer/ffmpeg';
+    const ffmpeg = (await import(ffmpegModule)).default;
+    const ffmpegInstaller = (await import(installerModule)).default;
     ffmpeg.setFfmpegPath(ffmpegInstaller.path);
 
     const base64Data = base64String.replace(/^data:audio\/\w+;base64,/, '');

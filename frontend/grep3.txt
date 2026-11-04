@@ -1,0 +1,8 @@
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\app\kanban\page.tsx:6: import BoardComp from '@/shared/kanban/board/components/BoardComp';
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\app\kanban\page.tsx:52: <BoardComp projectId={projectId} />
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\components\dashboard\detail\components\DetailComp.tsx:61: // BoardComp é importado com dynamic({ ssr: false }), então este componente
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\components\project\detail\components\ProjectDetailComp.tsx:5: import BoardComp from '@/shared/kanban/board/components/BoardComp';
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\components\project\detail\components\ProjectDetailComp.tsx:183: <BoardComp projectId={projectId} />
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\components\tarefas\main\components\TarefasComp.tsx:5: import BoardComp from '@/shared/kanban/board/components/BoardComp';
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\components\tarefas\main\components\TarefasComp.tsx:57: <BoardComp projectId={projectId} />
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\shared\kanban\board\components\BoardComp.tsx:11: export default function BoardComp({ projectId }: BoardTypes) {

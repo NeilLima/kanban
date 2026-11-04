@@ -2,7 +2,7 @@
 import React from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { StyledCard, StyledCardTitle, StyledCardFooter, StyledPriorityBadge, StyledDueDate, StyledCategoryBadge, StyledCardMeta, StyledMetaItem, StyledMetaLeft, StyledAvatarContainer, StyledAvatar, StyledProgressBar, StyledProgressFill } from '../styles/CardStyles';
+import { StyledCard, StyledCardTitle, StyledCardFooter, StyledCardBottom, StyledPriorityBadge, StyledDueDate, StyledCategoryBadge, StyledMetaItem, StyledMetaLeft, StyledAvatarContainer, StyledAvatar, StyledProgressBar, StyledProgressFill, StyledProgressLabel } from '../styles/CardStyles';
 import type { CardTypes } from '../types/CardTypes';
 import type { CardState } from '../types/CardTypes';
 
@@ -46,17 +46,10 @@ export default function CardComp({ task, onEdit }: CardTypes) {
           </StyledCategoryBadge>
         )}
         <StyledCardFooter>
-          <StyledPriorityBadge $priority={task.priority}>
-            {getPriorityLabel(task.priority)}
-          </StyledPriorityBadge>
-          {task.dueDate && (
-            <StyledDueDate $overdue={isOverdue(task.dueDate)}>
-              {formatDate(task.dueDate)}
-            </StyledDueDate>
-          )}
-        </StyledCardFooter>
-        <StyledCardMeta>
           <StyledMetaLeft>
+            <StyledPriorityBadge $priority={task.priority}>
+              {getPriorityLabel(task.priority)}
+            </StyledPriorityBadge>
             {(task.comments ?? 0) > 0 && (
               <StyledMetaItem>
                 <i className="bi bi-chat" style={{ fontSize: 12 }}></i>
@@ -83,7 +76,17 @@ export default function CardComp({ task, onEdit }: CardTypes) {
               ))}
             </StyledAvatarContainer>
           )}
-        </StyledCardMeta>
+        </StyledCardFooter>
+        <StyledCardBottom>
+          {task.dueDate && (
+            <StyledDueDate $overdue={isOverdue(task.dueDate)}>
+              {formatDate(task.dueDate)}
+            </StyledDueDate>
+          )}
+          {(task.progress ?? 0) > 0 && (
+            <StyledProgressLabel>{task.progress}%</StyledProgressLabel>
+          )}
+        </StyledCardBottom>
         {(task.progress ?? 0) > 0 && (
           <StyledProgressBar>
             <StyledProgressFill $progress={task.progress ?? 0} />

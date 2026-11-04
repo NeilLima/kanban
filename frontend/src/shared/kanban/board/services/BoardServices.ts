@@ -1,211 +1,146 @@
-import type { Task, Column } from '../types/BoardTypes';
+'use client';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { list, create, remove, update, patchAction } from '@/services/crudService';
+import type { Task, Column, RawColumn, RawTask, RawBoardData, RawProjectRef } from '../types/BoardTypes';
 
-// Dados mock constantes - nunca mudam a referência
-export const MOCK_COLUMNS: Column[] = [
-  { id: 'col-1', name: 'A Fazer', color: '#3b82f6', projectId: 'default-project', order: 0 },
-  { id: 'col-2', name: 'Em Desenvolvimento', color: '#f59e0b', projectId: 'default-project', order: 1 },
-  { id: 'col-3', name: 'Revisão', color: '#8b5cf6', projectId: 'default-project', order: 2 },
-  { id: 'col-4', name: 'Concluído', color: '#10b981', projectId: 'default-project', order: 3 },
-];
+// ============================================
+// MAPEAMENTO Backend (Prisma) -> Frontend
+// ============================================
 
-export const MOCK_TASKS: Task[] = [
-  {
-    id: 'task-1',
-    title: 'Criar protótipo do dashboard',
-    description: 'Desenvolver o layout inicial do dashboard com métricas principais',
-    columnId: 'col-1',
-    projectId: 'default-project',
-    priority: 'alta',
-    status: 'A Fazer',
-    color: '#3b82f6',
-    category: 'Design',
-    tags: ['Design', 'UI/UX'],
-    assignees: [
-      { name: 'Lucas Ferreira', email: 'lucas@empresa.com', color: '#3b82f6' },
-      { name: 'Maria Santos', email: 'maria@empresa.com', color: '#8b5cf6' },
-    ],
-    comments: 3,
-    attachments: 2,
-    dueDate: '2026-08-15',
-    progress: 0,
-    order: 0,
-    createdAt: '2026-07-01T10:00:00Z',
-    updatedAt: '2026-07-20T15:00:00Z',
-  },
-  {
-    id: 'task-2',
-    title: 'Implementar autenticação JWT',
-    description: 'Configurar login com JWT e refresh token',
-    columnId: 'col-1',
-    projectId: 'default-project',
-    priority: 'urgente',
-    status: 'A Fazer',
-    color: '#ef4444',
-    category: 'Backend',
-    tags: ['Backend', 'Segurança'],
-    assignees: [
-      { name: 'João Silva', email: 'joao@empresa.com', color: '#10b981' },
-    ],
-    comments: 5,
-    attachments: 1,
-    dueDate: '2026-07-30',
-    progress: 0,
-    order: 1,
-    createdAt: '2026-07-01T10:00:00Z',
-    updatedAt: '2026-07-20T15:00:00Z',
-  },
-  {
-    id: 'task-3',
-    title: 'Desenvolver API de usuários',
-    description: 'CRUD completo de usuários com validações',
-    columnId: 'col-2',
-    projectId: 'default-project',
-    priority: 'alta',
-    status: 'Em Desenvolvimento',
-    color: '#f59e0b',
-    category: 'Backend',
-    tags: ['Backend', 'API'],
-    assignees: [
-      { name: 'João Silva', email: 'joao@empresa.com', color: '#10b981' },
-      { name: 'Ana Costa', email: 'ana@empresa.com', color: '#f59e0b' },
-    ],
-    comments: 8,
-    attachments: 0,
-    dueDate: '2026-08-10',
-    progress: 60,
-    order: 0,
-    createdAt: '2026-07-01T10:00:00Z',
-    updatedAt: '2026-07-20T15:00:00Z',
-  },
-  {
-    id: 'task-4',
-    title: 'Criar componentes do Kanban',
-    description: 'Componentes de card, coluna e board com drag and drop',
-    columnId: 'col-2',
-    projectId: 'default-project',
-    priority: 'media',
-    status: 'Em Desenvolvimento',
-    color: '#8b5cf6',
-    category: 'Frontend',
-    tags: ['Frontend', 'Kanban'],
-    assignees: [
-      { name: 'Lucas Ferreira', email: 'lucas@empresa.com', color: '#3b82f6' },
-    ],
-    comments: 2,
-    attachments: 3,
-    dueDate: '2026-08-20',
-    progress: 40,
-    order: 1,
-    createdAt: '2026-07-01T10:00:00Z',
-    updatedAt: '2026-07-20T15:00:00Z',
-  },
-  {
-    id: 'task-5',
-    title: 'Testes de integração',
-    description: 'Testar fluxos completos da aplicação',
-    columnId: 'col-3',
-    projectId: 'default-project',
-    priority: 'media',
-    status: 'Revisão',
-    color: '#8b5cf6',
-    category: 'Planejamento',
-    tags: ['Testes', 'QA'],
-    assignees: [
-      { name: 'Ana Costa', email: 'ana@empresa.com', color: '#f59e0b' },
-    ],
-    comments: 1,
-    attachments: 0,
-    dueDate: '2026-08-25',
-    progress: 30,
-    order: 0,
-    createdAt: '2026-07-01T10:00:00Z',
-    updatedAt: '2026-07-20T15:00:00Z',
-  },
-  {
-    id: 'task-6',
-    title: 'Configurar CI/CD',
-    description: 'Pipeline de deploy automático',
-    columnId: 'col-3',
-    projectId: 'default-project',
-    priority: 'baixa',
-    status: 'Revisão',
-    color: '#14b8a6',
-    category: 'DevOps',
-    tags: ['DevOps', 'Infra'],
-    assignees: [
-      { name: 'Pedro Alves', email: 'pedro@empresa.com', color: '#ef4444' },
-    ],
-    comments: 0,
-    attachments: 1,
-    dueDate: '2026-09-01',
-    progress: 20,
-    order: 1,
-    createdAt: '2026-07-01T10:00:00Z',
-    updatedAt: '2026-07-20T15:00:00Z',
-  },
-  {
-    id: 'task-7',
-    title: 'Homepage do projeto',
-    description: 'Página inicial com apresentação do produto',
-    columnId: 'col-4',
-    projectId: 'default-project',
-    priority: 'alta',
-    status: 'Concluído',
-    color: '#10b981',
-    category: 'Frontend',
-    tags: ['Frontend', 'UI/UX'],
-    assignees: [
-      { name: 'Maria Santos', email: 'maria@empresa.com', color: '#8b5cf6' },
-    ],
-    comments: 4,
-    attachments: 2,
-    dueDate: '2026-07-25',
-    progress: 100,
-    order: 0,
-    createdAt: '2026-07-01T10:00:00Z',
-    updatedAt: '2026-07-20T15:00:00Z',
-  },
-  {
-    id: 'task-8',
-    title: 'Documentação da API',
-    description: 'Documentar todos os endpoints com Swagger',
-    columnId: 'col-4',
-    projectId: 'default-project',
-    priority: 'media',
-    status: 'Concluído',
-    color: '#64748b',
-    category: 'Backend',
-    tags: ['Backend', 'Docs'],
-    assignees: [
-      { name: 'João Silva', email: 'joao@empresa.com', color: '#10b981' },
-    ],
-    comments: 0,
-    attachments: 0,
-    dueDate: '2026-07-28',
-    progress: 100,
-    order: 1,
-    createdAt: '2026-07-01T10:00:00Z',
-    updatedAt: '2026-07-20T15:00:00Z',
-  },
-];
+const STATUS_MAP: Record<string, string> = {
+  TODO: 'A Fazer',
+  IN_PROGRESS: 'Em Desenvolvimento',
+  REVIEW: 'Em Revisão',
+  DONE: 'Concluído',
+};
 
-// Hook que retorna dados mock de forma síncrona
-export function useBoardService(_projectId: string) {
-  void _projectId;
+const EMPTY_BOARD: RawBoardData = { columns: [], tasks: [] };
+const PROJECTS_RESOURCE = 'projects';
+const TASKS_RESOURCE = 'tasks';
+
+function mapColumn(c: RawColumn): Column {
+  return { id: c.id, name: c.name, color: c.color, order: c.order, projectId: c.projectId };
+}
+
+function mapTask(t: RawTask): Task {
   return {
-    columns: MOCK_COLUMNS,
-    tasks: MOCK_TASKS,
-    loading: false,
-    addColumn: (_name: string, _color: string) => {
-      void _name;
-      void _color;
+    id: t.id,
+    title: t.title,
+    description: t.description ?? undefined,
+    columnId: t.columnId,
+    projectId: t.projectId,
+    priority: (t.priority ?? 'MEDIUM').toLowerCase() as Task['priority'],
+    status: STATUS_MAP[t.status ?? ''] ?? t.status ?? 'TODO',
+    color: t.color ?? '#3b82f6',
+    category: t.category ?? undefined,
+    tags: t.labels?.map((l) => l.label?.name).filter((n): n is string => Boolean(n)),
+    assignees: t.assignees?.map((a) => ({
+      name:
+        [a.user?.profile?.firstName, a.user?.profile?.lastName].filter(Boolean).join(' ') ||
+        a.user?.email ||
+        'Usuário',
+      email: a.user?.email,
+      color: '#3b82f6',
+    })),
+    comments: t._count?.comments ?? 0,
+    attachments: t._count?.attachments ?? 0,
+    progress: t.progress ?? 0,
+    order: t.order ?? 0,
+    dueDate: t.dueDate ? String(t.dueDate).slice(0, 10) : undefined,
+    createdAt: t.createdAt,
+    updatedAt: t.updatedAt,
+  };
+}
+
+// ============================================
+// HOOK: dados do board via crudService (fallback: vazio)
+// ============================================
+
+export function useBoardService(projectId: string) {
+  const queryClient = useQueryClient();
+
+  function invalidarBoard() {
+    queryClient.invalidateQueries({ queryKey: ['board'] });
+    queryClient.invalidateQueries({ queryKey: ['tasks'] });
+  }
+
+  // Busca o board real; se 'default-project', usa o primeiro projeto do usuário.
+  const boardQuery = useQuery<RawBoardData>({
+    queryKey: ['board', projectId],
+    queryFn: async () => {
+      let id = projectId;
+      if (id === 'default-project') {
+        const projects = (await list(PROJECTS_RESOURCE)) as RawProjectRef[] | undefined;
+        const first = projects?.[0];
+        if (!first) return EMPTY_BOARD;
+        id = first.id;
+      }
+
+      const board = (await list(`${PROJECTS_RESOURCE}/${id}/board`)) as RawBoardData | undefined;
+      return {
+        columns: board?.columns ?? [],
+        tasks: board?.tasks ?? [],
+      };
     },
-    deleteColumn: (_columnId: string) => {
-      void _columnId;
-    },
-    updateTask: (_taskId: string, _data: Record<string, unknown>) => {
-      void _taskId;
-      void _data;
-    },
+    enabled: !!projectId,
+    staleTime: 10 * 1000,
+  });
+
+  const addColumnMutation = useMutation({
+    mutationFn: (data: { name: string; color: string }) =>
+      create<RawColumn>(`${PROJECTS_RESOURCE}/${projectId}/columns`, data),
+    onSuccess: invalidarBoard,
+  });
+
+  const deleteColumnMutation = useMutation({
+    mutationFn: (columnId: string) => remove(`${PROJECTS_RESOURCE}/columns`, columnId),
+    onSuccess: invalidarBoard,
+  });
+
+  const updateTaskMutation = useMutation({
+    mutationFn: ({ taskId, data }: { taskId: string; data: Record<string, unknown> }) =>
+      update<RawTask>(TASKS_RESOURCE, taskId, data),
+    onSuccess: invalidarBoard,
+  });
+
+  const moveTaskMutation = useMutation({
+    mutationFn: ({
+      taskId,
+      columnId,
+      order,
+    }: {
+      taskId: string;
+      columnId: string;
+      order?: number;
+    }) => patchAction<RawTask>(TASKS_RESOURCE, taskId, 'move', { columnId, order }),
+    onSuccess: invalidarBoard,
+  });
+
+  const addTaskMutation = useMutation({
+    mutationFn: (data: { title: string; columnId: string }) => create<RawTask>(TASKS_RESOURCE, data),
+    onSuccess: invalidarBoard,
+  });
+
+  const columns = (boardQuery.data?.columns ?? []).map(mapColumn);
+  const tasks = (boardQuery.data?.tasks ?? []).map(mapTask);
+
+  const addColumn = (name: string, color: string) => addColumnMutation.mutateAsync({ name, color });
+  const deleteColumn = (columnId: string) => deleteColumnMutation.mutateAsync(columnId);
+  const updateTask = (taskId: string, data: Record<string, unknown>) =>
+    updateTaskMutation.mutateAsync({ taskId, data });
+  const moveTask = (taskId: string, columnId: string, order?: number) =>
+    moveTaskMutation.mutateAsync({ taskId, columnId, order });
+  const addTask = (title: string, columnId: string) =>
+    addTaskMutation.mutateAsync({ title, columnId });
+
+  return {
+    columns,
+    tasks,
+    loading: boardQuery.isLoading,
+    addColumn,
+    deleteColumn,
+    updateTask,
+    moveTask,
+    addTask,
   };
 }

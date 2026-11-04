@@ -56,3 +56,49 @@ export interface BoardActions {
   handleTaskClick: (taskId: string) => void;
   handleDragEnd: (event: DragEndEvent) => void;
 }
+
+// ============================================
+// Contratos cruos da API (backend Nest/Prisma)
+// ============================================
+
+export interface RawColumn {
+  id: string;
+  name: string;
+  color: string;
+  order: number;
+  projectId: string;
+}
+
+export interface RawAssigneeUser {
+  email?: string;
+  profile?: { firstName?: string; lastName?: string } | null;
+}
+
+export interface RawTask {
+  id: string;
+  title: string;
+  description?: string | null;
+  columnId: string;
+  projectId: string;
+  status?: string;
+  priority?: string | null;
+  color?: string | null;
+  category?: string | null;
+  progress?: number | null;
+  order?: number | null;
+  dueDate?: string | null;
+  createdAt: string;
+  updatedAt: string;
+  labels?: { label: { name: string } }[];
+  assignees?: { user?: RawAssigneeUser }[];
+  _count?: { comments?: number; attachments?: number };
+}
+
+export interface RawBoardData {
+  columns: RawColumn[];
+  tasks: RawTask[];
+}
+
+export interface RawProjectRef {
+  id: string;
+}

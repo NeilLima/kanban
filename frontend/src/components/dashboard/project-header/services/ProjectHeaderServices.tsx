@@ -1,23 +1,62 @@
-import type { ProjectInfo, TeamMember } from '../types/ProjectHeaderTypes';
+import { list } from '@/services/crudService';
+import { useQuery } from '@tanstack/react-query';
+import type {
+  ProjectInfo,
+  TeamMember,
+  RawProject,
+  RawOverviewHeader,
+} from '../types/ProjectHeaderTypes';
 
-// Dados mock
-const MOCK_PROJECT: ProjectInfo = {
-  name: 'Plataforma Nexus',
-  description: 'Sistema completo de gerenciamento de projetos com Kanban intuitivo e colaborativo.',
-  status: 'Em andamento',
+const STATUS_LABEL: Record<string, string> = {
+  PLANNING: 'Planejamento',
+  ACTIVE: 'Ativo',
+  PAUSED: 'Pausado',
+  COMPLETED: 'Concluído',
+  ARCHIVED: 'Arquivado',
 };
 
-const MOCK_TEAM_MEMBERS: TeamMember[] = [
-  { name: 'L', avatar: 'https://i.pravatar.cc/150?img=11', color: '#3b82f6' },
-  { name: 'M', avatar: 'https://i.pravatar.cc/150?img=12', color: '#10b981' },
-  { name: 'J', avatar: 'https://i.pravatar.cc/150?img=13', color: '#f59e0b' },
-];
+const TEAM_VISIBLE_COUNT = 3;
+
+// ============================================
+// GET /projects (primeiro projeto) + GET /reports/overview (equipe)
+// ============================================
 
 export function useProjectHeaderService() {
+  const projectsQuery = useQuery({
+    queryKey: ['projects', 'header'],
+    queryFn: async () => (await list('projects')) as RawProject[] | undefined,
+    staleTime: 30 * 1000,
+  });
+
+  const overviewQuery = useQuery({
+    queryKey: ['overview', 'header'],
+    queryFn: async () => (await list('reports/overview')) as RawOverviewHeader | undefined,
+    staleTime: 30 * 1000,
+  });
+
+  const first = projectsQuery.data?.[0];
+
+  const project: ProjectInfo = first
+    ? {
+        name: first.name,
+        description: first.description || 'Sem descrição.',
+        status: STATUS_LABEL[first.status] ?? first.status,
+      }
+    : { name: 'Nenhum projeto', description: 'Crie um projeto para começar.', status: '—' };
+
+  const team: TeamMember[] = (overviewQuery.data?.team ?? [])
+    .slice(0, TEAM_VISIBLE_COUNT)
+    .map((member) => ({
+      name: member.name,
+      color: member.color,
+    }));
+
   return {
-    project: MOCK_PROJECT,
-    teamMembers: MOCK_TEAM_MEMBERS,
-    isLoading: false,
-    error: null,
+    project,
+    teamMembers: team,
+    teamTotal: overviewQuery.data?.team?.length ?? 0,
+    teamVisibleCount: TEAM_VISIBLE_COUNT,
+    isLoading: projectsQuery.isLoading || overviewQuery.isLoading,
+    error: (projectsQuery.error as Error | null) ?? (overviewQuery.error as Error | null),
   };
 }

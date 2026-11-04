@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { useBoardService } from '../services/BoardServices';
+import { useFeedbackActions } from '@/shared/feedback/utils/FeedbackUtils';
 import type { BoardState, BoardActions } from '../types/BoardTypes';
 import type { DragEndEvent } from '@dnd-kit/core';
 
@@ -26,6 +27,7 @@ export function useBoard(projectId: string) {
   // 3️⃣ OBJETOS
   // ============================================
   const service = useBoardService(projectId);
+  const feedback = useFeedbackActions();
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: POINTER_ACTIVATION_CONSTRAINT }),
     useSensor(KeyboardSensor)
@@ -41,17 +43,33 @@ export function useBoard(projectId: string) {
   // 4️⃣ FUNÇÕES
   // ============================================
   const handleAddColumn = useCallback(() => {
-    service.addColumn(DEFAULT_COLUMN_NAME, DEFAULT_COLUMN_COLOR);
-    setShowAddColumn(false);
-  }, [service]);
+    service
+      .addColumn(DEFAULT_COLUMN_NAME, DEFAULT_COLUMN_COLOR)
+      .then(() => feedback.showFeedback({ variant: 'success', message: 'Coluna criada com sucesso.' }))
+      .catch(() => feedback.showFeedback({ variant: 'error', message: 'Erro ao criar coluna.' }))
+      .finally(() => setShowAddColumn(false));
+  }, [service, feedback]);
 
   const handleEditColumn = useCallback((columnId: string) => {
     console.log('Edit column:', columnId);
   }, []);
 
-  const handleDeleteColumn = useCallback((columnId: string) => {
-    service.deleteColumn(columnId);
-  }, [service]);
+  const handleDeleteColumn = useCallback(
+    (columnId: string) => {
+      feedback.showConfirm({
+        title: 'Excluir coluna',
+        message: 'Tem certeza que deseja excluir esta coluna? As tarefas dela também serão removidas.',
+        confirmLabel: 'Excluir',
+        onConfirm: () => {
+          service
+            .deleteColumn(columnId)
+            .then(() => feedback.showFeedback({ variant: 'success', message: 'Coluna excluída.' }))
+            .catch(() => feedback.showFeedback({ variant: 'error', message: 'Erro ao excluir coluna.' }));
+        },
+      });
+    },
+    [service, feedback],
+  );
 
   const handleTaskClick = useCallback((taskId: string) => {
     setSelectedTaskId(taskId);
@@ -65,8 +83,20 @@ export function useBoard(projectId: string) {
     if (!event.over) return;
     const taskId = String(event.active.id);
     const newColumnId = String(event.over.id);
-    service.updateTask(taskId, { columnId: newColumnId });
+    service.moveTask(taskId, newColumnId);
   }, [service]);
+
+  const handleAddTask = useCallback(
+    (columnId: string, title: string) => {
+      const trimmed = title.trim();
+      if (!trimmed) return;
+      service
+        .addTask(trimmed, columnId)
+        .then(() => feedback.showFeedback({ variant: 'success', message: 'Tarefa criada.' }))
+        .catch(() => feedback.showFeedback({ variant: 'error', message: 'Erro ao criar tarefa.' }));
+    },
+    [service, feedback],
+  );
 
   const actions: BoardActions = {
     handleAddColumn,

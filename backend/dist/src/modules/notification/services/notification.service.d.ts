@@ -1,0 +1,170 @@
+import { NotificationRepository } from '../repository/notification.repository';
+import { CreateNotificationDto } from '../dto/notification.dto';
+export declare class NotificationService {
+    private readonly notificationRepository;
+    private readonly logger;
+    constructor(notificationRepository: NotificationRepository);
+    create(userId: string, dto: CreateNotificationDto): Promise<{
+        project: {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            name: string;
+            description: string | null;
+            status: import("@prisma/client").$Enums.ProjectStatus;
+            color: string;
+            icon: string | null;
+            isFavorite: boolean;
+            isArchived: boolean;
+            order: number;
+            ownerId: string;
+        } | null;
+        task: {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            description: string | null;
+            status: import("@prisma/client").$Enums.TaskStatus;
+            color: string;
+            order: number;
+            title: string;
+            priority: import("@prisma/client").$Enums.TaskPriority;
+            category: string | null;
+            columnId: string;
+            projectId: string;
+            creatorId: string | null;
+            startDate: Date | null;
+            dueDate: Date | null;
+            estimatedTime: number | null;
+            spentTime: number | null;
+            progress: number;
+        } | null;
+    } & {
+        id: string;
+        createdAt: Date;
+        userId: string;
+        message: string | null;
+        title: string;
+        projectId: string | null;
+        taskId: string | null;
+        type: import("@prisma/client").$Enums.NotificationType;
+        isRead: boolean;
+    }>;
+    findAll(userId: string): Promise<({
+        project: {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            name: string;
+            description: string | null;
+            status: import("@prisma/client").$Enums.ProjectStatus;
+            color: string;
+            icon: string | null;
+            isFavorite: boolean;
+            isArchived: boolean;
+            order: number;
+            ownerId: string;
+        } | null;
+        task: {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            description: string | null;
+            status: import("@prisma/client").$Enums.TaskStatus;
+            color: string;
+            order: number;
+            title: string;
+            priority: import("@prisma/client").$Enums.TaskPriority;
+            category: string | null;
+            columnId: string;
+            projectId: string;
+            creatorId: string | null;
+            startDate: Date | null;
+            dueDate: Date | null;
+            estimatedTime: number | null;
+            spentTime: number | null;
+            progress: number;
+        } | null;
+    } & {
+        id: string;
+        createdAt: Date;
+        userId: string;
+        message: string | null;
+        title: string;
+        projectId: string | null;
+        taskId: string | null;
+        type: import("@prisma/client").$Enums.NotificationType;
+        isRead: boolean;
+    })[]>;
+    getUnreadCount(userId: string): Promise<number>;
+    findOne(id: string, userId: string): Promise<{
+        project: {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            name: string;
+            description: string | null;
+            status: import("@prisma/client").$Enums.ProjectStatus;
+            color: string;
+            icon: string | null;
+            isFavorite: boolean;
+            isArchived: boolean;
+            order: number;
+            ownerId: string;
+        } | null;
+        task: {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            description: string | null;
+            status: import("@prisma/client").$Enums.TaskStatus;
+            color: string;
+            order: number;
+            title: string;
+            priority: import("@prisma/client").$Enums.TaskPriority;
+            category: string | null;
+            columnId: string;
+            projectId: string;
+            creatorId: string | null;
+            startDate: Date | null;
+            dueDate: Date | null;
+            estimatedTime: number | null;
+            spentTime: number | null;
+            progress: number;
+        } | null;
+    } & {
+        id: string;
+        createdAt: Date;
+        userId: string;
+        message: string | null;
+        title: string;
+        projectId: string | null;
+        taskId: string | null;
+        type: import("@prisma/client").$Enums.NotificationType;
+        isRead: boolean;
+    }>;
+    markAsRead(id: string, userId: string): Promise<{
+        id: string;
+        createdAt: Date;
+        userId: string;
+        message: string | null;
+        title: string;
+        projectId: string | null;
+        taskId: string | null;
+        type: import("@prisma/client").$Enums.NotificationType;
+        isRead: boolean;
+    }>;
+    markAllAsRead(userId: string): Promise<import("@prisma/client").Prisma.BatchPayload>;
+    remove(id: string, userId: string): Promise<{
+        id: string;
+        createdAt: Date;
+        userId: string;
+        message: string | null;
+        title: string;
+        projectId: string | null;
+        taskId: string | null;
+        type: import("@prisma/client").$Enums.NotificationType;
+        isRead: boolean;
+    }>;
+    removeAll(userId: string): Promise<import("@prisma/client").Prisma.BatchPayload>;
+}

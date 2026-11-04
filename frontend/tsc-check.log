@@ -1,0 +1,14 @@
+﻿src/components/dashboard/activity-feed/services/ActivityFeedServices.tsx(29,26): error TS2352: Conversion of type 'Promise<any>' to type 'RawOverviewActivity' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Property 'activity' is missing in type 'Promise<any>' but required in type 'RawOverviewActivity'.
+src/components/dashboard/deadlines/services/DeadlinesServices.tsx(12,26): error TS2352: Conversion of type 'Promise<any>' to type 'RawOverviewUpcoming' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Property 'upcoming' is missing in type 'Promise<any>' but required in type 'RawOverviewUpcoming'.
+src/components/dashboard/productivity-chart/services/ProductivityChartServices.tsx(16,26): error TS2352: Conversion of type 'Promise<any>' to type 'RawOverviewProductivity' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Property 'productivity' is missing in type 'Promise<any>' but required in type 'RawOverviewProductivity'.
+src/components/dashboard/project-header/services/ProjectHeaderServices.tsx(27,26): error TS2352: Conversion of type 'Promise<any>' to type 'RawProject[]' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type 'Promise<any>' is missing the following properties from type 'RawProject[]': length, pop, push, concat, and 35 more.
+src/components/dashboard/project-header/services/ProjectHeaderServices.tsx(33,26): error TS2352: Conversion of type 'Promise<any>' to type 'RawOverviewHeader' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Property 'team' is missing in type 'Promise<any>' but required in type 'RawOverviewHeader'.
+src/components/dashboard/stat-card/services/StatCardServices.tsx(59,26): error TS2352: Conversion of type 'Promise<any>' to type 'RawOverviewReport' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Property 'kpis' is missing in type 'Promise<any>' but required in type 'RawOverviewReport'.
+src/components/dashboard/team-overview/services/TeamOverviewServices.tsx(12,26): error TS2352: Conversion of type 'Promise<any>' to type 'RawOverviewTeam' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Property 'team' is missing in type 'Promise<any>' but required in type 'RawOverviewTeam'.

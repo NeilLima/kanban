@@ -56,19 +56,23 @@ export default function ProjectHeaderComp() {
               {member.avatar ? (
                 <StyledAvatarImg src={member.avatar} alt={member.name} />
               ) : (
-                member.name[0]
+                member.initial
               )}
             </StyledAvatar>
           ))}
           <StyledExtraBadge>+{extraCount}</StyledExtraBadge>
         </StyledTeamContainer>
 
-        <StyledActionButton onClick={actions.handleShare}>
+        <StyledActionButton onClick={actions.handleShare} data-testid="project-share-btn">
           <i className="bi bi-people"></i>
           <span className="d-none d-md-inline">Compartilhar</span>
         </StyledActionButton>
 
-        <StyledActionButton $variant="icon" onClick={actions.handleMoreOptions}>
+        <StyledActionButton
+          $variant="icon"
+          onClick={actions.handleMoreOptions}
+          data-testid="project-more-btn"
+        >
           ⋯
         </StyledActionButton>
       </StyledRightSection>

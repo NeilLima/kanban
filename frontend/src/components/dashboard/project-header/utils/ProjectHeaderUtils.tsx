@@ -1,11 +1,28 @@
 import { useCallback } from 'react';
 import { useProjectHeaderService } from '../services/ProjectHeaderServices';
-import type { ProjectHeaderState, ProjectHeaderActions } from '../types/ProjectHeaderTypes';
+import type {
+  ProjectHeaderState,
+  ProjectHeaderActions,
+  TeamMember,
+  TeamMemberView,
+} from '../types/ProjectHeaderTypes';
+
+function getInitial(name: string): string {
+  return name.trim().charAt(0).toUpperCase();
+}
+
+function toView(member: TeamMember): TeamMemberView {
+  return {
+    name: member.name,
+    avatar: member.avatar,
+    color: member.color,
+    initial: getInitial(member.name),
+  };
+}
 
 // ============================================
 // 1️⃣ VARIÁVEIS
 // ============================================
-const EXTRA_MEMBERS_COUNT = 5;
 
 // ============================================
 // 2️⃣ ESTADOS
@@ -18,7 +35,7 @@ export function useProjectHeader() {
 
   const state: ProjectHeaderState = {
     project: service.project || { name: '', description: '', status: '' },
-    teamMembers: service.teamMembers || [],
+    teamMembers: (service.teamMembers || []).map(toView),
   };
 
   // ============================================
@@ -37,5 +54,7 @@ export function useProjectHeader() {
     handleMoreOptions,
   };
 
-  return { state, actions, extraCount: EXTRA_MEMBERS_COUNT };
+  const extraCount = Math.max(service.teamTotal - service.teamVisibleCount, 0);
+
+  return { state, actions, extraCount };
 }

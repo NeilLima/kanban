@@ -49,14 +49,22 @@ export const StyledCard = styled.div<{ $color: string }>`
 export const StyledCardContent = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: stretch;
+  gap: 8px;
 `;
 
 export const StyledCardInfo = styled.div`
   display: flex;
   flex-direction: column;
-  gap: clamp(4px, 0.5vw, 8px);
+  gap: clamp(2px, 0.4vw, 6px);
   min-width: 0;
+  flex: 1;
+`;
+
+export const StyledCardTitleRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: clamp(6px, 0.6vw, 8px);
 `;
 
 export const StyledCardTitle = styled.p`
@@ -98,26 +106,27 @@ export const StyledIconContainer = styled.div<{ $backgroundColor: string; $color
   display: flex;
   align-items: center;
   justify-content: center;
-  width: clamp(28px, 3vw, 40px);
-  height: clamp(28px, 3vw, 40px);
+  width: clamp(22px, 2.2vw, 30px);
+  height: clamp(22px, 2.2vw, 30px);
   background: ${props => props.$backgroundColor};
-  border-radius: clamp(8px, 0.8vw, 10px);
+  border-radius: clamp(6px, 0.6vw, 8px);
   position: relative;
-  box-shadow: 0 0 20px ${props => props.$color}30;
+  box-shadow: 0 0 16px ${props => props.$color}25;
   flex-shrink: 0;
   
   i {
-    font-size: clamp(12px, 1.3vw, 18px);
+    font-size: clamp(10px, 1vw, 14px);
     color: ${props => props.$color};
-    filter: drop-shadow(0 0 8px ${props => props.$color}60);
+    filter: drop-shadow(0 0 6px ${props => props.$color}50);
   }
 `;
 
 export const StyledChartContainer = styled.div<{ $color: string }>`
-  width: clamp(40px, 5vw, 70px);
-  height: clamp(20px, 2.5vw, 35px);
-  margin-top: clamp(4px, 0.5vw, 8px);
+  width: clamp(48px, 6vw, 84px);
+  height: clamp(24px, 3vw, 40px);
+  align-self: center;
   position: relative;
+  flex-shrink: 0;
   
   svg {
     path {

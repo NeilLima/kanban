@@ -2,7 +2,11 @@
 import React, { useState } from 'react';
 import { Form, InputGroup, Dropdown } from 'react-bootstrap';
 
-export default function Navbar() {
+interface NavbarProps {
+  onToggleSidebar?: () => void;
+}
+
+export default function Navbar({ onToggleSidebar }: NavbarProps) {
   const [showProfile, setShowProfile] = useState(false);
 
   return (
@@ -23,6 +27,16 @@ export default function Navbar() {
     >
       {/* Logo + Search */}
       <div className="d-flex align-items-center gap-3" style={{ flex: 1, maxWidth: 500 }}>
+        <button
+          type="button"
+          onClick={onToggleSidebar}
+          className="btn btn-sm d-md-none p-0 d-flex align-items-center justify-content-center"
+          style={{ width: 34, height: 34, color: '#94a3b8', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8, background: 'rgba(30,41,59,0.6)', flexShrink: 0 }}
+          aria-label="Abrir menu"
+          data-testid="navbar-hambuerger"
+        >
+          <i className="bi bi-list" style={{ fontSize: 18 }}></i>
+        </button>
         <div className="d-flex align-items-center gap-2" style={{ flexShrink: 0 }}>
           <div 
             className="d-flex align-items-center justify-content-center"
@@ -38,11 +52,11 @@ export default function Navbar() {
           </div>
           <div className="d-none d-md-block">
             <span className="fw-bold text-white" style={{ fontSize: 15, letterSpacing: 0.5 }}>NEXUS</span>
-            <span className="text-secondary ms-1" style={{ fontSize: 10, letterSpacing: 0.5 }}>KANBAN</span>
+            <span className="text-secondary ms-1" style={{ fontSize: 10, letterSpacing: 0.5 }}>TAREFAS</span>
           </div>
         </div>
 
-        <InputGroup style={{ maxWidth: 300 }} className="d-none d-md-flex">
+        <InputGroup style={{ maxWidth: 460 }} className="d-none d-md-flex position-relative">
           <InputGroup.Text 
             className="bg-transparent border-0"
             style={{ 
@@ -56,7 +70,7 @@ export default function Navbar() {
             <i className="bi bi-search" style={{ fontSize: 14 }}></i>
           </InputGroup.Text>
           <Form.Control
-            placeholder="Pesquisar projetos, tarefas..."
+            placeholder="Buscar tarefas, projetos, membros..."
             style={{
               backgroundColor: 'rgba(30, 41, 59, 0.6) !important',
               borderColor: 'rgba(255, 255, 255, 0.06) !important',
@@ -64,8 +78,22 @@ export default function Navbar() {
               fontSize: 13,
               borderRadius: '0 8px 8px 0',
               borderLeft: 'none',
+              paddingRight: 56,
             }}
           />
+          {/* Atalho ⌘ K */}
+          <span
+            className="position-absolute d-none d-lg-flex align-items-center"
+            style={{
+              right: 10, top: '50%', transform: 'translateY(-50%)',
+              color: '#64748b', fontSize: 11, gap: 4, pointerEvents: 'none',
+              backgroundColor: 'rgba(255,255,255,0.05)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              borderRadius: 6, padding: '1px 7px',
+            }}
+          >
+            ⌘ K
+          </span>
         </InputGroup>
       </div>
 
@@ -102,15 +130,24 @@ export default function Navbar() {
           <span 
             style={{
               position: 'absolute',
-              top: 6,
-              right: 6,
-              width: 8,
-              height: 8,
+              top: 2,
+              right: 2,
+              minWidth: 17,
+              height: 17,
+              padding: '0 4px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
               backgroundColor: '#ef4444',
+              color: '#fff',
+              fontSize: 10,
+              fontWeight: 600,
               borderRadius: '50%',
               border: '2px solid #111827',
             }}
-          ></span>
+          >
+            8
+          </span>
         </button>
 
         <button 
@@ -145,11 +182,11 @@ export default function Navbar() {
           <i className="bi bi-moon" style={{ fontSize: 18 }}></i>
         </button>
 
-        {/* Avatar Dropdown */}
+        {/* Avatar + Nome + Cargo */}
         <Dropdown show={showProfile} onToggle={setShowProfile}>
           <Dropdown.Toggle
             as="button"
-            className="btn p-0 border-0 d-flex align-items-center"
+            className="btn p-0 border-0 d-flex align-items-center gap-2"
             style={{ background: 'transparent', cursor: 'pointer' }}
             id="profile-dropdown"
           >
@@ -171,6 +208,11 @@ export default function Navbar() {
             >
               V
             </div>
+            <div className="d-none d-lg-block text-start" style={{ lineHeight: 1.2 }}>
+              <div className="fw-semibold text-white" style={{ fontSize: 13 }}>Victor Lima</div>
+              <div className="text-secondary" style={{ fontSize: 11 }}>Administrador</div>
+            </div>
+            <i className="bi bi-chevron-down d-none d-lg-inline text-secondary" style={{ fontSize: 11 }}></i>
           </Dropdown.Toggle>
 
           <Dropdown.Menu 

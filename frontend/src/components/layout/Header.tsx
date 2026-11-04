@@ -1,117 +1,119 @@
 'use client';
 import React from 'react';
-import { InputGroup, FormControl, Button, Dropdown } from 'react-bootstrap';
+import { InputGroup, Dropdown } from 'react-bootstrap';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
+import { useUnreadCountService } from '@/components/layout/services/HeaderServices';
+import { getInitials, getDisplayName } from '@/components/layout/utils/HeaderUtils';
+import {
+  StyledHeaderBar,
+  StyledLeftSection,
+  StyledLogoArea,
+  StyledLogoBox,
+  StyledLogoTitle,
+  StyledLogoSubtitle,
+  StyledMenuButton,
+  StyledSearchArea,
+  StyledSearchIcon,
+  StyledSearchInput,
+  StyledSearchHint,
+  StyledRightActions,
+  StyledNewTaskButton,
+  StyledIconButton,
+  StyledNotificationBadge,
+  StyledThemeButton,
+  StyledUserToggle,
+  StyledUserArea,
+  StyledAvatarBox,
+  StyledAvatarImg,
+  StyledUserInfo,
+  StyledUserName,
+  StyledUserEmail,
+  StyledChevron,
+  StyledMenu,
+  StyledMenuItem,
+} from '@/components/layout/styles/HeaderStyles';
 
 export default function Header() {
   const { theme, toggleTheme } = useTheme();
   const { user } = useAuth();
+  const { unreadCount } = useUnreadCountService();
+
+  const displayName = getDisplayName(user);
 
   return (
-    <div className="d-flex align-items-center justify-content-between px-4" style={{ 
-      height: 70, 
-      backgroundColor: '#111827',
-      borderBottom: '1px solid rgba(255,255,255,0.05)',
-      backdropFilter: 'blur(10px)',
-      boxShadow: '0 1px 3px rgba(0,0,0,0.3)'
-    }}>
-      {/* Left Section - Logo and Menu */}
-      <div className="d-flex align-items-center gap-4">
-        {/* Logo */}
-        <div className="d-flex align-items-center gap-2">
-          <div className="d-flex align-items-center justify-content-center" style={{ 
-            width: 40, 
-            height: 40, 
-            backgroundColor: '#3b82f6',
-            borderRadius: 8
-          }}>
+    <StyledHeaderBar>
+      <StyledLeftSection>
+        <StyledLogoArea>
+          <StyledLogoBox>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
-              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
             </svg>
-          </div>
+          </StyledLogoBox>
           <div>
-            <h6 className="fw-bold text-white mb-0" style={{ fontSize: 18, letterSpacing: 0.5 }}>NEXUS</h6>
-            <small className="text-primary mb-0" style={{ fontSize: 10, letterSpacing: 0.5 }}>KANBAN</small>
+            <StyledLogoTitle>NEXUS</StyledLogoTitle>
+            <StyledLogoSubtitle>KANBAN</StyledLogoSubtitle>
           </div>
-        </div>
+        </StyledLogoArea>
 
-        {/* Menu Button */}
-        <button className="btn btn-link text-white p-2" style={{ fontSize: 20 }}>
-          ☰
-        </button>
-      </div>
+        <StyledMenuButton data-testid="header-menu-btn">☰</StyledMenuButton>
+      </StyledLeftSection>
 
-      {/* Center - Search Bar */}
-      <div className="d-flex align-items-center" style={{ flex: 1, maxWidth: 600, margin: '0 24px' }}>
+      <StyledSearchArea>
         <InputGroup>
-          <InputGroup.Text className="bg-transparent border-0 text-secondary" style={{ border: 'none', fontSize: 18 }}>
-            🔍
-          </InputGroup.Text>
-          <FormControl
+          <StyledSearchIcon>🔍</StyledSearchIcon>
+          <StyledSearchInput
             placeholder="Buscar tarefas, projetos, membros..."
             size="sm"
-            className="bg-dark text-white border-secondary"
-            style={{ 
-              height: 40,
-              backgroundColor: '#1E293B',
-              borderColor: 'rgba(255,255,255,0.1)',
-              color: '#fff'
-            }}
+            data-testid="header-search-input"
           />
-          <InputGroup.Text className="bg-transparent border-0 text-secondary" style={{ border: 'none', cursor: 'pointer', fontSize: 12, fontFamily: 'monospace' }}>
-            ⌘K
-          </InputGroup.Text>
+          <StyledSearchHint>⌘K</StyledSearchHint>
         </InputGroup>
-      </div>
+      </StyledSearchArea>
 
-      {/* Right Actions */}
-      <div className="d-flex align-items-center gap-3">
-        <Button variant="primary" size="sm" className="d-flex align-items-center gap-2" style={{ 
-          backgroundColor: '#3b82f6',
-          borderColor: '#3b82f6',
-          padding: '8px 16px',
-          fontSize: 14
-        }}>
-          + Nova Tarefa
-        </Button>
+      <StyledRightActions>
+        <StyledNewTaskButton data-testid="header-new-task-btn">+ Nova Tarefa</StyledNewTaskButton>
 
-        <button className="btn btn-link text-secondary p-2 position-relative" style={{ fontSize: 18 }}>
+        <StyledIconButton data-testid="header-notifications-btn">
           🔔
-          <span className="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-danger" style={{ fontSize: 10, padding: '2px 5px' }}>
-            8
-          </span>
-        </button>
+          {unreadCount > 0 && (
+            <StyledNotificationBadge data-testid="header-notifications-count">
+              {unreadCount}
+            </StyledNotificationBadge>
+          )}
+        </StyledIconButton>
 
-        <button className="btn btn-link text-secondary p-2" style={{ fontSize: 18 }}>
-          ❓
-        </button>
+        <StyledIconButton data-testid="header-help-btn">❓</StyledIconButton>
 
-        <button className="btn btn-link text-secondary p-2" onClick={toggleTheme} style={{ fontSize: 18 }}>
-          {theme === 'dark' ? '☀️' : '🌙'}
-        </button>
+        <StyledThemeButton data-testid="header-theme-toggle" onClick={toggleTheme}>
+          {theme.mode === 'dark' ? '☀️' : '🌙'}
+        </StyledThemeButton>
 
         <Dropdown>
-          <Dropdown.Toggle variant="link" className="text-white p-0 d-flex align-items-center gap-2" style={{ textDecoration: 'none' }}>
-            <div className="d-flex align-items-center gap-2">
-              <div className="d-flex align-items-center justify-content-center rounded-circle bg-primary text-white fw-bold" style={{ width: 36, height: 36, fontSize: 14, overflow: 'hidden' }}>
-                <img src="https://i.pravatar.cc/150?img=12" alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              </div>
-              <div className="d-none d-lg-block">
-                <div className="text-white" style={{ fontSize: 14, fontWeight: 500 }}>{user?.name || 'Victor Lima'}</div>
-                <div className="text-secondary" style={{ fontSize: 11 }}>Administrador</div>
-              </div>
-              <i className="bi bi-chevron-down text-secondary" style={{ fontSize: 12 }}></i>
-            </div>
-          </Dropdown.Toggle>
-          <Dropdown.Menu className="bg-dark border-secondary">
-            <Dropdown.Item className="text-white">Perfil</Dropdown.Item>
-            <Dropdown.Item className="text-white">Configurações</Dropdown.Item>
+          <StyledUserToggle data-testid="header-user-menu">
+            <StyledUserArea>
+              <StyledAvatarBox>
+                {user?.avatar ? (
+                  <StyledAvatarImg src={user.avatar} alt="Avatar" />
+                ) : (
+                  getInitials(displayName)
+                )}
+              </StyledAvatarBox>
+              <StyledUserInfo>
+                <StyledUserName>{displayName}</StyledUserName>
+                <StyledUserEmail>{user?.email}</StyledUserEmail>
+              </StyledUserInfo>
+              <StyledChevron className="bi bi-chevron-down"></StyledChevron>
+            </StyledUserArea>
+          </StyledUserToggle>
+          <StyledMenu>
+            <StyledMenuItem data-testid="header-profile-item">Perfil</StyledMenuItem>
+            <StyledMenuItem data-testid="header-settings-item">Configurações</StyledMenuItem>
             <Dropdown.Divider />
-            <Dropdown.Item className="text-white">Sair</Dropdown.Item>
-          </Dropdown.Menu>
+            <StyledMenuItem data-testid="header-logout-item">Sair</StyledMenuItem>
+          </StyledMenu>
         </Dropdown>
-      </div>
-    </div>
+      </StyledRightActions>
+    </StyledHeaderBar>
   );
 }

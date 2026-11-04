@@ -1,0 +1,14 @@
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\components\dashboard\my-tasks\components\MyTasksComp.tsx:49: <StyledTaskRow key={task.id} onClick={() => actions.openTask(task.id)}>
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\components\dashboard\my-tasks\types\MyTasksTypes.ts:15: openTask: (taskId: string) => void;
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\components\dashboard\my-tasks\utils\MyTasksUtils.ts:63: const openTask = useCallback(() => {
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\components\dashboard\my-tasks\utils\MyTasksUtils.ts:68: const actions: MyTasksActions = { openKanban, openTask };
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\shared\kanban\board\components\BoardComp.tsx:41: onTaskClick={actions.handleTaskClick}
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\shared\kanban\board\types\BoardTypes.ts:56: handleTaskClick: (taskId: string) => void;
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\shared\kanban\board\utils\BoardUtils.ts:23: const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\shared\kanban\board\utils\BoardUtils.ts:74: const handleTaskClick = useCallback((taskId: string) => {
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\shared\kanban\board\utils\BoardUtils.ts:75: setSelectedTaskId(taskId);
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\shared\kanban\board\utils\BoardUtils.ts:79: setSelectedTaskId(null);
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\shared\kanban\board\utils\BoardUtils.ts:105: handleTaskClick,
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\shared\kanban\column\components\ColumnComp.tsx:9: export default function ColumnComp({ column, tasks, onTaskClick, onAddTask }: ColumnTypes) {
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\shared\kanban\column\components\ColumnComp.tsx:49: onEdit={onTaskClick}
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\shared\kanban\column\types\ColumnTypes.ts:43: onTaskClick: (taskId: string) => void;

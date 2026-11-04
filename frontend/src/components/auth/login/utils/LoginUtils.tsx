@@ -2,7 +2,6 @@
 import { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import { useLoginService } from '../services/LoginServices';
 import { useTheme } from '@/contexts/ThemeContext';
 import type { LoginState, LoginActions } from '../types/LoginTypes';
 
@@ -27,7 +26,6 @@ export function useLogin() {
   // 3️⃣ OBJETOS
   // ============================================
   const { login } = useAuth();
-  const service = useLoginService();
   const router = useRouter();
   const { theme } = useTheme();
 
@@ -57,7 +55,6 @@ export function useLogin() {
     setError(null);
 
     try {
-      await service.login(email, password);
       await login(email, password);
       router.push(DASHBOARD_ROUTE);
     } catch {
@@ -65,7 +62,7 @@ export function useLogin() {
     } finally {
       setLoading(false);
     }
-  }, [email, password, service, login, router]);
+  }, [email, password, login, router]);
 
   const handleNavigateRegister = useCallback(() => {
     router.push(REGISTER_ROUTE);

@@ -7,7 +7,13 @@ import { StyledColumn, StyledColumnHeader, StyledColumnTitle, StyledTaskCount, S
 import type { ColumnTypes } from '../types/ColumnTypes';
 
 export default function ColumnComp({ column, tasks, onTaskClick }: ColumnTypes) {
-  const { attributes, listeners, setNodeRef, style, getSortableContext } = useColumn(column.id);
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    style,
+    getSortableContext,
+  } = useColumn(column.id);
   const sortableContext = getSortableContext(tasks);
 
   return (
@@ -16,7 +22,9 @@ export default function ColumnComp({ column, tasks, onTaskClick }: ColumnTypes) 
         <StyledColumnTitle color={column.color}>
           {column.name}
         </StyledColumnTitle>
-        <StyledTaskCount>{tasks.length}</StyledTaskCount>
+        <div className="d-flex align-items-center gap-2" style={{ marginLeft: 'auto' }}>
+          <StyledTaskCount>{tasks.length}</StyledTaskCount>
+        </div>
       </StyledColumnHeader>
 
       <StyledTaskList>

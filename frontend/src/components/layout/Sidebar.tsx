@@ -6,15 +6,17 @@ import { useRouter, usePathname } from 'next/navigation';
 interface SidebarProps {
   collapsed?: boolean;
   onToggle?: () => void;
+  onNavigate?: () => void;
 }
 
 const menuItems = [
   { label: 'Dashboard', icon: 'bi-speedometer2', path: '/dashboard' },
   { label: 'Projetos', icon: 'bi-folder', path: '/projects' },
-  { label: 'Kanban', icon: 'bi-columns', path: '/dashboard' },
-  { label: 'Calendário', icon: 'bi-calendar', path: '#' },
-  { label: 'Equipe', icon: 'bi-people', path: '#' },
-  { label: 'Relatórios', icon: 'bi-graph-up', path: '#' },
+  { label: 'Tarefas', icon: 'bi-columns', path: '/tarefas' },
+  { label: 'Calendário', icon: 'bi-calendar', path: '/calendar' },
+  { label: 'Equipe', icon: 'bi-people', path: '/team' },
+  { label: 'Relatórios', icon: 'bi-graph-up', path: '/reports' },
+  { label: 'Favoritos', icon: 'bi-star', path: '/favorites' },
 ];
 
 const favoriteItems = [
@@ -24,13 +26,21 @@ const favoriteItems = [
 ];
 
 const otherItems = [
-  { label: 'Arquivados', icon: 'bi-archive', path: '#' },
-  { label: 'Lixeira', icon: 'bi-trash', path: '#' },
+  { label: 'Arquivados', icon: 'bi-archive', path: '/archived' },
+  { label: 'Lixeira', icon: 'bi-trash', path: '/trash' },
+  { label: 'Configurações', icon: 'bi-gear', path: '/settings' },
+  { label: 'Perfil', icon: 'bi-person-circle', path: '/profile' },
 ];
 
-export default function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
+
+export default function Sidebar({ collapsed = false, onToggle, onNavigate }: SidebarProps) {
   const router = useRouter();
   const pathname = usePathname();
+
+  function navegar(path: string) {
+    if (path !== '#') router.push(path);
+    onNavigate?.();
+  }
 
   return (
     <div className="d-flex flex-column h-100" style={{ 
@@ -48,7 +58,7 @@ export default function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
           {!collapsed && (
             <div className="d-none d-md-block" style={{ minWidth: 0 }}>
               <h6 className="fw-bold text-white mb-0" style={{ fontSize: 'clamp(11px, 1.2vw, 15px)', letterSpacing: 0.5, whiteSpace: 'nowrap' }}>NEXUS</h6>
-              <small className="text-secondary" style={{ fontSize: 'clamp(8px, 0.7vw, 10px)' }}>KANBAN</small>
+              <small className="text-secondary" style={{ fontSize: 'clamp(8px, 0.7vw, 10px)' }}>TAREFAS</small>
             </div>
           )}
         </div>
@@ -68,7 +78,7 @@ export default function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
           <ListGroup.Item
             key={item.label}
             action
-            onClick={() => item.path !== '#' && router.push(item.path)}
+            onClick={() => navegar(item.path)}
             className="d-flex align-items-center gap-2 border-0 rounded"
             style={{ 
               cursor: 'pointer',
@@ -105,10 +115,23 @@ export default function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
                   marginBottom: '1px'
                 }}
               >
-                <i className={`bi ${item.icon}`} style={{ fontSize: 'clamp(9px, 0.8vw, 11px)', color: item.color }}></i>
+                <span style={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: item.color, flexShrink: 0 }}></span>
                 <span style={{ fontSize: 'clamp(10px, 0.9vw, 13px)', whiteSpace: 'nowrap' }}>{item.label}</span>
               </ListGroup.Item>
             ))}
+            {/* Ver todos */}
+            <ListGroup.Item
+              action
+              className="d-flex align-items-center gap-2 border-0 rounded"
+              style={{ 
+                cursor: 'pointer',
+                color: '#94a3b8',
+                padding: 'clamp(3px, 0.4vw, 6px) clamp(6px, 0.8vw, 12px)',
+              }}
+            >
+              <i className="bi bi-chevron-down" style={{ fontSize: 11 }}></i>
+              <span style={{ fontSize: 'clamp(10px, 0.9vw, 13px)' }}>Ver todos</span>
+            </ListGroup.Item>
           </ListGroup>
 
           {/* Outros */}
@@ -120,7 +143,7 @@ export default function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
               <ListGroup.Item
                 key={item.label}
                 action
-                onClick={() => item.path !== '#' && router.push(item.path)}
+                onClick={() => navegar(item.path)}
                 className="d-flex align-items-center gap-2 border-0 rounded"
                 style={{ 
                   cursor: 'pointer',
@@ -140,16 +163,16 @@ export default function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
       {/* Upgrade Card - esconder em mobile */}
       {!collapsed && (
         <div className="d-none d-md-block px-2 px-md-2 mb-1" style={{ flexShrink: 0 }}>
-          <div className="p-2 rounded" style={{ backgroundColor: 'rgba(59, 130, 246, 0.1)', border: '1px solid rgba(59, 130, 246, 0.2)' }}>
-            <div className="d-flex align-items-center gap-1 mb-1">
-              <i className="bi bi-star-fill" style={{ color: '#fbbf24', fontSize: 'clamp(10px, 0.9vw, 12px)' }}></i>
-              <span className="fw-semibold text-white" style={{ fontSize: 'clamp(9px, 0.9vw, 12px)' }}>Pro</span>
+          <div className="p-3 rounded" style={{ backgroundColor: 'rgba(59, 130, 246, 0.08)', border: '1px solid rgba(59, 130, 246, 0.18)' }}>
+            <div className="d-flex align-items-center gap-2 mb-2">
+              <span style={{ color: '#fbbf24', fontSize: 14, lineHeight: 1 }}>👑</span>
+              <span className="fw-semibold text-white" style={{ fontSize: 13 }}>Plano Profissional</span>
             </div>
-            <p className="text-secondary mb-1" style={{ fontSize: 'clamp(8px, 0.7vw, 11px)', lineHeight: 1.3 }}>
-              Recursos avançados
+            <p className="text-secondary mb-2" style={{ fontSize: 11, lineHeight: 1.4 }}>
+              Aproveite recursos avançados e aumente sua produtividade.
             </p>
-            <button className="btn btn-primary w-100" style={{ fontSize: 'clamp(9px, 0.8vw, 12px)', padding: '2px 8px' }}>
-              Upgrade
+            <button className="btn btn-primary w-100" style={{ fontSize: 12, padding: '5px 8px', fontWeight: 500 }}>
+              Fazer Upgrade
             </button>
           </div>
         </div>
@@ -158,8 +181,11 @@ export default function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
       {/* Footer */}
       {!collapsed && (
         <div className="p-2 p-md-3 border-top" style={{ borderColor: 'rgba(255,255,255,0.05)', flexShrink: 0 }}>
-          <small className="text-secondary" style={{ fontSize: 'clamp(8px, 0.7vw, 11px)' }}>
-            Nexus Kanban v2.0.0
+          <small className="text-secondary d-block" style={{ fontSize: 'clamp(8px, 0.7vw, 11px)' }}>
+            Nexus Tarefas v2.0.0
+          </small>
+          <small className="text-secondary d-block mt-1" style={{ fontSize: 'clamp(7px, 0.6vw, 10px)' }}>
+            © 2024 Todos os direitos reservados.
           </small>
         </div>
       )}

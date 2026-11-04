@@ -1,0 +1,3 @@
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\components\items\main\components\ItemsListComp.tsx
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\components\items\main\services\ItemsServices.tsx
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\components\items\main\styles\ItemsStyles.ts

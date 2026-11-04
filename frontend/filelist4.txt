@@ -1,0 +1,17 @@
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\shared\kanban\board\components\BoardComp.tsx
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\shared\kanban\board\services\BoardServices.ts
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\shared\kanban\board\styles\BoardStyles.ts
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\shared\kanban\board\types\BoardTypes.ts
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\shared\kanban\board\utils\BoardUtils.ts
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\shared\kanban\card\components\CardComp.tsx
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\shared\kanban\card\services\CardServices.ts
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\shared\kanban\card\styles\CardStyles.ts
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\shared\kanban\card\types\CardTypes.ts
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\shared\kanban\column\components\ColumnComp.tsx
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\shared\kanban\column\styles\ColumnStyles.ts
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\shared\kanban\column\types\ColumnTypes.ts
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\shared\kanban\column\utils\ColumnUtils.ts
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\shared\kanban\detail\components\DetailComp.tsx
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\shared\kanban\detail\services\DetailServices.ts
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\shared\kanban\detail\types\DetailTypes.ts
+C:\Users\victor\Documents\GitHub\kanban\frontend\src\shared\kanban\detail\utils\DetailUtils.ts
