@@ -5,8 +5,10 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 import { AppModule } from './app.module';
 import { corsConfig } from './config/cors.config';
+import { resolveDatabaseConnection } from './config/database.bootstrap';
 
 async function bootstrap() {
+  await resolveDatabaseConnection();
   const app = await NestFactory.create(AppModule);
   const logger = new Logger('Bootstrap');
 
@@ -45,6 +47,7 @@ let cachedApp: unknown = null;
 export default async function handler(req: unknown, res: unknown) {
   try {
     if (!cachedApp) {
+      await resolveDatabaseConnection();
       const app = await NestFactory.create(AppModule, {
         logger: ['error', 'warn', 'log'],
       });

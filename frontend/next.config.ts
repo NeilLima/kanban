@@ -43,7 +43,7 @@ const nextConfig: NextConfig = {
   async rewrites() {
     const apiUrl =
       process.env.NODE_ENV === "production"
-        ? process.env.NEXT_PUBLIC_API_URL_PRODUCTION || "https://kanban-backend-ashy.vercel.app"
+        ? process.env.NEXT_PUBLIC_API_URL_PRODUCTION || "https://kanban-backend-nexusapis-projects.vercel.app"
         : process.env.NEXT_PUBLIC_API_URL || "http://localhost:3002";
     const base = apiUrl.replace(/\/api$/, "");
     return [

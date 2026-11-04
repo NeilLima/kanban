@@ -1,5 +1,5 @@
 require('reflect-metadata');
-const handler = require('../dist/main').default;
+const handler = require('../dist/src/main').default;
 
 process.on('uncaughtException', console.error);
 process.on('unhandledRejection', console.error);
