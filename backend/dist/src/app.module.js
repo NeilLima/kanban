@@ -34,7 +34,7 @@ exports.AppModule = AppModule = __decorate([
         imports: [
             config_1.ConfigModule.forRoot({
                 isGlobal: true,
-                envFilePath: '.env',
+                envFilePath: ['.env'],
                 load: [cors_config_1.default, database_config_1.default, jwt_config_1.default, auth_config_1.default, uploads_config_1.default],
             }),
             core_module_1.CoreModule,

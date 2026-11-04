@@ -201,6 +201,8 @@ export declare class TaskRepository {
         description?: string;
         columnId: string;
         projectId: string;
+        status?: string;
+        priority?: string;
         category?: string;
         color?: string;
         dueDate?: Date;

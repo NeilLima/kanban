@@ -64,6 +64,8 @@ let TaskRepository = class TaskRepository {
                 description: data.description,
                 columnId: data.columnId,
                 projectId: data.projectId,
+                status: data.status ?? 'TODO',
+                priority: data.priority ?? 'MEDIUM',
                 category: data.category,
                 color: data.color ?? '#3b82f6',
                 dueDate: data.dueDate,

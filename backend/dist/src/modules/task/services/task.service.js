@@ -23,16 +23,31 @@ let TaskService = TaskService_1 = class TaskService {
         this.projectRepository = projectRepository;
     }
     async create(userId, dto) {
-        const column = await this.taskRepository.findColumnById(dto.columnId);
+        let columnId = dto.columnId;
+        let projectId = dto.projectId;
+        if (!columnId && projectId) {
+            const board = await this.projectRepository.findBoard(projectId);
+            const firstColumn = board?.columns?.[0];
+            if (!firstColumn) {
+                throw new common_1.ForbiddenException('Projeto não possui colunas');
+            }
+            columnId = firstColumn.id;
+        }
+        if (!columnId) {
+            throw new common_1.ForbiddenException('Coluna é obrigatória');
+        }
+        const column = await this.taskRepository.findColumnById(columnId);
         if (!column) {
             throw new common_1.ForbiddenException('Coluna não encontrada');
         }
-        await this.projectRepository.assertAccess(column.projectId, userId);
-        this.logger.log(`Criando tarefa "${dto.title}" na coluna ${dto.columnId}`);
+        projectId = column.projectId;
+        await this.projectRepository.assertAccess(projectId, userId);
+        this.logger.log(`Criando tarefa "${dto.title}" na coluna ${columnId}`);
         const dueDate = dto.dueDate ? new Date(dto.dueDate) : undefined;
         return this.taskRepository.create({
             ...dto,
-            projectId: column.projectId,
+            columnId,
+            projectId,
             dueDate,
             creatorId: userId,
         });

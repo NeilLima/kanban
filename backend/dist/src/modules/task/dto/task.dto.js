@@ -21,6 +21,9 @@ class CreateTaskDto {
     estimatedTime;
     assigneeIds;
     labelIds;
+    status;
+    priority;
+    projectId;
 }
 exports.CreateTaskDto = CreateTaskDto;
 __decorate([
@@ -35,7 +38,7 @@ __decorate([
 ], CreateTaskDto.prototype, "description", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)({ message: 'Coluna é obrigatória' }),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], CreateTaskDto.prototype, "columnId", void 0);
 __decorate([
@@ -67,6 +70,21 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Array)
 ], CreateTaskDto.prototype, "labelIds", void 0);
+__decorate([
+    (0, class_validator_1.IsEnum)(['TODO', 'IN_PROGRESS', 'REVIEW', 'DONE']),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], CreateTaskDto.prototype, "status", void 0);
+__decorate([
+    (0, class_validator_1.IsEnum)(['LOW', 'MEDIUM', 'HIGH', 'URGENT']),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], CreateTaskDto.prototype, "priority", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], CreateTaskDto.prototype, "projectId", void 0);
 class UpdateTaskDto {
     title;
     description;
