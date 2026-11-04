@@ -38,7 +38,8 @@ async function bootstrap() {
   logger.log(`Aplicacao rodando em http://localhost:${port}/api`);
 }
 
-if (require.main === module) {
+const isMain = process.argv[1] && /main(\.js)?$/.test(process.argv[1]);
+if (isMain) {
   bootstrap();
 }
 
