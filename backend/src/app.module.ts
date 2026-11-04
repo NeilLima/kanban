@@ -23,7 +23,7 @@ import UploadsConfig from './config/uploads.config';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: '.env',
+      envFilePath: process.env.NODE_ENV === 'production' ? undefined : '.env',
       load: [CorsConfig, DatabaseConfig, JwtConfig, AuthConfig, UploadsConfig],
     }),
     CoreModule,

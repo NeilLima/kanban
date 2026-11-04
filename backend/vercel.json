@@ -11,6 +11,6 @@
       "destination": "/api/index"
     }
   ],
-  "installCommand": "npm install",
-  "buildCommand": "npx prisma generate && npm run build"
+  "installCommand": "npm install --include=dev && npx prisma generate",
+  "buildCommand": "./node_modules/.bin/nest build"
 }
