@@ -7,7 +7,7 @@
   "type": "module",
   "license": "UNLICENSED",
   "scripts": {
-    "build": "prisma generate && nest build",
+    "build": "chmod +x node_modules/.bin/prisma node_modules/.bin/nest 2>/dev/null && prisma generate && nest build",
     "postinstall": "prisma generate && chmod +x node_modules/.bin/prisma node_modules/.bin/nest 2>/dev/null || true",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
