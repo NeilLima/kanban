@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9,13 +8,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var UserService_1;
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserService = void 0;
-const common_1 = require("@nestjs/common");
-const user_repository_1 = require("../repository/user.repository");
+import { Injectable, Logger, NotFoundException, ForbiddenException } from '@nestjs/common';
+import { UserRepository } from '../repository/user.repository';
 let UserService = UserService_1 = class UserService {
     userRepository;
-    logger = new common_1.Logger(UserService_1.name);
+    logger = new Logger(UserService_1.name);
     constructor(userRepository) {
         this.userRepository = userRepository;
     }
@@ -29,51 +26,51 @@ let UserService = UserService_1 = class UserService {
     async findOne(id, userId) {
         const user = await this.userRepository.findById(id);
         if (!user) {
-            throw new common_1.NotFoundException('Usuário não encontrado');
+            throw new NotFoundException('Usuário não encontrado');
         }
         return user;
     }
     async update(id, userId, dto) {
         const user = await this.userRepository.findById(id);
         if (!user) {
-            throw new common_1.NotFoundException('Usuário não encontrado');
+            throw new NotFoundException('Usuário não encontrado');
         }
         if (user.id !== userId) {
-            throw new common_1.ForbiddenException('Você só pode editar seu próprio perfil');
+            throw new ForbiddenException('Você só pode editar seu próprio perfil');
         }
         return this.userRepository.update(id, { ...dto });
     }
     async remove(id, userId) {
         const user = await this.userRepository.findById(id);
         if (!user) {
-            throw new common_1.NotFoundException('Usuário não encontrado');
+            throw new NotFoundException('Usuário não encontrado');
         }
         if (user.id !== userId) {
-            throw new common_1.ForbiddenException('Você só pode excluir seu próprio perfil');
+            throw new ForbiddenException('Você só pode excluir seu próprio perfil');
         }
         return this.userRepository.delete(id);
     }
     async getProfile(id, userId) {
         const profile = await this.userRepository.getProfile(id);
         if (!profile) {
-            throw new common_1.NotFoundException('Perfil não encontrado');
+            throw new NotFoundException('Perfil não encontrado');
         }
         return profile;
     }
     async updateAvatar(id, userId, avatarUrl) {
         const user = await this.userRepository.findById(id);
         if (!user) {
-            throw new common_1.NotFoundException('Usuário não encontrado');
+            throw new NotFoundException('Usuário não encontrado');
         }
         if (user.id !== userId) {
-            throw new common_1.ForbiddenException('Você só pode atualizar seu próprio avatar');
+            throw new ForbiddenException('Você só pode atualizar seu próprio avatar');
         }
         return this.userRepository.updateAvatar(id, avatarUrl);
     }
 };
-exports.UserService = UserService;
-exports.UserService = UserService = UserService_1 = __decorate([
-    (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [user_repository_1.UserRepository])
+UserService = UserService_1 = __decorate([
+    Injectable(),
+    __metadata("design:paramtypes", [UserRepository])
 ], UserService);
+export { UserService };
 //# sourceMappingURL=user.service.js.map

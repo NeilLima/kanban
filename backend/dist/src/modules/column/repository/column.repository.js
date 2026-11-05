@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,10 +7,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ColumnRepository = void 0;
-const common_1 = require("@nestjs/common");
-const prisma_service_1 = require("../../../core/prisma/prisma.service");
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../../../core/prisma/prisma.service';
 let ColumnRepository = class ColumnRepository {
     prisma;
     constructor(prisma) {
@@ -51,9 +48,9 @@ let ColumnRepository = class ColumnRepository {
         return this.prisma.column.delete({ where: { id } });
     }
 };
-exports.ColumnRepository = ColumnRepository;
-exports.ColumnRepository = ColumnRepository = __decorate([
-    (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
+ColumnRepository = __decorate([
+    Injectable(),
+    __metadata("design:paramtypes", [PrismaService])
 ], ColumnRepository);
+export { ColumnRepository };
 //# sourceMappingURL=column.repository.js.map

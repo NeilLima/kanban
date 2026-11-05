@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.QueryBuilder = void 0;
-class QueryBuilder {
+export class QueryBuilder {
     static buildFilter(params) {
         const filter = {};
         const { page, limit, sort, ...queryParams } = params;
@@ -65,5 +62,4 @@ class QueryBuilder {
         return data;
     }
 }
-exports.QueryBuilder = QueryBuilder;
 //# sourceMappingURL=query.builder.js.map

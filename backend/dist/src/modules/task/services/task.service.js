@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9,15 +8,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var TaskService_1;
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.TaskService = void 0;
-const common_1 = require("@nestjs/common");
-const task_repository_1 = require("../repository/task.repository");
-const project_repository_1 = require("../../project/repository/project.repository");
+import { Injectable, Logger, ForbiddenException } from '@nestjs/common';
+import { TaskRepository } from '../repository/task.repository';
+import { ProjectRepository } from '../../project/repository/project.repository';
 let TaskService = TaskService_1 = class TaskService {
     taskRepository;
     projectRepository;
-    logger = new common_1.Logger(TaskService_1.name);
+    logger = new Logger(TaskService_1.name);
     constructor(taskRepository, projectRepository) {
         this.taskRepository = taskRepository;
         this.projectRepository = projectRepository;
@@ -29,16 +26,16 @@ let TaskService = TaskService_1 = class TaskService {
             const board = await this.projectRepository.findBoard(projectId);
             const firstColumn = board?.columns?.[0];
             if (!firstColumn) {
-                throw new common_1.ForbiddenException('Projeto não possui colunas');
+                throw new ForbiddenException('Projeto não possui colunas');
             }
             columnId = firstColumn.id;
         }
         if (!columnId) {
-            throw new common_1.ForbiddenException('Coluna é obrigatória');
+            throw new ForbiddenException('Coluna é obrigatória');
         }
         const column = await this.taskRepository.findColumnById(columnId);
         if (!column) {
-            throw new common_1.ForbiddenException('Coluna não encontrada');
+            throw new ForbiddenException('Coluna não encontrada');
         }
         projectId = column.projectId;
         await this.projectRepository.assertAccess(projectId, userId);
@@ -60,7 +57,7 @@ let TaskService = TaskService_1 = class TaskService {
     async update(taskId, userId, dto) {
         const task = await this.taskRepository.findTaskById(taskId);
         if (!task)
-            throw new common_1.ForbiddenException('Tarefa não encontrada');
+            throw new ForbiddenException('Tarefa não encontrada');
         await this.projectRepository.assertAccess(task.projectId, userId);
         const { assigneeIds, labelIds, dueDate, ...rest } = dto;
         const data = { ...rest };
@@ -89,11 +86,11 @@ let TaskService = TaskService_1 = class TaskService {
     async move(taskId, userId, dto) {
         const task = await this.taskRepository.findTaskById(taskId);
         if (!task)
-            throw new common_1.ForbiddenException('Tarefa não encontrada');
+            throw new ForbiddenException('Tarefa não encontrada');
         await this.projectRepository.assertAccess(task.projectId, userId);
         const targetColumn = await this.taskRepository.findColumnById(dto.columnId);
         if (!targetColumn)
-            throw new common_1.ForbiddenException('Coluna de destino não encontrada');
+            throw new ForbiddenException('Coluna de destino não encontrada');
         if (dto.columnId !== task.columnId) {
             await this.taskRepository.logHistory({
                 taskId, userId, field: 'column',
@@ -127,14 +124,14 @@ let TaskService = TaskService_1 = class TaskService {
     async remove(taskId, userId) {
         const task = await this.taskRepository.findTaskById(taskId);
         if (!task)
-            throw new common_1.ForbiddenException('Tarefa não encontrada');
+            throw new ForbiddenException('Tarefa não encontrada');
         await this.projectRepository.assertAccess(task.projectId, userId);
         return this.taskRepository.delete(taskId);
     }
     async addChecklistItem(taskId, userId, title) {
         const task = await this.taskRepository.findTaskById(taskId);
         if (!task)
-            throw new common_1.ForbiddenException('Tarefa não encontrada');
+            throw new ForbiddenException('Tarefa não encontrada');
         await this.projectRepository.assertAccess(task.projectId, userId);
         const detail = await this.taskRepository.findDetailById(taskId);
         const order = detail.checklistItems.length;
@@ -164,7 +161,7 @@ let TaskService = TaskService_1 = class TaskService {
     async addComment(taskId, userId, content, parentId) {
         const task = await this.taskRepository.findTaskById(taskId);
         if (!task)
-            throw new common_1.ForbiddenException('Tarefa não encontrada');
+            throw new ForbiddenException('Tarefa não encontrada');
         await this.projectRepository.assertAccess(task.projectId, userId);
         return this.taskRepository.createComment({ content, taskId, authorId: userId, parentId });
     }
@@ -178,15 +175,15 @@ let TaskService = TaskService_1 = class TaskService {
     async getHistory(taskId, userId) {
         const task = await this.taskRepository.findTaskById(taskId);
         if (!task)
-            throw new common_1.ForbiddenException('Tarefa não encontrada');
+            throw new ForbiddenException('Tarefa não encontrada');
         await this.projectRepository.assertAccess(task.projectId, userId);
         return this.taskRepository.findHistory(taskId);
     }
 };
-exports.TaskService = TaskService;
-exports.TaskService = TaskService = TaskService_1 = __decorate([
-    (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [task_repository_1.TaskRepository,
-        project_repository_1.ProjectRepository])
+TaskService = TaskService_1 = __decorate([
+    Injectable(),
+    __metadata("design:paramtypes", [TaskRepository,
+        ProjectRepository])
 ], TaskService);
+export { TaskService };
 //# sourceMappingURL=task.service.js.map

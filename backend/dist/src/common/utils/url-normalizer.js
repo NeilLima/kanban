@@ -1,20 +1,14 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.getBaseUrl = getBaseUrl;
-exports.extractFileNameFromUrl = extractFileNameFromUrl;
-exports.extractFileName = extractFileName;
-exports.normalizeMediaUrl = normalizeMediaUrl;
-function getBaseUrl() {
+export function getBaseUrl() {
     return process.env.BACKEND_URL || '';
 }
-function extractFileNameFromUrl(url) {
+export function extractFileNameFromUrl(url) {
     const match = url.match(/\/file\/[^/]+\/(.+)$/);
     if (match && match[1]) {
         return decodeURIComponent(match[1]);
     }
     return null;
 }
-function extractFileName(url) {
+export function extractFileName(url) {
     if (!url)
         return null;
     const proxyMatch = url.match(/(?:\/storage\/file\/)(.+)$/);
@@ -31,7 +25,7 @@ function extractFileName(url) {
     }
     return null;
 }
-function normalizeMediaUrl(url) {
+export function normalizeMediaUrl(url) {
     if (!url)
         return null;
     if (url.includes('/storage/file')) {

@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9,13 +8,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var NotificationService_1;
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.NotificationService = void 0;
-const common_1 = require("@nestjs/common");
-const notification_repository_1 = require("../repository/notification.repository");
+import { Injectable, Logger, NotFoundException, ForbiddenException } from '@nestjs/common';
+import { NotificationRepository } from '../repository/notification.repository';
 let NotificationService = NotificationService_1 = class NotificationService {
     notificationRepository;
-    logger = new common_1.Logger(NotificationService_1.name);
+    logger = new Logger(NotificationService_1.name);
     constructor(notificationRepository) {
         this.notificationRepository = notificationRepository;
     }
@@ -32,20 +29,20 @@ let NotificationService = NotificationService_1 = class NotificationService {
     async findOne(id, userId) {
         const notification = await this.notificationRepository.findById(id);
         if (!notification) {
-            throw new common_1.NotFoundException('Notificação não encontrada');
+            throw new NotFoundException('Notificação não encontrada');
         }
         if (notification.userId !== userId) {
-            throw new common_1.ForbiddenException('Você não tem acesso a esta notificação');
+            throw new ForbiddenException('Você não tem acesso a esta notificação');
         }
         return notification;
     }
     async markAsRead(id, userId) {
         const notification = await this.notificationRepository.findById(id);
         if (!notification) {
-            throw new common_1.NotFoundException('Notificação não encontrada');
+            throw new NotFoundException('Notificação não encontrada');
         }
         if (notification.userId !== userId) {
-            throw new common_1.ForbiddenException('Você não tem acesso a esta notificação');
+            throw new ForbiddenException('Você não tem acesso a esta notificação');
         }
         return this.notificationRepository.markAsRead(id);
     }
@@ -55,10 +52,10 @@ let NotificationService = NotificationService_1 = class NotificationService {
     async remove(id, userId) {
         const notification = await this.notificationRepository.findById(id);
         if (!notification) {
-            throw new common_1.NotFoundException('Notificação não encontrada');
+            throw new NotFoundException('Notificação não encontrada');
         }
         if (notification.userId !== userId) {
-            throw new common_1.ForbiddenException('Você não tem acesso a esta notificação');
+            throw new ForbiddenException('Você não tem acesso a esta notificação');
         }
         return this.notificationRepository.delete(id);
     }
@@ -66,9 +63,9 @@ let NotificationService = NotificationService_1 = class NotificationService {
         return this.notificationRepository.deleteAll(userId);
     }
 };
-exports.NotificationService = NotificationService;
-exports.NotificationService = NotificationService = NotificationService_1 = __decorate([
-    (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [notification_repository_1.NotificationRepository])
+NotificationService = NotificationService_1 = __decorate([
+    Injectable(),
+    __metadata("design:paramtypes", [NotificationRepository])
 ], NotificationService);
+export { NotificationService };
 //# sourceMappingURL=notification.service.js.map

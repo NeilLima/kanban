@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,10 +7,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.TaskRepository = void 0;
-const common_1 = require("@nestjs/common");
-const prisma_service_1 = require("../../../core/prisma/prisma.service");
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { PrismaService } from '../../../core/prisma/prisma.service';
 const TASK_INCLUDE = {
     assignees: { include: { user: { include: { profile: true } } } },
     labels: { include: { label: true } },
@@ -50,7 +47,7 @@ let TaskRepository = class TaskRepository {
             },
         });
         if (!task)
-            throw new common_1.NotFoundException('Tarefa não encontrada');
+            throw new NotFoundException('Tarefa não encontrada');
         return task;
     }
     async create(data) {
@@ -134,25 +131,25 @@ let TaskRepository = class TaskRepository {
     async updateComment(id, content, userId) {
         const comment = await this.prisma.comment.findUnique({ where: { id } });
         if (!comment)
-            throw new common_1.NotFoundException('Comentário não encontrado');
+            throw new NotFoundException('Comentário não encontrado');
         if (comment.authorId !== userId) {
-            throw new common_1.NotFoundException('Sem permissão para editar este comentário');
+            throw new NotFoundException('Sem permissão para editar este comentário');
         }
         return this.prisma.comment.update({ where: { id }, data: { content } });
     }
     async deleteComment(id, userId) {
         const comment = await this.prisma.comment.findUnique({ where: { id } });
         if (!comment)
-            throw new common_1.NotFoundException('Comentário não encontrado');
+            throw new NotFoundException('Comentário não encontrado');
         if (comment.authorId !== userId) {
-            throw new common_1.NotFoundException('Sem permissão para excluir este comentário');
+            throw new NotFoundException('Sem permissão para excluir este comentário');
         }
         return this.prisma.comment.delete({ where: { id } });
     }
 };
-exports.TaskRepository = TaskRepository;
-exports.TaskRepository = TaskRepository = __decorate([
-    (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
+TaskRepository = __decorate([
+    Injectable(),
+    __metadata("design:paramtypes", [PrismaService])
 ], TaskRepository);
+export { TaskRepository };
 //# sourceMappingURL=task.repository.js.map

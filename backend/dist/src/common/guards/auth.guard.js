@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,10 +7,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthGuard = void 0;
-const common_1 = require("@nestjs/common");
-const jwt_1 = require("@nestjs/jwt");
+import { Injectable, UnauthorizedException, } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 let AuthGuard = class AuthGuard {
     jwtService;
     constructor(jwtService) {
@@ -23,7 +20,7 @@ let AuthGuard = class AuthGuard {
             .getRequest();
         const token = this.extractTokenFromHeader(request);
         if (!token) {
-            throw new common_1.UnauthorizedException('Token not found');
+            throw new UnauthorizedException('Token not found');
         }
         try {
             const payload = await this.jwtService.verifyAsync(token);
@@ -31,7 +28,7 @@ let AuthGuard = class AuthGuard {
             return true;
         }
         catch {
-            throw new common_1.UnauthorizedException('Invalid token');
+            throw new UnauthorizedException('Invalid token');
         }
     }
     extractTokenFromHeader(request) {
@@ -39,9 +36,9 @@ let AuthGuard = class AuthGuard {
         return type === 'Bearer' ? token : undefined;
     }
 };
-exports.AuthGuard = AuthGuard;
-exports.AuthGuard = AuthGuard = __decorate([
-    (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [jwt_1.JwtService])
+AuthGuard = __decorate([
+    Injectable(),
+    __metadata("design:paramtypes", [JwtService])
 ], AuthGuard);
+export { AuthGuard };
 //# sourceMappingURL=auth.guard.js.map

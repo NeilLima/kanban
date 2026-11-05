@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ResponseBuilder = void 0;
-class ResponseBuilder {
+export class ResponseBuilder {
     static success(data, message) {
         return {
             success: true,
@@ -28,5 +25,4 @@ class ResponseBuilder {
         };
     }
 }
-exports.ResponseBuilder = ResponseBuilder;
 //# sourceMappingURL=response.builder.js.map

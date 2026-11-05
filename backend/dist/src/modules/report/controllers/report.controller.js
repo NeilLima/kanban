@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11,12 +10,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ReportController = void 0;
-const common_1 = require("@nestjs/common");
-const report_service_1 = require("../services/report.service");
-const auth_guard_1 = require("../../../common/guards/auth.guard");
-const get_user_decorator_1 = require("../../../common/decorators/get-user.decorator");
+import { Controller, Get, UseGuards } from '@nestjs/common';
+import { ReportService } from '../services/report.service';
+import { AuthGuard } from '../../../common/guards/auth.guard';
+import { GetUser } from '../../../common/decorators/get-user.decorator';
 let ReportController = class ReportController {
     reportService;
     constructor(reportService) {
@@ -26,17 +23,17 @@ let ReportController = class ReportController {
         return this.reportService.getOverview(userId);
     }
 };
-exports.ReportController = ReportController;
 __decorate([
-    (0, common_1.Get)('overview'),
-    __param(0, (0, get_user_decorator_1.GetUser)('userId')),
+    Get('overview'),
+    __param(0, GetUser('userId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], ReportController.prototype, "getOverview", null);
-exports.ReportController = ReportController = __decorate([
-    (0, common_1.Controller)('reports'),
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    __metadata("design:paramtypes", [report_service_1.ReportService])
+ReportController = __decorate([
+    Controller('reports'),
+    UseGuards(AuthGuard),
+    __metadata("design:paramtypes", [ReportService])
 ], ReportController);
+export { ReportController };
 //# sourceMappingURL=report.controller.js.map

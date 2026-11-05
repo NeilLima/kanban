@@ -1,22 +1,19 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.BaseServiceImpl = void 0;
-const common_1 = require("@nestjs/common");
-const id_formatter_config_1 = require("../../../config/id-formatter.config");
-class BaseServiceImpl {
+import { Logger } from '@nestjs/common';
+import { IdFormatter } from '../../../config/id-formatter.config';
+export class BaseServiceImpl {
     repository;
     entityName;
     logger;
     constructor(repository, entityName) {
         this.repository = repository;
         this.entityName = entityName;
-        this.logger = new common_1.Logger(`${entityName}Service`);
+        this.logger = new Logger(`${entityName}Service`);
     }
     async create(createDto) {
         return await this.repository.create(createDto);
     }
     async findById(id, options) {
-        if (!id_formatter_config_1.IdFormatter.isValid(id)) {
+        if (!IdFormatter.isValid(id)) {
             this.logger.error(`ID inválido: ${id}`);
             return null;
         }
@@ -29,7 +26,7 @@ class BaseServiceImpl {
         return await this.repository.findAll(filter, options);
     }
     async update(id, updateDto) {
-        if (!id_formatter_config_1.IdFormatter.isValid(id)) {
+        if (!IdFormatter.isValid(id)) {
             this.logger.error(`ID inválido: ${id}`);
             throw new Error(`ID inválido: ${id}`);
         }
@@ -41,7 +38,7 @@ class BaseServiceImpl {
         return await this.repository.update(id, updateDto);
     }
     async remove(id) {
-        if (!id_formatter_config_1.IdFormatter.isValid(id)) {
+        if (!IdFormatter.isValid(id)) {
             this.logger.error(`ID inválido: ${id}`);
             return false;
         }
@@ -56,5 +53,4 @@ class BaseServiceImpl {
         return await this.repository.count(filter);
     }
 }
-exports.BaseServiceImpl = BaseServiceImpl;
 //# sourceMappingURL=base.service.js.map

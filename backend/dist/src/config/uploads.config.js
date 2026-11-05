@@ -1,46 +1,10 @@
-"use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || (function () {
-    var ownKeys = function(o) {
-        ownKeys = Object.getOwnPropertyNames || function (o) {
-            var ar = [];
-            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
-            return ar;
-        };
-        return ownKeys(o);
-    };
-    return function (mod) {
-        if (mod && mod.__esModule) return mod;
-        var result = {};
-        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
-        __setModuleDefault(result, mod);
-        return result;
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.processMedia = exports.processAudio = exports.processVideo = exports.processImage = exports.validateMedia = exports.uploadsConfig = void 0;
-const config_1 = require("@nestjs/config");
-const fs = __importStar(require("fs-extra"));
-const buffer_1 = require("buffer");
-const fs_1 = require("fs");
-const path_1 = require("path");
-const os = __importStar(require("os"));
-exports.uploadsConfig = {
+import { registerAs } from '@nestjs/config';
+import * as fs from 'fs-extra';
+import { Buffer } from 'buffer';
+import { createReadStream } from 'fs';
+import { join } from 'path';
+import * as os from 'os';
+export const uploadsConfig = {
     maxFileSize: 1024 * 1024 * 1024 * 5,
     allowedMimeTypes: {
         image: [
@@ -97,7 +61,7 @@ exports.uploadsConfig = {
         },
     },
 };
-const validateMedia = (base64String) => {
+export const validateMedia = (base64String) => {
     try {
         const matches = base64String.match(/^data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+);base64,/);
         if (!matches) {
@@ -113,13 +77,13 @@ const validateMedia = (base64String) => {
             return { isValid: false, type: null, mimeType: null };
         }
         const mimeType = matches[1];
-        if (exports.uploadsConfig.allowedMimeTypes.image.includes(mimeType)) {
+        if (uploadsConfig.allowedMimeTypes.image.includes(mimeType)) {
             return { isValid: true, type: 'image', mimeType };
         }
-        if (exports.uploadsConfig.allowedMimeTypes.video.includes(mimeType)) {
+        if (uploadsConfig.allowedMimeTypes.video.includes(mimeType)) {
             return { isValid: true, type: 'video', mimeType };
         }
-        if (exports.uploadsConfig.allowedMimeTypes.audio.includes(mimeType)) {
+        if (uploadsConfig.allowedMimeTypes.audio.includes(mimeType)) {
             return { isValid: true, type: 'audio', mimeType };
         }
         return { isValid: false, type: null, mimeType };
@@ -129,8 +93,7 @@ const validateMedia = (base64String) => {
         return { isValid: false, type: null, mimeType: null };
     }
 };
-exports.validateMedia = validateMedia;
-const processImage = async (base64String) => {
+export const processImage = async (base64String) => {
     try {
         const sharpModule = 'sharp';
         const sharp = (await import(sharpModule)).default;
@@ -139,13 +102,13 @@ const processImage = async (base64String) => {
             return base64String;
         }
         const base64Data = base64String.replace(/^data:image\/[a-zA-Z0-9.+-]+;base64,/, '');
-        const buffer = buffer_1.Buffer.from(base64Data, 'base64');
+        const buffer = Buffer.from(base64Data, 'base64');
         const processedBuffer = await sharp(buffer)
-            .resize(exports.uploadsConfig.compression.image.maxWidth, exports.uploadsConfig.compression.image.maxHeight, {
+            .resize(uploadsConfig.compression.image.maxWidth, uploadsConfig.compression.image.maxHeight, {
             fit: 'inside',
             withoutEnlargement: true,
         })
-            .jpeg({ quality: exports.uploadsConfig.compression.image.quality })
+            .jpeg({ quality: uploadsConfig.compression.image.quality })
             .toBuffer();
         return `data:image/jpeg;base64,${processedBuffer.toString('base64')}`;
     }
@@ -156,8 +119,7 @@ const processImage = async (base64String) => {
         return base64String;
     }
 };
-exports.processImage = processImage;
-const processVideo = async (base64String) => {
+export const processVideo = async (base64String) => {
     try {
         const ffmpegModule = 'fluent-ffmpeg';
         const installerModule = '@ffmpeg-installer/ffmpeg';
@@ -165,18 +127,18 @@ const processVideo = async (base64String) => {
         const ffmpegInstaller = (await import(installerModule)).default;
         ffmpeg.setFfmpegPath(ffmpegInstaller.path);
         const base64Data = base64String.replace(/^data:video\/[^;]+;base64,/, '');
-        const inputBuffer = buffer_1.Buffer.from(base64Data, 'base64');
+        const inputBuffer = Buffer.from(base64Data, 'base64');
         const tmpDir = os.tmpdir();
-        const inPath = (0, path_1.join)(tmpDir, `in-${Date.now()}.mp4`);
-        const outPath = (0, path_1.join)(tmpDir, `out-${Date.now()}.mp4`);
+        const inPath = join(tmpDir, `in-${Date.now()}.mp4`);
+        const outPath = join(tmpDir, `out-${Date.now()}.mp4`);
         await fs.writeFile(inPath, inputBuffer);
         await new Promise((resolve, reject) => {
             ffmpeg(inPath)
                 .videoCodec('libx264')
                 .audioCodec('aac')
                 .size('?x720')
-                .videoBitrate(exports.uploadsConfig.compression.video.bitrate)
-                .format(exports.uploadsConfig.compression.video.format)
+                .videoBitrate(uploadsConfig.compression.video.bitrate)
+                .format(uploadsConfig.compression.video.format)
                 .outputOptions('-movflags', 'faststart')
                 .on('end', () => resolve())
                 .on('error', reject)
@@ -192,8 +154,7 @@ const processVideo = async (base64String) => {
         return base64String;
     }
 };
-exports.processVideo = processVideo;
-const processAudio = async (base64String) => {
+export const processAudio = async (base64String) => {
     try {
         const ffmpegModule = 'fluent-ffmpeg';
         const installerModule = '@ffmpeg-installer/ffmpeg';
@@ -201,19 +162,19 @@ const processAudio = async (base64String) => {
         const ffmpegInstaller = (await import(installerModule)).default;
         ffmpeg.setFfmpegPath(ffmpegInstaller.path);
         const base64Data = base64String.replace(/^data:audio\/\w+;base64,/, '');
-        const inputBuffer = buffer_1.Buffer.from(base64Data, 'base64');
-        const tempFilePath = (0, path_1.join)(process.cwd(), `temp-${Date.now()}.mp3`);
+        const inputBuffer = Buffer.from(base64Data, 'base64');
+        const tempFilePath = join(process.cwd(), `temp-${Date.now()}.mp3`);
         await fs.writeFile(tempFilePath, inputBuffer);
         const outputBuffer = await new Promise((resolve, reject) => {
             const chunks = [];
-            const inputStream = (0, fs_1.createReadStream)(tempFilePath);
+            const inputStream = createReadStream(tempFilePath);
             ffmpeg(inputStream)
-                .audioBitrate(exports.uploadsConfig.compression.audio.bitrate)
-                .audioCodec(exports.uploadsConfig.compression.audio.codec)
-                .toFormat(exports.uploadsConfig.compression.audio.format)
+                .audioBitrate(uploadsConfig.compression.audio.bitrate)
+                .audioCodec(uploadsConfig.compression.audio.codec)
+                .toFormat(uploadsConfig.compression.audio.format)
                 .on('end', () => {
                 fs.unlink(tempFilePath).catch(() => { });
-                resolve(buffer_1.Buffer.concat(chunks));
+                resolve(Buffer.concat(chunks));
             })
                 .on('error', (err) => {
                 console.error('❌ Erro no ffmpeg:', err);
@@ -221,7 +182,7 @@ const processAudio = async (base64String) => {
                 reject(err instanceof Error ? err : new Error(String(err)));
             })
                 .pipe()
-                .on('data', (chunk) => chunks.push(buffer_1.Buffer.from(chunk)));
+                .on('data', (chunk) => chunks.push(Buffer.from(chunk)));
         });
         return `data:audio/mp3;base64,${outputBuffer.toString('base64')}`;
     }
@@ -230,9 +191,8 @@ const processAudio = async (base64String) => {
         throw new Error('Erro ao processar áudio');
     }
 };
-exports.processAudio = processAudio;
-const processMedia = async (base64String) => {
-    const validation = (0, exports.validateMedia)(base64String);
+export const processMedia = async (base64String) => {
+    const validation = validateMedia(base64String);
     if (!validation.isValid) {
         console.error('❌ Formato de mídia inválido');
         throw new Error('Formato de mídia inválido');
@@ -241,13 +201,13 @@ const processMedia = async (base64String) => {
         let result;
         switch (validation.type) {
             case 'image':
-                result = await (0, exports.processImage)(base64String);
+                result = await processImage(base64String);
                 break;
             case 'video':
-                result = await (0, exports.processVideo)(base64String);
+                result = await processVideo(base64String);
                 break;
             case 'audio':
-                result = await (0, exports.processAudio)(base64String);
+                result = await processAudio(base64String);
                 break;
             default:
                 throw new Error('Tipo de mídia não suportado');
@@ -259,6 +219,5 @@ const processMedia = async (base64String) => {
         throw error;
     }
 };
-exports.processMedia = processMedia;
-exports.default = (0, config_1.registerAs)('uploads', () => exports.uploadsConfig);
+export default registerAs('uploads', () => uploadsConfig);
 //# sourceMappingURL=uploads.config.js.map

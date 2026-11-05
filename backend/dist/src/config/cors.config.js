@@ -1,9 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.corsConfig = void 0;
-const config_1 = require("@nestjs/config");
+import { registerAs } from '@nestjs/config';
 const isDev = process.env.NODE_ENV !== 'production';
-exports.corsConfig = {
+export const corsConfig = {
     origin: isDev
         ? true
         : [
@@ -21,5 +18,5 @@ exports.corsConfig = {
     preflightContinue: false,
     optionsSuccessStatus: 204,
 };
-exports.default = (0, config_1.registerAs)('cors', () => exports.corsConfig);
+export default registerAs('cors', () => corsConfig);
 //# sourceMappingURL=cors.config.js.map

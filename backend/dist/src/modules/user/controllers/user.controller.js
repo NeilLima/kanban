@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11,13 +10,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserController = void 0;
-const common_1 = require("@nestjs/common");
-const user_service_1 = require("../services/user.service");
-const user_dto_1 = require("../dto/user.dto");
-const auth_guard_1 = require("../../../common/guards/auth.guard");
-const get_user_decorator_1 = require("../../../common/decorators/get-user.decorator");
+import { Body, Controller, Delete, Get, Param, Patch, UseGuards, } from '@nestjs/common';
+import { UserService } from '../services/user.service';
+import { UpdateUserDto } from '../dto/user.dto';
+import { AuthGuard } from '../../../common/guards/auth.guard';
+import { GetUser } from '../../../common/decorators/get-user.decorator';
 let UserController = class UserController {
     userService;
     constructor(userService) {
@@ -42,59 +39,59 @@ let UserController = class UserController {
         return this.userService.updateAvatar(id, userId, body.avatarUrl);
     }
 };
-exports.UserController = UserController;
 __decorate([
-    (0, common_1.Get)(),
-    __param(0, (0, get_user_decorator_1.GetUser)('userId')),
+    Get(),
+    __param(0, GetUser('userId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "findAll", null);
 __decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, get_user_decorator_1.GetUser)('userId')),
+    Get(':id'),
+    __param(0, Param('id')),
+    __param(1, GetUser('userId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "findOne", null);
 __decorate([
-    (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, get_user_decorator_1.GetUser)('userId')),
-    __param(2, (0, common_1.Body)()),
+    Patch(':id'),
+    __param(0, Param('id')),
+    __param(1, GetUser('userId')),
+    __param(2, Body()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, user_dto_1.UpdateUserDto]),
+    __metadata("design:paramtypes", [String, String, UpdateUserDto]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "update", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, get_user_decorator_1.GetUser)('userId')),
+    Delete(':id'),
+    __param(0, Param('id')),
+    __param(1, GetUser('userId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "remove", null);
 __decorate([
-    (0, common_1.Get)(':id/profile'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, get_user_decorator_1.GetUser)('userId')),
+    Get(':id/profile'),
+    __param(0, Param('id')),
+    __param(1, GetUser('userId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "getProfile", null);
 __decorate([
-    (0, common_1.Patch)(':id/avatar'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, get_user_decorator_1.GetUser)('userId')),
-    __param(2, (0, common_1.Body)()),
+    Patch(':id/avatar'),
+    __param(0, Param('id')),
+    __param(1, GetUser('userId')),
+    __param(2, Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, String, Object]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "updateAvatar", null);
-exports.UserController = UserController = __decorate([
-    (0, common_1.Controller)('users'),
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    __metadata("design:paramtypes", [user_service_1.UserService])
+UserController = __decorate([
+    Controller('users'),
+    UseGuards(AuthGuard),
+    __metadata("design:paramtypes", [UserService])
 ], UserController);
+export { UserController };
 //# sourceMappingURL=user.controller.js.map

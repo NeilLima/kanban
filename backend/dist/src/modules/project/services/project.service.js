@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9,13 +8,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var ProjectService_1;
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProjectService = void 0;
-const common_1 = require("@nestjs/common");
-const project_repository_1 = require("../repository/project.repository");
+import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { ProjectRepository } from '../repository/project.repository';
 let ProjectService = ProjectService_1 = class ProjectService {
     projectRepository;
-    logger = new common_1.Logger(ProjectService_1.name);
+    logger = new Logger(ProjectService_1.name);
     constructor(projectRepository) {
         this.projectRepository = projectRepository;
     }
@@ -70,11 +67,11 @@ let ProjectService = ProjectService_1 = class ProjectService {
         await this.projectRepository.assertAdmin(projectId, userId);
         const alvo = await this.projectRepository.findUserByEmail(email.trim().toLowerCase());
         if (!alvo) {
-            throw new common_1.NotFoundException('Nenhum usuário encontrado com este e-mail');
+            throw new NotFoundException('Nenhum usuário encontrado com este e-mail');
         }
         const existente = await this.projectRepository.findMember(projectId, alvo.id);
         if (existente) {
-            throw new common_1.BadRequestException('Este usuário já faz parte da equipe');
+            throw new BadRequestException('Este usuário já faz parte da equipe');
         }
         const membro = await this.projectRepository.addMember(projectId, alvo.id);
         const nome = `${alvo.profile?.firstName ?? ''} ${alvo.profile?.lastName ?? ''}`.trim() ||
@@ -91,7 +88,7 @@ let ProjectService = ProjectService_1 = class ProjectService {
         await this.projectRepository.assertAdmin(projectId, userId);
         const existente = await this.projectRepository.findMember(projectId, memberUserId);
         if (!existente) {
-            throw new common_1.NotFoundException('Membro não encontrado');
+            throw new NotFoundException('Membro não encontrado');
         }
         await this.projectRepository.removeMember(projectId, memberUserId);
         return { removed: true };
@@ -107,7 +104,7 @@ let ProjectService = ProjectService_1 = class ProjectService {
     async updateColumn(columnId, userId, dto) {
         const column = await this.projectRepository.findColumnById(columnId);
         if (!column) {
-            throw new common_1.NotFoundException('Coluna não encontrada');
+            throw new NotFoundException('Coluna não encontrada');
         }
         await this.projectRepository.assertAccess(column.projectId, userId);
         return this.projectRepository.updateColumn(columnId, { ...dto });
@@ -115,15 +112,15 @@ let ProjectService = ProjectService_1 = class ProjectService {
     async removeColumn(columnId, userId) {
         const column = await this.projectRepository.findColumnById(columnId);
         if (!column) {
-            throw new common_1.NotFoundException('Coluna não encontrada');
+            throw new NotFoundException('Coluna não encontrada');
         }
         await this.projectRepository.assertAccess(column.projectId, userId);
         return this.projectRepository.deleteColumn(columnId);
     }
 };
-exports.ProjectService = ProjectService;
-exports.ProjectService = ProjectService = ProjectService_1 = __decorate([
-    (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [project_repository_1.ProjectRepository])
+ProjectService = ProjectService_1 = __decorate([
+    Injectable(),
+    __metadata("design:paramtypes", [ProjectRepository])
 ], ProjectService);
+export { ProjectService };
 //# sourceMappingURL=project.service.js.map

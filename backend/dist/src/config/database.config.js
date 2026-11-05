@@ -1,9 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const config_1 = require("@nestjs/config");
-const common_1 = require("@nestjs/common");
-const logger = new common_1.Logger('Database');
-exports.default = (0, config_1.registerAs)('database', () => {
+import { registerAs } from '@nestjs/config';
+import { Logger } from '@nestjs/common';
+const logger = new Logger('Database');
+export default registerAs('database', () => {
     const url = process.env.DATABASE_URL;
     const supabaseUrl = process.env.SUPABASE_URL;
     const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;

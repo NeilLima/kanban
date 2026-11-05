@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,37 +7,34 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.UpdateColumnDto = exports.CreateColumnDto = exports.UpdateProjectDto = exports.CreateProjectDto = void 0;
-const class_validator_1 = require("class-validator");
-class CreateProjectDto {
+import { IsString, IsNotEmpty, IsOptional, IsBoolean, IsInt, Min, } from 'class-validator';
+export class CreateProjectDto {
     name;
     description;
     color;
     icon;
 }
-exports.CreateProjectDto = CreateProjectDto;
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)({ message: 'Nome do projeto é obrigatório' }),
+    IsString(),
+    IsNotEmpty({ message: 'Nome do projeto é obrigatório' }),
     __metadata("design:type", String)
 ], CreateProjectDto.prototype, "name", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
+    IsString(),
+    IsOptional(),
     __metadata("design:type", String)
 ], CreateProjectDto.prototype, "description", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
+    IsString(),
+    IsOptional(),
     __metadata("design:type", String)
 ], CreateProjectDto.prototype, "color", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
+    IsString(),
+    IsOptional(),
     __metadata("design:type", String)
 ], CreateProjectDto.prototype, "icon", void 0);
-class UpdateProjectDto {
+export class UpdateProjectDto {
     name;
     description;
     color;
@@ -46,72 +42,69 @@ class UpdateProjectDto {
     isFavorite;
     isArchived;
 }
-exports.UpdateProjectDto = UpdateProjectDto;
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
+    IsString(),
+    IsOptional(),
     __metadata("design:type", String)
 ], UpdateProjectDto.prototype, "name", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
+    IsString(),
+    IsOptional(),
     __metadata("design:type", String)
 ], UpdateProjectDto.prototype, "description", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
+    IsString(),
+    IsOptional(),
     __metadata("design:type", String)
 ], UpdateProjectDto.prototype, "color", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
+    IsString(),
+    IsOptional(),
     __metadata("design:type", String)
 ], UpdateProjectDto.prototype, "icon", void 0);
 __decorate([
-    (0, class_validator_1.IsBoolean)(),
-    (0, class_validator_1.IsOptional)(),
+    IsBoolean(),
+    IsOptional(),
     __metadata("design:type", Boolean)
 ], UpdateProjectDto.prototype, "isFavorite", void 0);
 __decorate([
-    (0, class_validator_1.IsBoolean)(),
-    (0, class_validator_1.IsOptional)(),
+    IsBoolean(),
+    IsOptional(),
     __metadata("design:type", Boolean)
 ], UpdateProjectDto.prototype, "isArchived", void 0);
-class CreateColumnDto {
+export class CreateColumnDto {
     name;
     color;
 }
-exports.CreateColumnDto = CreateColumnDto;
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)({ message: 'Nome da coluna é obrigatório' }),
+    IsString(),
+    IsNotEmpty({ message: 'Nome da coluna é obrigatório' }),
     __metadata("design:type", String)
 ], CreateColumnDto.prototype, "name", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
+    IsString(),
+    IsOptional(),
     __metadata("design:type", String)
 ], CreateColumnDto.prototype, "color", void 0);
-class UpdateColumnDto {
+export class UpdateColumnDto {
     name;
     color;
     order;
 }
-exports.UpdateColumnDto = UpdateColumnDto;
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
+    IsString(),
+    IsOptional(),
     __metadata("design:type", String)
 ], UpdateColumnDto.prototype, "name", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
+    IsString(),
+    IsOptional(),
     __metadata("design:type", String)
 ], UpdateColumnDto.prototype, "color", void 0);
 __decorate([
-    (0, class_validator_1.IsInt)(),
-    (0, class_validator_1.Min)(0),
-    (0, class_validator_1.IsOptional)(),
+    IsInt(),
+    Min(0),
+    IsOptional(),
     __metadata("design:type", Number)
 ], UpdateColumnDto.prototype, "order", void 0);
 //# sourceMappingURL=project.dto.js.map

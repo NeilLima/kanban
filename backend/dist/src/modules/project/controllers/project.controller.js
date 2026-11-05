@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11,13 +10,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProjectController = void 0;
-const common_1 = require("@nestjs/common");
-const project_service_1 = require("../services/project.service");
-const project_dto_1 = require("../dto/project.dto");
-const auth_guard_1 = require("../../../common/guards/auth.guard");
-const get_user_decorator_1 = require("../../../common/decorators/get-user.decorator");
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards, } from '@nestjs/common';
+import { ProjectService } from '../services/project.service';
+import { CreateProjectDto, UpdateProjectDto, CreateColumnDto, UpdateColumnDto, } from '../dto/project.dto';
+import { AuthGuard } from '../../../common/guards/auth.guard';
+import { GetUser } from '../../../common/decorators/get-user.decorator';
 let ProjectController = class ProjectController {
     projectService;
     constructor(projectService) {
@@ -57,102 +54,102 @@ let ProjectController = class ProjectController {
         return this.projectService.removeColumn(columnId, userId);
     }
 };
-exports.ProjectController = ProjectController;
 __decorate([
-    (0, common_1.Get)(),
-    __param(0, (0, get_user_decorator_1.GetUser)('userId')),
+    Get(),
+    __param(0, GetUser('userId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], ProjectController.prototype, "findAll", null);
 __decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, get_user_decorator_1.GetUser)('userId')),
+    Get(':id'),
+    __param(0, Param('id')),
+    __param(1, GetUser('userId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", void 0)
 ], ProjectController.prototype, "findOne", null);
 __decorate([
-    (0, common_1.Post)(),
-    __param(0, (0, get_user_decorator_1.GetUser)('userId')),
-    __param(1, (0, common_1.Body)()),
+    Post(),
+    __param(0, GetUser('userId')),
+    __param(1, Body()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, project_dto_1.CreateProjectDto]),
+    __metadata("design:paramtypes", [String, CreateProjectDto]),
     __metadata("design:returntype", void 0)
 ], ProjectController.prototype, "create", null);
 __decorate([
-    (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, get_user_decorator_1.GetUser)('userId')),
-    __param(2, (0, common_1.Body)()),
+    Patch(':id'),
+    __param(0, Param('id')),
+    __param(1, GetUser('userId')),
+    __param(2, Body()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, project_dto_1.UpdateProjectDto]),
+    __metadata("design:paramtypes", [String, String, UpdateProjectDto]),
     __metadata("design:returntype", void 0)
 ], ProjectController.prototype, "update", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, get_user_decorator_1.GetUser)('userId')),
+    Delete(':id'),
+    __param(0, Param('id')),
+    __param(1, GetUser('userId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", void 0)
 ], ProjectController.prototype, "remove", null);
 __decorate([
-    (0, common_1.Post)(':id/members'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, get_user_decorator_1.GetUser)('userId')),
-    __param(2, (0, common_1.Body)()),
+    Post(':id/members'),
+    __param(0, Param('id')),
+    __param(1, GetUser('userId')),
+    __param(2, Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, String, Object]),
     __metadata("design:returntype", void 0)
 ], ProjectController.prototype, "addMember", null);
 __decorate([
-    (0, common_1.Delete)(':id/members/:memberUserId'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, get_user_decorator_1.GetUser)('userId')),
-    __param(2, (0, common_1.Param)('memberUserId')),
+    Delete(':id/members/:memberUserId'),
+    __param(0, Param('id')),
+    __param(1, GetUser('userId')),
+    __param(2, Param('memberUserId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, String, String]),
     __metadata("design:returntype", void 0)
 ], ProjectController.prototype, "removeMember", null);
 __decorate([
-    (0, common_1.Get)(':id/board'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, get_user_decorator_1.GetUser)('userId')),
+    Get(':id/board'),
+    __param(0, Param('id')),
+    __param(1, GetUser('userId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", void 0)
 ], ProjectController.prototype, "getBoard", null);
 __decorate([
-    (0, common_1.Post)(':id/columns'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, get_user_decorator_1.GetUser)('userId')),
-    __param(2, (0, common_1.Body)()),
+    Post(':id/columns'),
+    __param(0, Param('id')),
+    __param(1, GetUser('userId')),
+    __param(2, Body()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, project_dto_1.CreateColumnDto]),
+    __metadata("design:paramtypes", [String, String, CreateColumnDto]),
     __metadata("design:returntype", void 0)
 ], ProjectController.prototype, "createColumn", null);
 __decorate([
-    (0, common_1.Patch)('columns/:columnId'),
-    __param(0, (0, common_1.Param)('columnId')),
-    __param(1, (0, get_user_decorator_1.GetUser)('userId')),
-    __param(2, (0, common_1.Body)()),
+    Patch('columns/:columnId'),
+    __param(0, Param('columnId')),
+    __param(1, GetUser('userId')),
+    __param(2, Body()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, project_dto_1.UpdateColumnDto]),
+    __metadata("design:paramtypes", [String, String, UpdateColumnDto]),
     __metadata("design:returntype", void 0)
 ], ProjectController.prototype, "updateColumn", null);
 __decorate([
-    (0, common_1.Delete)('columns/:columnId'),
-    __param(0, (0, common_1.Param)('columnId')),
-    __param(1, (0, get_user_decorator_1.GetUser)('userId')),
+    Delete('columns/:columnId'),
+    __param(0, Param('columnId')),
+    __param(1, GetUser('userId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", void 0)
 ], ProjectController.prototype, "removeColumn", null);
-exports.ProjectController = ProjectController = __decorate([
-    (0, common_1.Controller)('projects'),
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    __metadata("design:paramtypes", [project_service_1.ProjectService])
+ProjectController = __decorate([
+    Controller('projects'),
+    UseGuards(AuthGuard),
+    __metadata("design:paramtypes", [ProjectService])
 ], ProjectController);
+export { ProjectController };
 //# sourceMappingURL=project.controller.js.map

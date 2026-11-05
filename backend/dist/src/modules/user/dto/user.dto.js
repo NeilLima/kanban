@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,51 +7,47 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.UpdateUserDto = exports.CreateUserDto = void 0;
-const class_validator_1 = require("class-validator");
-class CreateUserDto {
+import { IsString, IsNotEmpty, IsOptional, IsEmail, MinLength, MaxLength, } from 'class-validator';
+export class CreateUserDto {
     email;
     username;
     password;
     avatar;
 }
-exports.CreateUserDto = CreateUserDto;
 __decorate([
-    (0, class_validator_1.IsEmail)(),
-    (0, class_validator_1.IsNotEmpty)({ message: 'E-mail é obrigatório' }),
+    IsEmail(),
+    IsNotEmpty({ message: 'E-mail é obrigatório' }),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "email", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
+    IsString(),
+    IsOptional(),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "username", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)({ message: 'Senha é obrigatória' }),
-    (0, class_validator_1.MinLength)(6),
+    IsString(),
+    IsNotEmpty({ message: 'Senha é obrigatória' }),
+    MinLength(6),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "password", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
+    IsString(),
+    IsOptional(),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "avatar", void 0);
-class UpdateUserDto {
+export class UpdateUserDto {
     username;
     avatar;
 }
-exports.UpdateUserDto = UpdateUserDto;
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.MaxLength)(100),
+    IsString(),
+    IsOptional(),
+    MaxLength(100),
     __metadata("design:type", String)
 ], UpdateUserDto.prototype, "username", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
+    IsString(),
+    IsOptional(),
     __metadata("design:type", String)
 ], UpdateUserDto.prototype, "avatar", void 0);
 //# sourceMappingURL=user.dto.js.map

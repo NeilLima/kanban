@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,11 +7,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.GridFSStorageService = void 0;
-const common_1 = require("@nestjs/common");
+import { Injectable, Logger } from '@nestjs/common';
 let GridFSStorageService = class GridFSStorageService {
-    logger = new common_1.Logger('GridFSStorageService');
+    logger = new Logger('GridFSStorageService');
     constructor() { }
     async saveBase64(base64Data, filePath) {
         try {
@@ -47,9 +44,9 @@ let GridFSStorageService = class GridFSStorageService {
         return false;
     }
 };
-exports.GridFSStorageService = GridFSStorageService;
-exports.GridFSStorageService = GridFSStorageService = __decorate([
-    (0, common_1.Injectable)(),
+GridFSStorageService = __decorate([
+    Injectable(),
     __metadata("design:paramtypes", [])
 ], GridFSStorageService);
+export { GridFSStorageService };
 //# sourceMappingURL=gridfs.storage.js.map

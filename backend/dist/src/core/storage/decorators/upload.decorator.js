@@ -1,9 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProcessUpload = void 0;
-const common_1 = require("@nestjs/common");
-const uploads_config_1 = require("../../../config/uploads.config");
-exports.ProcessUpload = (0, common_1.createParamDecorator)(async (options = {}, ctx) => {
+import { BadRequestException, createParamDecorator } from '@nestjs/common';
+import { processMedia, validateMedia } from '../../../config/uploads.config';
+export const ProcessUpload = createParamDecorator(async (options = {}, ctx) => {
     const request = ctx.switchToHttp().getRequest();
     const { field = 'file', required = false } = options;
     const base64Data = field.includes('.')
@@ -11,16 +8,16 @@ exports.ProcessUpload = (0, common_1.createParamDecorator)(async (options = {}, 
         : request.body[field];
     if (!base64Data) {
         if (required) {
-            throw new common_1.BadRequestException(`Campo '${field}' obrigatório`);
+            throw new BadRequestException(`Campo '${field}' obrigatório`);
         }
         return null;
     }
-    const validation = (0, uploads_config_1.validateMedia)(base64Data);
+    const validation = validateMedia(base64Data);
     if (!validation.isValid) {
-        throw new common_1.BadRequestException(`Formato de mídia inválido: ${validation.mimeType || 'desconhecido'}`);
+        throw new BadRequestException(`Formato de mídia inválido: ${validation.mimeType || 'desconhecido'}`);
     }
     try {
-        const processedData = await (0, uploads_config_1.processMedia)(base64Data);
+        const processedData = await processMedia(base64Data);
         return {
             data: processedData,
             type: validation.type,
@@ -28,7 +25,7 @@ exports.ProcessUpload = (0, common_1.createParamDecorator)(async (options = {}, 
         };
     }
     catch (error) {
-        throw new common_1.BadRequestException(`Erro ao processar upload: ${error.message}`);
+        throw new BadRequestException(`Erro ao processar upload: ${error.message}`);
     }
 });
 //# sourceMappingURL=upload.decorator.js.map

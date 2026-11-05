@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,11 +7,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.UpdateNotificationDto = exports.CreateNotificationDto = void 0;
-const class_validator_1 = require("class-validator");
-const client_1 = require("@prisma/client");
-class CreateNotificationDto {
+import { IsString, IsNotEmpty, IsOptional, IsEnum, } from 'class-validator';
+import { NotificationType } from '@prisma/client';
+export class CreateNotificationDto {
     userId;
     type;
     title;
@@ -20,49 +17,47 @@ class CreateNotificationDto {
     taskId;
     projectId;
 }
-exports.CreateNotificationDto = CreateNotificationDto;
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)({ message: 'userId é obrigatório' }),
+    IsString(),
+    IsNotEmpty({ message: 'userId é obrigatório' }),
     __metadata("design:type", String)
 ], CreateNotificationDto.prototype, "userId", void 0);
 __decorate([
-    (0, class_validator_1.IsEnum)(client_1.NotificationType),
+    IsEnum(NotificationType),
     __metadata("design:type", String)
 ], CreateNotificationDto.prototype, "type", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)({ message: 'Título é obrigatório' }),
+    IsString(),
+    IsNotEmpty({ message: 'Título é obrigatório' }),
     __metadata("design:type", String)
 ], CreateNotificationDto.prototype, "title", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
+    IsString(),
+    IsOptional(),
     __metadata("design:type", String)
 ], CreateNotificationDto.prototype, "message", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
+    IsString(),
+    IsOptional(),
     __metadata("design:type", String)
 ], CreateNotificationDto.prototype, "taskId", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
+    IsString(),
+    IsOptional(),
     __metadata("design:type", String)
 ], CreateNotificationDto.prototype, "projectId", void 0);
-class UpdateNotificationDto {
+export class UpdateNotificationDto {
     title;
     message;
 }
-exports.UpdateNotificationDto = UpdateNotificationDto;
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
+    IsString(),
+    IsOptional(),
     __metadata("design:type", String)
 ], UpdateNotificationDto.prototype, "title", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
+    IsString(),
+    IsOptional(),
     __metadata("design:type", String)
 ], UpdateNotificationDto.prototype, "message", void 0);
 //# sourceMappingURL=notification.dto.js.map

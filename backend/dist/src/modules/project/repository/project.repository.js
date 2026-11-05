@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,10 +7,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProjectRepository = void 0;
-const common_1 = require("@nestjs/common");
-const prisma_service_1 = require("../../../core/prisma/prisma.service");
+import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
+import { PrismaService } from '../../../core/prisma/prisma.service';
 const PROJECT_INCLUDE = {
     members: { include: { user: { include: { profile: true } } } },
     columns: { orderBy: { order: 'asc' } },
@@ -82,12 +79,12 @@ let ProjectRepository = class ProjectRepository {
             include: { members: true },
         });
         if (!project) {
-            throw new common_1.NotFoundException('Projeto não encontrado');
+            throw new NotFoundException('Projeto não encontrado');
         }
         const isMember = project.ownerId === userId ||
             project.members.some((m) => m.userId === userId);
         if (!isMember) {
-            throw new common_1.ForbiddenException('Sem acesso a este projeto');
+            throw new ForbiddenException('Sem acesso a este projeto');
         }
         return project;
     }
@@ -97,12 +94,12 @@ let ProjectRepository = class ProjectRepository {
             include: { members: true },
         });
         if (!project) {
-            throw new common_1.NotFoundException('Projeto não encontrado');
+            throw new NotFoundException('Projeto não encontrado');
         }
         const role = project.members.find((m) => m.userId === userId)?.role;
         const isAdmin = project.ownerId === userId || role === 'OWNER' || role === 'ADMIN';
         if (!isAdmin) {
-            throw new common_1.ForbiddenException('Apenas administradores podem executar esta ação');
+            throw new ForbiddenException('Apenas administradores podem executar esta ação');
         }
         return project;
     }
@@ -168,9 +165,9 @@ let ProjectRepository = class ProjectRepository {
         return { columns, tasks };
     }
 };
-exports.ProjectRepository = ProjectRepository;
-exports.ProjectRepository = ProjectRepository = __decorate([
-    (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
+ProjectRepository = __decorate([
+    Injectable(),
+    __metadata("design:paramtypes", [PrismaService])
 ], ProjectRepository);
+export { ProjectRepository };
 //# sourceMappingURL=project.repository.js.map

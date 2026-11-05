@@ -1,25 +1,22 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.BaseRepositoryImpl = void 0;
-const id_formatter_config_1 = require("../../../config/id-formatter.config");
-const common_1 = require("@nestjs/common");
-class BaseRepositoryImpl {
+import { IdFormatter } from '../../../config/id-formatter.config';
+import { Logger } from '@nestjs/common';
+export class BaseRepositoryImpl {
     model;
     entityName;
     logger;
     constructor(model, entityName) {
         this.model = model;
         this.entityName = entityName;
-        this.logger = new common_1.Logger(`${entityName}Repository`);
+        this.logger = new Logger(`${entityName}Repository`);
     }
     async create(data) {
         try {
             const processedData = { ...data };
             if (processedData['postId'] && typeof processedData['postId'] === 'string') {
-                processedData['postId'] = id_formatter_config_1.IdFormatter.toId(processedData['postId']);
+                processedData['postId'] = IdFormatter.toId(processedData['postId']);
             }
             if (processedData['userId'] && typeof processedData['userId'] === 'string') {
-                processedData['userId'] = id_formatter_config_1.IdFormatter.toId(processedData['userId']);
+                processedData['userId'] = IdFormatter.toId(processedData['userId']);
             }
             if (this.entityName === 'EventParticipant') {
                 const entity = new this.model({
@@ -52,11 +49,11 @@ class BaseRepositoryImpl {
     }
     async findById(id, options) {
         try {
-            if (!id_formatter_config_1.IdFormatter.isValid(id)) {
+            if (!IdFormatter.isValid(id)) {
                 this.logger.error(`ID inválido: ${id}`);
                 return null;
             }
-            let query = this.model.findById(id_formatter_config_1.IdFormatter.toId(id));
+            let query = this.model.findById(IdFormatter.toId(id));
             if (options?.select) {
                 query = query.select(options.select);
             }
@@ -119,11 +116,11 @@ class BaseRepositoryImpl {
     }
     async update(id, data) {
         try {
-            if (!id_formatter_config_1.IdFormatter.isValid(id)) {
+            if (!IdFormatter.isValid(id)) {
                 this.logger.error(`ID inválido: ${id}`);
                 throw new Error(`ID inválido: ${id}`);
             }
-            const objectId = id_formatter_config_1.IdFormatter.toId(id);
+            const objectId = IdFormatter.toId(id);
             const result = await this.model.findByIdAndUpdate(objectId, { $set: data }, { new: true }).exec();
             return result;
         }
@@ -134,11 +131,11 @@ class BaseRepositoryImpl {
     }
     async delete(id) {
         try {
-            if (!id_formatter_config_1.IdFormatter.isValid(id)) {
+            if (!IdFormatter.isValid(id)) {
                 this.logger.error(`ID inválido: ${id}`);
                 return false;
             }
-            const objectId = id_formatter_config_1.IdFormatter.toId(id);
+            const objectId = IdFormatter.toId(id);
             const result = await this.model.findByIdAndDelete(objectId).exec();
             return result != null;
         }
@@ -167,5 +164,4 @@ class BaseRepositoryImpl {
         }
     }
 }
-exports.BaseRepositoryImpl = BaseRepositoryImpl;
 //# sourceMappingURL=base.repository.js.map

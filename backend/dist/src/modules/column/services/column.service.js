@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9,13 +8,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var ColumnService_1;
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ColumnService = void 0;
-const common_1 = require("@nestjs/common");
-const column_repository_1 = require("../repository/column.repository");
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { ColumnRepository } from '../repository/column.repository';
 let ColumnService = ColumnService_1 = class ColumnService {
     columnRepository;
-    logger = new common_1.Logger(ColumnService_1.name);
+    logger = new Logger(ColumnService_1.name);
     constructor(columnRepository) {
         this.columnRepository = columnRepository;
     }
@@ -29,28 +26,28 @@ let ColumnService = ColumnService_1 = class ColumnService {
     async findOne(id, userId) {
         const column = await this.columnRepository.findById(id);
         if (!column) {
-            throw new common_1.NotFoundException('Coluna não encontrada');
+            throw new NotFoundException('Coluna não encontrada');
         }
         return column;
     }
     async update(id, userId, dto) {
         const column = await this.columnRepository.findById(id);
         if (!column) {
-            throw new common_1.NotFoundException('Coluna não encontrada');
+            throw new NotFoundException('Coluna não encontrada');
         }
         return this.columnRepository.update(id, { ...dto });
     }
     async remove(id, userId) {
         const column = await this.columnRepository.findById(id);
         if (!column) {
-            throw new common_1.NotFoundException('Coluna não encontrada');
+            throw new NotFoundException('Coluna não encontrada');
         }
         return this.columnRepository.delete(id);
     }
 };
-exports.ColumnService = ColumnService;
-exports.ColumnService = ColumnService = ColumnService_1 = __decorate([
-    (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [column_repository_1.ColumnRepository])
+ColumnService = ColumnService_1 = __decorate([
+    Injectable(),
+    __metadata("design:paramtypes", [ColumnRepository])
 ], ColumnService);
+export { ColumnService };
 //# sourceMappingURL=column.service.js.map

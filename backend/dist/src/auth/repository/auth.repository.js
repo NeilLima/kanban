@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,11 +7,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthRepository = void 0;
-const common_1 = require("@nestjs/common");
-const crypto_1 = require("crypto");
-const prisma_service_1 = require("../../core/prisma/prisma.service");
+import { Injectable } from '@nestjs/common';
+import { randomUUID } from 'crypto';
+import { PrismaService } from '../../core/prisma/prisma.service';
 let AuthRepository = class AuthRepository {
     prisma;
     constructor(prisma) {
@@ -24,8 +21,8 @@ let AuthRepository = class AuthRepository {
         });
     }
     async createUser(data) {
-        const userId = (0, crypto_1.randomUUID)();
-        const profileId = (0, crypto_1.randomUUID)();
+        const userId = randomUUID();
+        const profileId = randomUUID();
         return this.prisma.user.create({
             data: {
                 id: userId,
@@ -45,9 +42,9 @@ let AuthRepository = class AuthRepository {
         });
     }
 };
-exports.AuthRepository = AuthRepository;
-exports.AuthRepository = AuthRepository = __decorate([
-    (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
+AuthRepository = __decorate([
+    Injectable(),
+    __metadata("design:paramtypes", [PrismaService])
 ], AuthRepository);
+export { AuthRepository };
 //# sourceMappingURL=auth.repository.js.map

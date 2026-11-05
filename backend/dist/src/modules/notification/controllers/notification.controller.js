@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11,13 +10,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.NotificationController = void 0;
-const common_1 = require("@nestjs/common");
-const notification_service_1 = require("../services/notification.service");
-const notification_dto_1 = require("../dto/notification.dto");
-const auth_guard_1 = require("../../../common/guards/auth.guard");
-const get_user_decorator_1 = require("../../../common/decorators/get-user.decorator");
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards, } from '@nestjs/common';
+import { NotificationService } from '../services/notification.service';
+import { CreateNotificationDto } from '../dto/notification.dto';
+import { AuthGuard } from '../../../common/guards/auth.guard';
+import { GetUser } from '../../../common/decorators/get-user.decorator';
 let NotificationController = class NotificationController {
     notificationService;
     constructor(notificationService) {
@@ -48,70 +45,70 @@ let NotificationController = class NotificationController {
         return this.notificationService.removeAll(userId);
     }
 };
-exports.NotificationController = NotificationController;
 __decorate([
-    (0, common_1.Get)(),
-    __param(0, (0, get_user_decorator_1.GetUser)('userId')),
+    Get(),
+    __param(0, GetUser('userId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], NotificationController.prototype, "findAll", null);
 __decorate([
-    (0, common_1.Get)('unread-count'),
-    __param(0, (0, get_user_decorator_1.GetUser)('userId')),
+    Get('unread-count'),
+    __param(0, GetUser('userId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], NotificationController.prototype, "getUnreadCount", null);
 __decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, get_user_decorator_1.GetUser)('userId')),
+    Get(':id'),
+    __param(0, Param('id')),
+    __param(1, GetUser('userId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", void 0)
 ], NotificationController.prototype, "findOne", null);
 __decorate([
-    (0, common_1.Post)(),
-    __param(0, (0, get_user_decorator_1.GetUser)('userId')),
-    __param(1, (0, common_1.Body)()),
+    Post(),
+    __param(0, GetUser('userId')),
+    __param(1, Body()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, notification_dto_1.CreateNotificationDto]),
+    __metadata("design:paramtypes", [String, CreateNotificationDto]),
     __metadata("design:returntype", void 0)
 ], NotificationController.prototype, "create", null);
 __decorate([
-    (0, common_1.Patch)(':id/read'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, get_user_decorator_1.GetUser)('userId')),
+    Patch(':id/read'),
+    __param(0, Param('id')),
+    __param(1, GetUser('userId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", void 0)
 ], NotificationController.prototype, "markAsRead", null);
 __decorate([
-    (0, common_1.Patch)('read-all'),
-    __param(0, (0, get_user_decorator_1.GetUser)('userId')),
+    Patch('read-all'),
+    __param(0, GetUser('userId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], NotificationController.prototype, "markAllAsRead", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, get_user_decorator_1.GetUser)('userId')),
+    Delete(':id'),
+    __param(0, Param('id')),
+    __param(1, GetUser('userId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", void 0)
 ], NotificationController.prototype, "remove", null);
 __decorate([
-    (0, common_1.Delete)(),
-    __param(0, (0, get_user_decorator_1.GetUser)('userId')),
+    Delete(),
+    __param(0, GetUser('userId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], NotificationController.prototype, "removeAll", null);
-exports.NotificationController = NotificationController = __decorate([
-    (0, common_1.Controller)('notifications'),
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    __metadata("design:paramtypes", [notification_service_1.NotificationService])
+NotificationController = __decorate([
+    Controller('notifications'),
+    UseGuards(AuthGuard),
+    __metadata("design:paramtypes", [NotificationService])
 ], NotificationController);
+export { NotificationController };
 //# sourceMappingURL=notification.controller.js.map

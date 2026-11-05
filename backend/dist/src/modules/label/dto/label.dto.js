@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,43 +7,39 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.UpdateLabelDto = exports.CreateLabelDto = void 0;
-const class_validator_1 = require("class-validator");
-class CreateLabelDto {
+import { IsString, IsNotEmpty, IsOptional, } from 'class-validator';
+export class CreateLabelDto {
     name;
     color;
     projectId;
 }
-exports.CreateLabelDto = CreateLabelDto;
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)({ message: 'Nome da label é obrigatório' }),
+    IsString(),
+    IsNotEmpty({ message: 'Nome da label é obrigatório' }),
     __metadata("design:type", String)
 ], CreateLabelDto.prototype, "name", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
+    IsString(),
+    IsOptional(),
     __metadata("design:type", String)
 ], CreateLabelDto.prototype, "color", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)({ message: 'projectId é obrigatório' }),
+    IsString(),
+    IsNotEmpty({ message: 'projectId é obrigatório' }),
     __metadata("design:type", String)
 ], CreateLabelDto.prototype, "projectId", void 0);
-class UpdateLabelDto {
+export class UpdateLabelDto {
     name;
     color;
 }
-exports.UpdateLabelDto = UpdateLabelDto;
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
+    IsString(),
+    IsOptional(),
     __metadata("design:type", String)
 ], UpdateLabelDto.prototype, "name", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
+    IsString(),
+    IsOptional(),
     __metadata("design:type", String)
 ], UpdateLabelDto.prototype, "color", void 0);
 //# sourceMappingURL=label.dto.js.map

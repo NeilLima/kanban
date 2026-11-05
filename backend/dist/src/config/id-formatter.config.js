@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.IdFormatter = void 0;
-class IdFormatter {
+export class IdFormatter {
     static format(id) {
         if (!id) {
             return '';
@@ -21,5 +18,4 @@ class IdFormatter {
         return id;
     }
 }
-exports.IdFormatter = IdFormatter;
 //# sourceMappingURL=id-formatter.config.js.map

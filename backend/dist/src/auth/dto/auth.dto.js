@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,25 +7,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.RegisterDto = exports.LoginDto = void 0;
-const class_validator_1 = require("class-validator");
-class LoginDto {
+import { IsEmail, IsNotEmpty, IsOptional, IsString, MinLength } from 'class-validator';
+export class LoginDto {
     email;
     password;
 }
-exports.LoginDto = LoginDto;
 __decorate([
-    (0, class_validator_1.IsEmail)({}, { message: 'E-mail inválido' }),
-    (0, class_validator_1.IsNotEmpty)({ message: 'E-mail é obrigatório' }),
+    IsEmail({}, { message: 'E-mail inválido' }),
+    IsNotEmpty({ message: 'E-mail é obrigatório' }),
     __metadata("design:type", String)
 ], LoginDto.prototype, "email", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)({ message: 'Senha é obrigatória' }),
+    IsString(),
+    IsNotEmpty({ message: 'Senha é obrigatória' }),
     __metadata("design:type", String)
 ], LoginDto.prototype, "password", void 0);
-class RegisterDto {
+export class RegisterDto {
     email;
     password;
     firstName;
@@ -37,51 +33,50 @@ class RegisterDto {
     birthDate;
     gender;
 }
-exports.RegisterDto = RegisterDto;
 __decorate([
-    (0, class_validator_1.IsEmail)({}, { message: 'E-mail inválido' }),
-    (0, class_validator_1.IsNotEmpty)({ message: 'E-mail é obrigatório' }),
+    IsEmail({}, { message: 'E-mail inválido' }),
+    IsNotEmpty({ message: 'E-mail é obrigatório' }),
     __metadata("design:type", String)
 ], RegisterDto.prototype, "email", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.MinLength)(8, { message: 'A senha deve ter pelo menos 8 caracteres' }),
-    (0, class_validator_1.IsNotEmpty)({ message: 'Senha é obrigatória' }),
+    IsString(),
+    MinLength(8, { message: 'A senha deve ter pelo menos 8 caracteres' }),
+    IsNotEmpty({ message: 'Senha é obrigatória' }),
     __metadata("design:type", String)
 ], RegisterDto.prototype, "password", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)({ message: 'Nome é obrigatório' }),
+    IsString(),
+    IsNotEmpty({ message: 'Nome é obrigatório' }),
     __metadata("design:type", String)
 ], RegisterDto.prototype, "firstName", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)({ message: 'Sobrenome é obrigatório' }),
+    IsString(),
+    IsNotEmpty({ message: 'Sobrenome é obrigatório' }),
     __metadata("design:type", String)
 ], RegisterDto.prototype, "lastName", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
+    IsString(),
+    IsOptional(),
     __metadata("design:type", String)
 ], RegisterDto.prototype, "countryIso2", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
+    IsString(),
+    IsOptional(),
     __metadata("design:type", String)
 ], RegisterDto.prototype, "stateIso2", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
+    IsString(),
+    IsOptional(),
     __metadata("design:type", String)
 ], RegisterDto.prototype, "city", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
+    IsString(),
+    IsOptional(),
     __metadata("design:type", String)
 ], RegisterDto.prototype, "birthDate", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
+    IsString(),
+    IsOptional(),
     __metadata("design:type", String)
 ], RegisterDto.prototype, "gender", void 0);
 //# sourceMappingURL=auth.dto.js.map

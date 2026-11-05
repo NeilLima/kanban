@@ -1,8 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Crud = Crud;
-const common_1 = require("@nestjs/common");
-function Crud(options) {
+import { applyDecorators, ClassSerializerInterceptor, UseInterceptors } from '@nestjs/common';
+export function Crud(options) {
     const { model, dto, routes, entity } = options;
     const entityName = (entity?.name || model.name);
     const includeRoutes = {
@@ -23,6 +20,6 @@ function Crud(options) {
             includeRoutes[route] = onlyRoutes.includes(route);
         });
     }
-    return (0, common_1.applyDecorators)((0, common_1.UseInterceptors)(common_1.ClassSerializerInterceptor));
+    return applyDecorators(UseInterceptors(ClassSerializerInterceptor));
 }
 //# sourceMappingURL=crud.decorator.js.map
