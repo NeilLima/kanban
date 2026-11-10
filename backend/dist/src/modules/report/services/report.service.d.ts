@@ -1,4 +1,4 @@
-import { ReportRepository } from '../repository/report.repository';
+import { ReportRepository } from '../repository/report.repository.js';
 export declare class ReportService {
     private readonly repository;
     constructor(repository: ReportRepository);

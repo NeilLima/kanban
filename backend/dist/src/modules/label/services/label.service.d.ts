@@ -1,5 +1,5 @@
-import { LabelRepository } from '../repository/label.repository';
-import { CreateLabelDto, UpdateLabelDto } from '../dto/label.dto';
+import { LabelRepository } from '../repository/label.repository.js';
+import { CreateLabelDto, UpdateLabelDto } from '../dto/label.dto.js';
 export declare class LabelService {
     private readonly labelRepository;
     private readonly logger;

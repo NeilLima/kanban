@@ -1,5 +1,5 @@
 import { Type } from '@nestjs/common';
-import { BaseEntity } from '../interfaces/entity.interface';
+import { BaseEntity } from '../interfaces/entity.interface.js';
 export interface CrudOptions<T extends BaseEntity, CreateDto, UpdateDto> {
     model: Type<T>;
     dto: {

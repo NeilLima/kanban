@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var LabelService_1;
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
-import { LabelRepository } from '../repository/label.repository';
+import { LabelRepository } from '../repository/label.repository.js';
 let LabelService = LabelService_1 = class LabelService {
     labelRepository;
     logger = new Logger(LabelService_1.name);

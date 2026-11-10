@@ -47,6 +47,15 @@ export default function CardComp({ task, onEdit }: CardTypes) {
         )}
         <StyledCardFooter>
           <StyledMetaLeft>
+            <button
+              type="button"
+              title="Ver detalhes"
+              onClick={(e) => { e.stopPropagation(); onEdit?.(task.id); }}
+              style={{ background: 'transparent', border: 'none', color: '#64748b', padding: '2px 4px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center' }}
+              data-testid={`task-card-view-details-${task.id}`}
+            >
+              <i className="bi bi-eye" style={{ fontSize: 13 }}></i>
+            </button>
             <StyledPriorityBadge $priority={task.priority}>
               {getPriorityLabel(task.priority)}
             </StyledPriorityBadge>

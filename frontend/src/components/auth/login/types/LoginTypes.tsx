@@ -16,6 +16,7 @@ export interface LoginTypes {
 export interface LoginState {
   email: string;
   password: string;
+  showPassword: boolean;
   loading: boolean;
   error: string | null;
 }
@@ -23,6 +24,7 @@ export interface LoginState {
 export interface LoginActions {
   handleEmailChange: (value: string) => void;
   handlePasswordChange: (value: string) => void;
+  toggleShowPassword: () => void;
   handleSubmit: (e: React.FormEvent) => void;
   handleNavigateRegister: () => void;
 }

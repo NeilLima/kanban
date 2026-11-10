@@ -62,7 +62,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const register = useCallback(async (name: string, email: string, password: string) => {
     const parts = name.trim().split(' ');
     const firstName = parts[0] || name;
-    const lastName = parts.slice(1).join(' ') || parts[0] || name;
+    const lastName = parts.slice(1).join(' ');
     const { data } = await api.post<AuthResponse>('/auth/register', {
       firstName,
       lastName,

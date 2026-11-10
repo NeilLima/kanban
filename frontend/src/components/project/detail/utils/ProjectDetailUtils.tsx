@@ -17,6 +17,10 @@ export function useProjectDetail(projectId: string) {
   const [showEdit, setShowEdit] = useState(false);
   const [showAddTask, setShowAddTask] = useState(false);
   const [showAddMember, setShowAddMember] = useState(false);
+  const [showRegisterUser, setShowRegisterUser] = useState(false);
+  const [registerForm, setRegisterForm] = useState({ name: '', email: '', password: '' });
+  const [registering, setRegistering] = useState(false);
+  const [registerError, setRegisterError] = useState('');
   const [users, setUsers] = useState<UserOption[]>([]);
   // ============================================
   // 3️⃣ OBJETOS
@@ -41,8 +45,9 @@ export function useProjectDetail(projectId: string) {
         const data = (await fetch('/api/users', {
           headers: { Authorization: `Bearer ${localStorage.getItem('token') || ''}` },
         }).then((r) => r.json())) as Array<{ id: string; email?: string; profile?: { firstName?: string; lastName?: string } | null }> | undefined;
+        const memberIds = new Set((project?.members ?? []).map((m) => m.userId));
         const lista = (data ?? [])
-          .filter((u) => u.id !== user?.id)
+          .filter((u) => u.id !== user?.id && !memberIds.has(u.id))
           .map((u) => ({ id: u.id, name: `${u.profile?.firstName ?? ''} ${u.profile?.lastName ?? ''}`.trim() || u.email || 'Usuário', email: u.email }));
         setUsers(lista);
       } catch {
@@ -50,7 +55,7 @@ export function useProjectDetail(projectId: string) {
       }
     };
     carregarUsuarios();
-  }, [user?.id]);
+  }, [user?.id, project?.members]);
 
   const state: ProjectDetailState = {
     project,
@@ -62,6 +67,10 @@ export function useProjectDetail(projectId: string) {
     showEdit,
     showAddTask,
     showAddMember,
+    showRegisterUser,
+    registerForm,
+    registering,
+    registerError,
     users,
     membersCount,
   };
@@ -106,7 +115,78 @@ export function useProjectDetail(projectId: string) {
   const handleAddTask = useCallback(() => setShowAddTask(true), []);
   const handleCloseAddTask = useCallback(() => setShowAddTask(false), []);
   const handleAddMember = useCallback(() => setShowAddMember(true), []);
-  const handleCloseAddMember = useCallback(() => setShowAddMember(false), []);
+  const handleCloseAddMember = useCallback(() => {
+    setShowAddMember(false);
+    setShowRegisterUser(false);
+    setRegisterForm({ name: '', email: '', password: '' });
+    setRegisterError('');
+  }, []);
+  const handleToggleRegisterUser = useCallback(() => {
+    setShowRegisterUser((v) => !v);
+    setRegisterError('');
+  }, []);
+  const handleRegisterFormChange = useCallback(
+    (field: 'name' | 'email' | 'password', value: string) => {
+      setRegisterForm((f) => ({ ...f, [field]: value }));
+      setRegisterError('');
+    },
+    [],
+  );
+  const handleRegisterSubmit = useCallback(
+    async (projectId: string) => {
+      const { name, email, password } = registerForm;
+      if (!name.trim() || !email.trim() || !password) {
+        setRegisterError('Preencha nome, e-mail e senha.');
+        return;
+      }
+      if (password.length < 8) {
+        setRegisterError('A senha deve ter pelo menos 8 caracteres.');
+        return;
+      }
+      setRegistering(true);
+      setRegisterError('');
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+      };
+      try {
+        const parts = name.trim().split(/\s+/);
+        const regRes = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({
+            firstName: parts[0],
+            lastName: parts.slice(1).join(' '),
+            email: email.trim(),
+            password,
+          }),
+        });
+        const regData = await regRes.json().catch(() => ({}));
+        if (!regRes.ok) {
+          const msg = Array.isArray(regData?.message) ? regData.message[0] : regData?.message;
+          throw new Error(msg || 'Erro ao cadastrar usuário.');
+        }
+        const memberRes = await fetch(`/api/projects/${projectId}/members`, {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({ email: email.trim().toLowerCase() }),
+        });
+        const memberData = await memberRes.json().catch(() => ({}));
+        if (!memberRes.ok) {
+          const msg = Array.isArray(memberData?.message) ? memberData.message[0] : memberData?.message;
+          throw new Error(msg || 'Usuário criado, mas falhou ao adicionar à equipe.');
+        }
+        feedback.showFeedback({ variant: 'success', message: 'Usuário cadastrado e adicionado à equipe.' });
+        handleCloseAddMember();
+        service.refetch();
+      } catch (err) {
+        setRegisterError(err instanceof Error ? err.message : 'Erro ao cadastrar usuário.');
+      } finally {
+        setRegistering(false);
+      }
+    },
+    [registerForm, feedback, service, handleCloseAddMember],
+  );
 
   const actions: ProjectDetailActions = {
     handleVoltar,
@@ -118,6 +198,9 @@ export function useProjectDetail(projectId: string) {
     handleCloseAddTask,
     handleAddMember,
     handleCloseAddMember,
+    handleToggleRegisterUser,
+    handleRegisterFormChange,
+    handleRegisterSubmit,
     refetch: service.refetch,
   };
 

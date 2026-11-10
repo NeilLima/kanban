@@ -118,3 +118,142 @@ export const StyledRoleBadge = styled.span<{ $color: string }>`
   text-transform: uppercase;
   letter-spacing: 0.4px;
 `;
+
+export const StyledSearchBar = styled.div`
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+`;
+
+export const StyledSearchInput = styled.input`
+  width: 100%;
+  background: #0b1120;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  color: #f8fafc;
+  font-size: 13px;
+  padding: 8px 12px 8px 32px;
+  outline: none;
+
+  &::placeholder {
+    color: #64748b;
+  }
+
+  &:focus {
+    border-color: #3b82f6;
+  }
+`;
+
+export const StyledDetailOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 1200;
+`;
+
+export const StyledDetailModal = styled.div`
+  background: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  width: 100%;
+  max-width: 560px;
+  padding: clamp(18px, 2vw, 24px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+  max-height: 90vh;
+  overflow-y: auto;
+`;
+
+export const StyledDetailHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+`;
+
+export const StyledDetailTitle = styled.h2`
+  font-size: clamp(15px, 1.5vw, 18px);
+  font-weight: 600;
+  color: #f8fafc;
+  margin: 0;
+`;
+
+export const StyledDetailClose = styled.button`
+  background: transparent;
+  border: none;
+  color: #64748b;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px;
+`;
+
+export const StyledDetailSection = styled.div`
+  margin-bottom: 18px;
+`;
+
+export const StyledDetailSectionTitle = styled.h6`
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 10px 0;
+`;
+
+export const StyledProjectChip = styled.span<{ $color: string }>`
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 500;
+  color: #f8fafc;
+  background: ${(p) => p.$color}18;
+  border: 1px solid ${(p) => p.$color}45;
+  border-radius: 20px;
+  padding: 5px 12px;
+`;
+
+export const StyledStatusRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+`;
+
+export const StyledStatusDot = styled.span<{ $color: string }>`
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: ${(p) => p.$color};
+  flex-shrink: 0;
+`;
+
+export const StyledTaskRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+`;
+
+export const StyledTaskTitle = styled.div`
+  color: #f8fafc;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+export const StyledTaskMeta = styled.div`
+  color: #64748b;
+  font-size: 11px;
+  margin-top: 2px;
+`;

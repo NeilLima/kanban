@@ -1,4 +1,4 @@
-import { ReportService } from '../services/report.service';
+import { ReportService } from '../services/report.service.js';
 export declare class ReportController {
     private readonly reportService;
     constructor(reportService: ReportService);

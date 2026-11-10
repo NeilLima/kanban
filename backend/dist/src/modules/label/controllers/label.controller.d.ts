@@ -1,5 +1,5 @@
-import { LabelService } from '../services/label.service';
-import { CreateLabelDto, UpdateLabelDto } from '../dto/label.dto';
+import { LabelService } from '../services/label.service.js';
+import { CreateLabelDto, UpdateLabelDto } from '../dto/label.dto.js';
 export declare class LabelController {
     private readonly labelService;
     constructor(labelService: LabelService);

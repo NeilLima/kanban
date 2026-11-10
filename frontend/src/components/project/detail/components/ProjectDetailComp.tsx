@@ -88,15 +88,13 @@ export default function ProjectDetailComp({ projectId }: ProjectDetailTypes) {
               >
                 <i className="bi bi-pencil me-1"></i>Editar
               </button>
-              {state.users.length > 0 && (
-                <button
-                  className="btn btn-outline-success btn-sm"
-                  onClick={actions.handleAddMember}
-                  data-testid="project-detail-add-member"
-                >
-                  <i className="bi bi-person-plus me-1"></i>Adicionar membros
-                </button>
-              )}
+              <button
+                className="btn btn-outline-success btn-sm"
+                onClick={actions.handleAddMember}
+                data-testid="project-detail-add-member"
+              >
+                <i className="bi bi-person-plus me-1"></i>Adicionar membros
+              </button>
               <button
                 className="btn btn-outline-info btn-sm"
                 onClick={actions.handleAddTask}
@@ -215,11 +213,12 @@ export default function ProjectDetailComp({ projectId }: ProjectDetailTypes) {
         <TaskCreateModalComp
           onClose={actions.handleCloseAddTask}
           columnId=""
+          projectId={projectId}
         />
       )}
 
       {/* Modal: Adicionar membros ao projeto */}
-      {state.showAddMember && state.users.length > 0 && (
+      {state.showAddMember && (
         <div
           style={{
             position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
@@ -248,10 +247,83 @@ export default function ProjectDetailComp({ projectId }: ProjectDetailTypes) {
                 <i className="bi bi-x-lg"></i>
               </button>
             </div>
-            <p style={{ color: '#94a3b8', fontSize: 13, marginBottom: 20 }} data-testid="project-add-member-hint">
-              Selecione um usuário para adicionar à equipe deste projeto.
+            <p style={{ color: '#94a3b8', fontSize: 13, marginBottom: 14 }} data-testid="project-add-member-hint">
+              Selecione um usuário existente ou cadastre um novo membro para a equipe deste projeto.
             </p>
-            <div style={{ maxHeight: 300, overflowY: auto, marginBottom: 20 }} data-testid="project-add-member-list">
+
+            {/* Cadastrar novo usuário */}
+            <button
+              onClick={actions.handleToggleRegisterUser}
+              style={{
+                background: 'transparent', border: '1px dashed rgba(59,130,246,0.4)',
+                color: '#3b82f6', borderRadius: 8, padding: '8px 12px',
+                fontSize: 12.5, cursor: 'pointer', width: '100%', marginBottom: 14,
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+              }}
+              data-testid="project-register-member-toggle"
+            >
+              <i className={`bi ${state.showRegisterUser ? 'bi-dash-circle' : 'bi-person-plus'}`}></i>
+              {state.showRegisterUser ? 'Fechar cadastro' : 'Cadastrar novo usuário'}
+            </button>
+
+            {state.showRegisterUser && (
+              <div
+                style={{
+                  background: 'rgba(59,130,246,0.06)', border: '1px solid rgba(59,130,246,0.15)',
+                  borderRadius: 10, padding: 14, marginBottom: 16,
+                }}
+                data-testid="project-register-member-form"
+              >
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  <input
+                    className="form-control form-control-sm"
+                    placeholder="Nome completo"
+                    value={state.registerForm.name}
+                    onChange={(e) => actions.handleRegisterFormChange('name', e.target.value)}
+                    style={{ backgroundColor: '#0B1120', borderColor: 'rgba(255,255,255,0.08)', color: '#F8FAFC', fontSize: 13 }}
+                    data-testid="project-register-name"
+                  />
+                  <input
+                    className="form-control form-control-sm"
+                    type="email"
+                    placeholder="E-mail"
+                    value={state.registerForm.email}
+                    onChange={(e) => actions.handleRegisterFormChange('email', e.target.value)}
+                    style={{ backgroundColor: '#0B1120', borderColor: 'rgba(255,255,255,0.08)', color: '#F8FAFC', fontSize: 13 }}
+                    data-testid="project-register-email"
+                  />
+                  <input
+                    className="form-control form-control-sm"
+                    type="password"
+                    placeholder="Senha (mín. 8 caracteres)"
+                    value={state.registerForm.password}
+                    onChange={(e) => actions.handleRegisterFormChange('password', e.target.value)}
+                    style={{ backgroundColor: '#0B1120', borderColor: 'rgba(255,255,255,0.08)', color: '#F8FAFC', fontSize: 13 }}
+                    data-testid="project-register-password"
+                  />
+                  {state.registerError && (
+                    <p style={{ color: '#f87171', fontSize: 12, margin: 0 }} data-testid="project-register-error">
+                      {state.registerError}
+                    </p>
+                  )}
+                  <button
+                    onClick={() => actions.handleRegisterSubmit(projectId)}
+                    disabled={state.registering}
+                    style={{
+                      background: state.registering ? '#334155' : '#3b82f6',
+                      border: 'none', color: '#fff', borderRadius: 8,
+                      padding: '9px 14px', fontSize: 13, fontWeight: 600,
+                      cursor: state.registering ? 'not-allowed' : 'pointer',
+                    }}
+                    data-testid="project-register-submit"
+                  >
+                    {state.registering ? 'Cadastrando...' : 'Cadastrar e adicionar à equipe'}
+                  </button>
+                </div>
+              </div>
+            )}
+
+            <div style={{ maxHeight: 300, overflowY: 'auto', marginBottom: 20 }} data-testid="project-add-member-list">
               {state.users.map((u) => (
                 <div
                   key={u.id}

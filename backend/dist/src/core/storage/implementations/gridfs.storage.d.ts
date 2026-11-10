@@ -1,4 +1,4 @@
-import { StorageService } from '../interfaces/storage.interface';
+import { StorageService } from '../interfaces/storage.interface.js';
 export declare class GridFSStorageService implements StorageService {
     private readonly logger;
     constructor();

@@ -9,8 +9,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var TaskService_1;
 import { Injectable, Logger, ForbiddenException } from '@nestjs/common';
-import { TaskRepository } from '../repository/task.repository';
-import { ProjectRepository } from '../../project/repository/project.repository';
+import { TaskRepository } from '../repository/task.repository.js';
+import { ProjectRepository } from '../../project/repository/project.repository.js';
 let TaskService = TaskService_1 = class TaskService {
     taskRepository;
     projectRepository;

@@ -23,12 +23,14 @@ import {
 export default function TaskCreateModalComp({
   onClose,
   columnId,
+  projectId,
 }: {
   onClose: () => void;
   columnId: string;
+  projectId?: string;
 }) {
   const { state, actions, isLoading, STATUS_OPTIONS, PRIORITY_OPTIONS } =
-    useTaskCreate(columnId);
+    useTaskCreate(columnId, projectId);
 
   if (isLoading) {
     return (

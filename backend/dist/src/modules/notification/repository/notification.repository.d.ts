@@ -1,4 +1,4 @@
-import { PrismaService } from '../../../core/prisma/prisma.service';
+import { PrismaService } from '../../../core/prisma/prisma.service.js';
 export declare class NotificationRepository {
     private readonly prisma;
     constructor(prisma: PrismaService);
@@ -49,11 +49,11 @@ export declare class NotificationRepository {
         id: string;
         createdAt: Date;
         userId: string;
-        message: string | null;
         title: string;
         projectId: string | null;
         taskId: string | null;
         type: import("@prisma/client").$Enums.NotificationType;
+        message: string | null;
         isRead: boolean;
     }>;
     findAll(userId: string): Promise<({
@@ -95,11 +95,11 @@ export declare class NotificationRepository {
         id: string;
         createdAt: Date;
         userId: string;
-        message: string | null;
         title: string;
         projectId: string | null;
         taskId: string | null;
         type: import("@prisma/client").$Enums.NotificationType;
+        message: string | null;
         isRead: boolean;
     })[]>;
     countUnread(userId: string): Promise<number>;
@@ -142,22 +142,22 @@ export declare class NotificationRepository {
         id: string;
         createdAt: Date;
         userId: string;
-        message: string | null;
         title: string;
         projectId: string | null;
         taskId: string | null;
         type: import("@prisma/client").$Enums.NotificationType;
+        message: string | null;
         isRead: boolean;
     }) | null>;
     markAsRead(id: string): Promise<{
         id: string;
         createdAt: Date;
         userId: string;
-        message: string | null;
         title: string;
         projectId: string | null;
         taskId: string | null;
         type: import("@prisma/client").$Enums.NotificationType;
+        message: string | null;
         isRead: boolean;
     }>;
     markAllAsRead(userId: string): Promise<import("@prisma/client").Prisma.BatchPayload>;
@@ -165,11 +165,11 @@ export declare class NotificationRepository {
         id: string;
         createdAt: Date;
         userId: string;
-        message: string | null;
         title: string;
         projectId: string | null;
         taskId: string | null;
         type: import("@prisma/client").$Enums.NotificationType;
+        message: string | null;
         isRead: boolean;
     }>;
     deleteAll(userId: string): Promise<import("@prisma/client").Prisma.BatchPayload>;

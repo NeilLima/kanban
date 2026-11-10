@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var ProjectService_1;
 import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
-import { ProjectRepository } from '../repository/project.repository';
+import { ProjectRepository } from '../repository/project.repository.js';
 let ProjectService = ProjectService_1 = class ProjectService {
     projectRepository;
     logger = new Logger(ProjectService_1.name);

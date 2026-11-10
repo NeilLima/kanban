@@ -19,6 +19,7 @@ const REGISTER_ROUTE = '/register';
 export function useLogin() {
   const [email, setEmail] = useState(DEFAULT_EMAIL);
   const [password, setPassword] = useState(DEFAULT_PASSWORD);
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -32,6 +33,7 @@ export function useLogin() {
   const state: LoginState = {
     email,
     password,
+    showPassword,
     loading,
     error,
   };
@@ -47,6 +49,10 @@ export function useLogin() {
   const handlePasswordChange = useCallback((value: string) => {
     setPassword(value);
     setError(null);
+  }, []);
+
+  const toggleShowPassword = useCallback(() => {
+    setShowPassword((v) => !v);
   }, []);
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
@@ -71,6 +77,7 @@ export function useLogin() {
   const actions: LoginActions = {
     handleEmailChange,
     handlePasswordChange,
+    toggleShowPassword,
     handleSubmit,
     handleNavigateRegister,
   };

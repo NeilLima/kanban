@@ -1,19 +1,34 @@
 import { useQuery } from '@tanstack/react-query';
-import { listTyped } from '@/services/crudService';
-import type { ReportsOverviewData } from '@/components/report/main/types/ReportsTypes';
+import { list, getById } from '@/services/crudService';
+import type { TeamMember, TeamMemberDetail } from '../types/TeamTypes';
 
-// Reusa o mesmo contrato/cachê de /reports/overview (queryKey idêntica => 1 chamada)
+const TEAM_RESOURCE = 'team/members';
+
 export function useTeamService() {
   const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ['reports', 'overview'],
-    queryFn: () => listTyped<ReportsOverviewData>('reports/overview'),
-    staleTime: 60 * 1000,
+    queryKey: ['team', 'members'],
+    queryFn: () => list(TEAM_RESOURCE) as Promise<TeamMember[]>,
+    staleTime: 30 * 1000,
   });
 
   return {
-    team: data?.team ?? [],
+    team: data ?? [],
     isLoading,
     error: (error as Error | null) ?? null,
     refetch,
+  };
+}
+
+export function useTeamMemberService(memberId: string | null) {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['team', 'member', memberId],
+    queryFn: () => getById(TEAM_RESOURCE, memberId as string) as Promise<TeamMemberDetail>,
+    enabled: !!memberId,
+  });
+
+  return {
+    member: data ?? null,
+    isLoading,
+    error: (error as Error | null) ?? null,
   };
 }

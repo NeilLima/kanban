@@ -1,8 +1,8 @@
 import { Logger } from '@nestjs/common';
-import { BaseEntity } from '../interfaces/entity.interface';
-import { BaseRepository } from '../interfaces/repository.interface';
-import { CrudService } from '../interfaces/crud.interface';
-import { FilterOptions, QueryOptions } from '../interfaces/query-options.interface';
+import { BaseEntity } from '../interfaces/entity.interface.js';
+import { BaseRepository } from '../interfaces/repository.interface.js';
+import { CrudService } from '../interfaces/crud.interface.js';
+import { FilterOptions, QueryOptions } from '../interfaces/query-options.interface.js';
 export declare class BaseServiceImpl<T extends BaseEntity, CreateDto, UpdateDto> implements CrudService<T, CreateDto, UpdateDto> {
     protected readonly repository: BaseRepository<T>;
     protected readonly entityName: string;

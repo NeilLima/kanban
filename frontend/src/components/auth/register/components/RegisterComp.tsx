@@ -62,28 +62,60 @@ export default function RegisterComp() {
 
           <StyledFormGroup theme={theme}>
             <StyledLabel theme={theme}>Senha</StyledLabel>
-            <StyledInput
-              theme={theme}
-              type="password"
-              placeholder="••••••••"
-              value={state.password}
-              onChange={e => actions.handlePasswordChange(e.target.value)}
-              required
-              data-testid="register-password"
-            />
+            <div style={{ position: 'relative' }}>
+              <StyledInput
+                theme={theme}
+                type={state.showPassword ? 'text' : 'password'}
+                placeholder="••••••••"
+                value={state.password}
+                onChange={e => actions.handlePasswordChange(e.target.value)}
+                required
+                style={{ paddingRight: 42 }}
+                data-testid="register-password"
+              />
+              <button
+                type="button"
+                onClick={actions.toggleShowPassword}
+                aria-label={state.showPassword ? 'Ocultar senha' : 'Mostrar senha'}
+                style={{
+                  position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)',
+                  background: 'transparent', border: 'none', color: '#94a3b8',
+                  cursor: 'pointer', padding: 4, display: 'flex', alignItems: 'center',
+                }}
+                data-testid="register-toggle-password"
+              >
+                <i className={`bi ${state.showPassword ? 'bi-eye-slash' : 'bi-eye'}`} style={{ fontSize: 16 }}></i>
+              </button>
+            </div>
           </StyledFormGroup>
 
           <StyledFormGroup theme={theme}>
             <StyledLabel theme={theme}>Confirmar Senha</StyledLabel>
-            <StyledInput
-              theme={theme}
-              type="password"
-              placeholder="••••••••"
-              value={state.confirmPassword}
-              onChange={e => actions.handleConfirmPasswordChange(e.target.value)}
-              required
-              data-testid="register-confirm-password"
-            />
+            <div style={{ position: 'relative' }}>
+              <StyledInput
+                theme={theme}
+                type={state.showConfirmPassword ? 'text' : 'password'}
+                placeholder="••••••••"
+                value={state.confirmPassword}
+                onChange={e => actions.handleConfirmPasswordChange(e.target.value)}
+                required
+                style={{ paddingRight: 42 }}
+                data-testid="register-confirm-password"
+              />
+              <button
+                type="button"
+                onClick={actions.toggleShowConfirmPassword}
+                aria-label={state.showConfirmPassword ? 'Ocultar senha' : 'Mostrar senha'}
+                style={{
+                  position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)',
+                  background: 'transparent', border: 'none', color: '#94a3b8',
+                  cursor: 'pointer', padding: 4, display: 'flex', alignItems: 'center',
+                }}
+                data-testid="register-toggle-confirm-password"
+              >
+                <i className={`bi ${state.showConfirmPassword ? 'bi-eye-slash' : 'bi-eye'}`} style={{ fontSize: 16 }}></i>
+              </button>
+            </div>
           </StyledFormGroup>
 
           {state.error && (

@@ -11,10 +11,10 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 import { Body, Controller, Delete, Get, Param, Patch, UseGuards, } from '@nestjs/common';
-import { UserService } from '../services/user.service';
-import { UpdateUserDto } from '../dto/user.dto';
-import { AuthGuard } from '../../../common/guards/auth.guard';
-import { GetUser } from '../../../common/decorators/get-user.decorator';
+import { UserService } from '../services/user.service.js';
+import { UpdateUserDto } from '../dto/user.dto.js';
+import { AuthGuard } from '../../../common/guards/auth.guard.js';
+import { GetUser } from '../../../common/decorators/get-user.decorator.js';
 let UserController = class UserController {
     userService;
     constructor(userService) {

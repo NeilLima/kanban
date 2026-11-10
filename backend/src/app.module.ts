@@ -11,6 +11,7 @@ import { UserModule } from './modules/user/user.module.js';
 import { NotificationModule } from './modules/notification/notification.module.js';
 import { ColumnModule } from './modules/column/column.module.js';
 import { LabelModule } from './modules/label/label.module.js';
+import { TeamModule } from './modules/team/team.module.js';
 
 // Configurações centralizadas (ver DOCUMENTACAO_GERAL.md)
 import CorsConfig from './config/cors.config.js';
@@ -35,6 +36,7 @@ import UploadsConfig from './config/uploads.config.js';
     NotificationModule,
     ColumnModule,
     LabelModule,
+    TeamModule,
   ],
 })
 export class AppModule {}

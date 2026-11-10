@@ -7,9 +7,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { NotificationController } from './controllers/notification.controller';
-import { NotificationService } from './services/notification.service';
-import { NotificationRepository } from './repository/notification.repository';
+import { NotificationController } from './controllers/notification.controller.js';
+import { NotificationService } from './services/notification.service.js';
+import { NotificationRepository } from './repository/notification.repository.js';
 let NotificationModule = class NotificationModule {
 };
 NotificationModule = __decorate([

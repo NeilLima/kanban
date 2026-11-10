@@ -1,5 +1,5 @@
 import { BadRequestException, createParamDecorator } from '@nestjs/common';
-import { processMedia, validateMedia } from '../../../config/uploads.config';
+import { processMedia, validateMedia } from '../../../config/uploads.config.js';
 export const ProcessUpload = createParamDecorator(async (options = {}, ctx) => {
     const request = ctx.switchToHttp().getRequest();
     const { field = 'file', required = false } = options;

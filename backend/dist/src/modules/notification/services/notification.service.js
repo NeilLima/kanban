@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var NotificationService_1;
 import { Injectable, Logger, NotFoundException, ForbiddenException } from '@nestjs/common';
-import { NotificationRepository } from '../repository/notification.repository';
+import { NotificationRepository } from '../repository/notification.repository.js';
 let NotificationService = NotificationService_1 = class NotificationService {
     notificationRepository;
     logger = new Logger(NotificationService_1.name);

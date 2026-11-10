@@ -1,5 +1,5 @@
-import { UserRepository } from '../repository/user.repository';
-import { CreateUserDto, UpdateUserDto } from '../dto/user.dto';
+import { UserRepository } from '../repository/user.repository.js';
+import { CreateUserDto, UpdateUserDto } from '../dto/user.dto.js';
 export declare class UserService {
     private readonly userRepository;
     private readonly logger;
@@ -67,11 +67,11 @@ export declare class UserService {
             id: string;
             createdAt: Date;
             userId: string;
-            message: string | null;
             title: string;
             projectId: string | null;
             taskId: string | null;
             type: import("@prisma/client").$Enums.NotificationType;
+            message: string | null;
             isRead: boolean;
         }[];
     } & {
@@ -169,11 +169,11 @@ export declare class UserService {
             id: string;
             createdAt: Date;
             userId: string;
-            message: string | null;
             title: string;
             projectId: string | null;
             taskId: string | null;
             type: import("@prisma/client").$Enums.NotificationType;
+            message: string | null;
             isRead: boolean;
         }[];
     } & {
@@ -249,11 +249,11 @@ export declare class UserService {
             id: string;
             createdAt: Date;
             userId: string;
-            message: string | null;
             title: string;
             projectId: string | null;
             taskId: string | null;
             type: import("@prisma/client").$Enums.NotificationType;
+            message: string | null;
             isRead: boolean;
         }[];
     } & {
@@ -361,11 +361,11 @@ export declare class UserService {
             id: string;
             createdAt: Date;
             userId: string;
-            message: string | null;
             title: string;
             projectId: string | null;
             taskId: string | null;
             type: import("@prisma/client").$Enums.NotificationType;
+            message: string | null;
             isRead: boolean;
         }[];
     } & {

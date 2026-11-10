@@ -1,5 +1,5 @@
-import { useMemo } from 'react';
-import { useTeamService } from '../services/TeamServices';
+import { useMemo, useState, useCallback } from 'react';
+import { useTeamService, useTeamMemberService } from '../services/TeamServices';
 import { useAuth } from '@/contexts/AuthContext';
 import type { TeamMemberView, TeamState } from '../types/TeamTypes';
 
@@ -17,6 +17,8 @@ export function useTeam() {
   // ============================================
   const service = useTeamService();
   const { user } = useAuth();
+  const [selectedMemberId, setSelectedMemberId] = useState<string | null>(null);
+  const detail = useTeamMemberService(selectedMemberId);
 
   const members: TeamMemberView[] = useMemo(
     () =>
@@ -26,12 +28,13 @@ export function useTeam() {
         role: m.role || PAPEL_PADRAO,
         email: m.email,
         color: m.color,
-        badge: m.role || PAPEL_PADRAO,
-        avatarUrl: undefined,
+        badge: m.projectsCount > 0 ? `${m.projectsCount} projeto(s)` : (m.role || PAPEL_PADRAO),
+        avatarUrl: m.avatar ?? undefined,
         isMe: user ? m.email === user.email : false,
-        tasks: m.tarefas,
+        projectsCount: m.projectsCount,
+        tasks: m.tasks,
         done: m.done,
-        percent: m.tarefas > 0 ? Math.round((m.done / m.tarefas) * 100) : 0,
+        percent: m.productivity,
       })),
     [service.team, user],
   );
@@ -45,9 +48,28 @@ export function useTeam() {
   // ============================================
   // 4️⃣ FUNÇÕES
   // ============================================
+  const openMember = useCallback((memberId: string) => {
+    setSelectedMemberId(memberId);
+  }, []);
+
+  const closeMember = useCallback(() => {
+    setSelectedMemberId(null);
+  }, []);
+
   const actions = {
     refetch: service.refetch,
+    openMember,
+    closeMember,
   };
 
-  return { state, actions };
+  return {
+    state,
+    actions,
+    selectedMemberId,
+    detail: {
+      member: detail.member,
+      loading: detail.isLoading,
+      error: detail.error,
+    },
+  };
 }

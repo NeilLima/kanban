@@ -1,5 +1,5 @@
-import { ProjectRepository } from '../repository/project.repository';
-import { CreateProjectDto, UpdateProjectDto, CreateColumnDto, UpdateColumnDto } from '../dto/project.dto';
+import { ProjectRepository } from '../repository/project.repository.js';
+import { CreateProjectDto, UpdateProjectDto, CreateColumnDto, UpdateColumnDto } from '../dto/project.dto.js';
 export declare class ProjectService {
     private readonly projectRepository;
     private readonly logger;
@@ -231,8 +231,8 @@ export declare class ProjectService {
                     projectId: string | null;
                 };
             } & {
-                taskId: string;
                 labelId: string;
+                taskId: string;
             })[];
             _count: {
                 comments: number;

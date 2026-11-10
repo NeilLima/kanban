@@ -196,9 +196,11 @@ function ProjectCard({
 
 export default function ProjectsPage() {
   const { state, actions } = useProjects();
+  const router = useRouter();
   const [search, setSearch] = useState('');
   const [sort, setSort] = useState<ProjectSortValue>('recent');
   const [onlyFavorites, setOnlyFavorites] = useState(false);
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
   const activeProjects = state.projects.filter((p) => !p.isArchived);
 
@@ -232,11 +234,23 @@ export default function ProjectsPage() {
       subtitle="Todos os projetos que você participa ou administra."
       headerActions={
         <div className="d-flex align-items-center gap-2">
-          <div style={{ backgroundColor: '#0B1120', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 8, overflow: 'hidden' }}>
-            <button className="btn btn-sm px-2" title="Visualização em grade" style={{ color: '#fff', background: 'transparent', border: 'none', fontSize: 13 }}>
+          <div style={{ backgroundColor: '#0B1120', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 8, overflow: 'hidden' }} data-testid="projects-view-toggle">
+            <button
+              className="btn btn-sm px-2"
+              title="Visualização em grade"
+              onClick={() => setViewMode('grid')}
+              style={{ color: viewMode === 'grid' ? '#fff' : '#64748b', background: viewMode === 'grid' ? 'rgba(59,130,246,0.25)' : 'transparent', border: 'none', fontSize: 13 }}
+              data-testid="projects-view-grid"
+            >
               <i className="bi bi-grid-3x3-gap-fill"></i>
             </button>
-            <button className="btn btn-sm px-2" title="Visualização em lista (em breve)" style={{ color: '#64748b', background: 'transparent', border: 'none', fontSize: 13 }}>
+            <button
+              className="btn btn-sm px-2"
+              title="Visualização em lista"
+              onClick={() => setViewMode('list')}
+              style={{ color: viewMode === 'list' ? '#fff' : '#64748b', background: viewMode === 'list' ? 'rgba(59,130,246,0.25)' : 'transparent', border: 'none', fontSize: 13 }}
+              data-testid="projects-view-list"
+            >
               <i className="bi bi-list-ul"></i>
             </button>
           </div>
@@ -302,19 +316,105 @@ export default function ProjectsPage() {
         </div>
       </div>
 
-      {/* Grid de projetos */}
-      <div className="row g-3">
-        {visibleProjects.map((project) => (
-          <ProjectCard
-            key={project.id}
-            project={project}
-            onToggleFavorite={actions.toggleFavorite}
-            onArchive={actions.archiveProject}
-            onDelete={actions.deleteProject}
-            onViewDetails={handleViewDetails}
-          />
-        ))}
-      </div>
+      {/* Grid ou lista de projetos */}
+      {viewMode === 'grid' ? (
+        <div className="row g-3">
+          {visibleProjects.map((project) => (
+            <ProjectCard
+              key={project.id}
+              project={project}
+              onToggleFavorite={actions.toggleFavorite}
+              onArchive={actions.archiveProject}
+              onDelete={actions.deleteProject}
+              onViewDetails={handleViewDetails}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="d-flex flex-column gap-2" data-testid="projects-list-view">
+          {visibleProjects.map((project) => {
+            const color = project.color || '#3b82f6';
+            const done = project.tasksDone ?? 0;
+            const total = project.tasksTotal ?? 0;
+            const progress = total > 0 ? Math.round((done / total) * 100) : project.progress ?? 0;
+            return (
+              <div
+                key={project.id}
+                role="button"
+                tabIndex={0}
+                onClick={() => router.push(`/projects/${project.id}`)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    router.push(`/projects/${project.id}`);
+                  }
+                }}
+                className="d-flex align-items-center gap-3"
+                style={{ ...PROJECT_CARD_STYLE, cursor: 'pointer', padding: '12px 16px' }}
+                data-testid={`project-list-item-${project.id}`}
+              >
+                <div
+                  className="d-flex align-items-center justify-content-center flex-shrink-0"
+                  style={{
+                    width: 36, height: 36, borderRadius: 10,
+                    background: `linear-gradient(135deg, ${color} 0%, ${color}99 100%)`,
+                    color: '#fff', fontWeight: 700, fontSize: 14,
+                  }}
+                >
+                  {project.name.charAt(0).toUpperCase()}
+                </div>
+                <div style={{ minWidth: 0, flex: 1 }}>
+                  <div className="d-flex align-items-center gap-2">
+                    <span className="text-white fw-semibold" style={{ fontSize: 14 }}>{project.name}</span>
+                    {project.isFavorite && <i className="bi bi-star-fill" style={{ color: '#fbbf24', fontSize: 12 }}></i>}
+                  </div>
+                  <small className="text-secondary" style={{ fontSize: 12 }}>
+                    {done}/{total} tarefas • {progress}% • {formatDateBR(project.createdAt)}
+                  </small>
+                </div>
+                <div className="d-flex align-items-center gap-1 flex-shrink-0">
+                  <button
+                    type="button"
+                    title="Ver detalhes"
+                    onClick={(e) => { e.stopPropagation(); handleViewDetails(project.id); }}
+                    style={{ ...ACTION_ICON_STYLE, background: 'rgba(255,255,255,0.08)', color: '#fff' }}
+                    data-testid={`project-list-view-details-${project.id}`}
+                  >
+                    <i className="bi bi-eye" style={{ fontSize: 13 }}></i>
+                  </button>
+                  <button
+                    type="button"
+                    title={project.isFavorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
+                    onClick={(e) => { e.stopPropagation(); actions.toggleFavorite(project.id); }}
+                    style={{ ...ACTION_ICON_STYLE, color: project.isFavorite ? '#fbbf24' : '#475569', fontSize: 15 }}
+                    data-testid={`project-list-favorite-${project.id}`}
+                  >
+                    <i className={`bi ${project.isFavorite ? 'bi-star-fill' : 'bi-star'}`}></i>
+                  </button>
+                  <button
+                    type="button"
+                    title="Arquivar projeto"
+                    onClick={(e) => { e.stopPropagation(); actions.archiveProject(project.id); }}
+                    style={ACTION_ICON_STYLE}
+                    data-testid={`project-list-archive-${project.id}`}
+                  >
+                    <i className="bi bi-archive"></i>
+                  </button>
+                  <button
+                    type="button"
+                    title="Excluir projeto"
+                    onClick={(e) => { e.stopPropagation(); actions.deleteProject(project.id); }}
+                    style={ACTION_ICON_STYLE}
+                    data-testid={`project-list-delete-${project.id}`}
+                  >
+                    <i className="bi bi-trash"></i>
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
 
       {/* Estado vazio */}
       {visibleProjects.length === 0 && (

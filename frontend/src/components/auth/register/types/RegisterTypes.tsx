@@ -22,6 +22,8 @@ export interface RegisterState {
   email: string;
   password: string;
   confirmPassword: string;
+  showPassword: boolean;
+  showConfirmPassword: boolean;
   loading: boolean;
   error: string | null;
 }
@@ -31,6 +33,8 @@ export interface RegisterActions {
   handleEmailChange: (value: string) => void;
   handlePasswordChange: (value: string) => void;
   handleConfirmPasswordChange: (value: string) => void;
+  toggleShowPassword: () => void;
+  toggleShowConfirmPassword: () => void;
   handleSubmit: (e: React.FormEvent) => void;
   handleNavigateLogin: () => void;
 }

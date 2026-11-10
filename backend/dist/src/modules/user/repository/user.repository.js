@@ -8,7 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../../../core/prisma/prisma.service';
+import { PrismaService } from '../../../core/prisma/prisma.service.js';
 const USER_INCLUDE = {
     profile: true,
     projectMembers: { include: { project: true } },

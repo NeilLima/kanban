@@ -22,9 +22,9 @@ interface ModelLike<T> {
     findByIdAndDelete: (id: unknown) => QueryLike<T | null>;
     countDocuments: (filter: unknown) => QueryLike<number>;
 }
-import { BaseEntity } from '../interfaces/entity.interface';
-import { BaseRepository } from '../interfaces/repository.interface';
-import { FilterOptions, QueryOptions } from '../interfaces/query-options.interface';
+import { BaseEntity } from '../interfaces/entity.interface.js';
+import { BaseRepository } from '../interfaces/repository.interface.js';
+import { FilterOptions, QueryOptions } from '../interfaces/query-options.interface.js';
 import { Logger } from '@nestjs/common';
 export declare class BaseRepositoryImpl<T extends BaseEntity> implements BaseRepository<T> {
     protected readonly model: ModelLike<T>;

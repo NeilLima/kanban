@@ -23,6 +23,8 @@ export function useRegister() {
   const [email, setEmail] = useState(DEFAULT_EMAIL);
   const [password, setPassword] = useState(DEFAULT_PASSWORD);
   const [confirmPassword, setConfirmPassword] = useState(DEFAULT_CONFIRM_PASSWORD);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -38,6 +40,8 @@ export function useRegister() {
     email,
     password,
     confirmPassword,
+    showPassword,
+    showConfirmPassword,
     loading,
     error,
   };
@@ -65,6 +69,14 @@ export function useRegister() {
     setError(null);
   }, []);
 
+  const toggleShowPassword = useCallback(() => {
+    setShowPassword((v) => !v);
+  }, []);
+
+  const toggleShowConfirmPassword = useCallback(() => {
+    setShowConfirmPassword((v) => !v);
+  }, []);
+
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -79,8 +91,16 @@ export function useRegister() {
     try {
       await register(name, email, password);
       router.push(DASHBOARD_ROUTE);
-    } catch {
-      setError('Erro ao cadastrar. Tente novamente.');
+    } catch (err: unknown) {
+      const axiosErr = err as { response?: { data?: { message?: string | string[] } } };
+      const msg = axiosErr?.response?.data?.message;
+      if (Array.isArray(msg)) {
+        setError(msg[0] || 'Erro ao cadastrar. Tente novamente.');
+      } else if (typeof msg === 'string' && msg) {
+        setError(msg);
+      } else {
+        setError('Erro ao cadastrar. Tente novamente.');
+      }
     } finally {
       setLoading(false);
     }
@@ -95,6 +115,8 @@ export function useRegister() {
     handleEmailChange,
     handlePasswordChange,
     handleConfirmPasswordChange,
+    toggleShowPassword,
+    toggleShowConfirmPassword,
     handleSubmit,
     handleNavigateLogin,
   };

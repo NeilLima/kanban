@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var UserService_1;
 import { Injectable, Logger, NotFoundException, ForbiddenException } from '@nestjs/common';
-import { UserRepository } from '../repository/user.repository';
+import { UserRepository } from '../repository/user.repository.js';
 let UserService = UserService_1 = class UserService {
     userRepository;
     logger = new Logger(UserService_1.name);

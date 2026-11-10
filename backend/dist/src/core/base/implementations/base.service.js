@@ -1,5 +1,5 @@
 import { Logger } from '@nestjs/common';
-import { IdFormatter } from '../../../config/id-formatter.config';
+import { IdFormatter } from '../../../config/id-formatter.config.js';
 export class BaseServiceImpl {
     repository;
     entityName;

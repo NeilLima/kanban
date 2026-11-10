@@ -1,6 +1,6 @@
 import { Logger } from '@nestjs/common';
-import { CrudService } from '../interfaces/crud.interface';
-import { BaseEntity } from '../interfaces/entity.interface';
+import { CrudService } from '../interfaces/crud.interface.js';
+import { BaseEntity } from '../interfaces/entity.interface.js';
 export declare abstract class BaseController<T extends BaseEntity, CreateDto, UpdateDto> {
     protected readonly service: CrudService<T, CreateDto, UpdateDto>;
     protected readonly entityName: string;

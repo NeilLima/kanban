@@ -1,4 +1,4 @@
-import { PrismaService } from '../../../core/prisma/prisma.service';
+import { PrismaService } from '../../../core/prisma/prisma.service.js';
 export declare class UserRepository {
     private readonly prisma;
     constructor(prisma: PrismaService);
@@ -72,11 +72,11 @@ export declare class UserRepository {
             id: string;
             createdAt: Date;
             userId: string;
-            message: string | null;
             title: string;
             projectId: string | null;
             taskId: string | null;
             type: import("@prisma/client").$Enums.NotificationType;
+            message: string | null;
             isRead: boolean;
         }[];
     } & {
@@ -174,11 +174,11 @@ export declare class UserRepository {
             id: string;
             createdAt: Date;
             userId: string;
-            message: string | null;
             title: string;
             projectId: string | null;
             taskId: string | null;
             type: import("@prisma/client").$Enums.NotificationType;
+            message: string | null;
             isRead: boolean;
         }[];
     } & {
@@ -254,11 +254,11 @@ export declare class UserRepository {
             id: string;
             createdAt: Date;
             userId: string;
-            message: string | null;
             title: string;
             projectId: string | null;
             taskId: string | null;
             type: import("@prisma/client").$Enums.NotificationType;
+            message: string | null;
             isRead: boolean;
         }[];
     } & {
@@ -366,11 +366,11 @@ export declare class UserRepository {
             id: string;
             createdAt: Date;
             userId: string;
-            message: string | null;
             title: string;
             projectId: string | null;
             taskId: string | null;
             type: import("@prisma/client").$Enums.NotificationType;
+            message: string | null;
             isRead: boolean;
         }[];
     } & {

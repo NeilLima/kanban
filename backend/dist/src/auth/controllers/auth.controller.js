@@ -11,8 +11,8 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 import { Body, Controller, Post } from '@nestjs/common';
-import { AuthService } from '../services/auth.service';
-import { LoginDto, RegisterDto } from '../dto/auth.dto';
+import { AuthService } from '../services/auth.service.js';
+import { LoginDto, RegisterDto } from '../dto/auth.dto.js';
 let AuthController = class AuthController {
     authService;
     constructor(authService) {

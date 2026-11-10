@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
-import { PrismaService } from '../../core/prisma/prisma.service';
+import { PrismaService } from '../../core/prisma/prisma.service.js';
 let AuthRepository = class AuthRepository {
     prisma;
     constructor(prisma) {

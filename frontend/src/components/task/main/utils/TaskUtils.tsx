@@ -14,7 +14,7 @@ import type {
 const STATUS_OPTIONS = ['A Fazer', 'Em Desenvolvimento', 'Em Revisão', 'Concluído'] as const;
 const PRIORITY_OPTIONS = ['Baixa', 'Média', 'Alta', 'Urgente'] as const;
 
-export function useTaskCreate(columnId: string) {
+export function useTaskCreate(columnId: string, defaultProjectId?: string) {
   const [form, setForm] = useState<TaskCreateState>({
     title: '',
     description: '',
@@ -24,7 +24,7 @@ export function useTaskCreate(columnId: string) {
     dueDate: '',
     assigneeId: '',
     tags: '',
-    projectId: '',
+    projectId: defaultProjectId && defaultProjectId !== 'default-project' ? defaultProjectId : '',
     isSaving: false,
     projects: [],
     users: [],
@@ -44,6 +44,7 @@ export function useTaskCreate(columnId: string) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tasks'] });
       queryClient.invalidateQueries({ queryKey: ['kanban'] });
+      queryClient.invalidateQueries({ queryKey: ['board'] });
       queryClient.invalidateQueries({ queryKey: ['dashboard'] });
       feedback.showFeedback({
         variant: 'success',
@@ -58,14 +59,17 @@ export function useTaskCreate(columnId: string) {
         dueDate: '',
         assigneeId: '',
         tags: '',
-        projectId: '',
+        projectId: defaultProjectId && defaultProjectId !== 'default-project' ? defaultProjectId : '',
         isSaving: false,
       }));
     },
-    onError: () => {
+    onError: (err: unknown) => {
+      const axiosErr = err as { response?: { data?: { message?: string | string[] } } };
+      const msg = axiosErr?.response?.data?.message;
+      const text = Array.isArray(msg) ? msg[0] : msg;
       feedback.showFeedback({
         variant: 'error',
-        message: 'Erro ao criar tarefa.',
+        message: text || 'Erro ao criar tarefa.',
       });
     },
   });
@@ -128,19 +132,40 @@ export function useTaskCreate(columnId: string) {
 
     const assigneeIds = form.assigneeId ? [form.assigneeId] : undefined;
 
+    // columnId pode vir como placeholder ('default-column', '', etc.) —
+    // nesse caso omitimos e o backend usa a primeira coluna do projeto.
+    const isPlaceholderColumn =
+      !form.columnId || form.columnId.startsWith('default') || form.columnId === 'column-1';
+    const resolvedColumnId = isPlaceholderColumn ? undefined : form.columnId;
+
+    // Se não há coluna válida, o backend precisa de um projectId para
+    // resolver a primeira coluna — usa o selecionado ou o primeiro da lista.
+    const selectedProject =
+      form.projectId && form.projectId !== 'default-project' ? form.projectId : undefined;
+    const resolvedProjectId =
+      selectedProject || (!resolvedColumnId ? form.projects[0]?.id : undefined) || undefined;
+
+    if (!resolvedColumnId && !resolvedProjectId) {
+      feedback.showFeedback({
+        variant: 'error',
+        message: 'Não foi possível criar a tarefa: nenhum projeto disponível.',
+      });
+      return;
+    }
+
     const payload: TaskCreateData = {
       title: form.title.trim(),
       description: form.description.trim() || undefined,
-      columnId: form.columnId || undefined,
+      columnId: resolvedColumnId,
       status: STATUS_TO_BACKEND[form.status] || form.status,
       priority: PRIORITY_TO_BACKEND[form.priority] || form.priority,
       dueDate: form.dueDate || undefined,
       assigneeIds,
-      projectId: form.projectId || undefined,
+      projectId: resolvedProjectId,
     };
 
     criarMutation.mutate(payload);
-  }, [form, criarMutation]);
+  }, [form, criarMutation, feedback]);
 
   const state: TaskCreateState = {
     ...form,

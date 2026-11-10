@@ -5,7 +5,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import { Module, Global } from '@nestjs/common';
-import { LocalStorageService } from './implementations/local.storage';
+import { LocalStorageService } from './implementations/local.storage.js';
 let StorageModule = class StorageModule {
 };
 StorageModule = __decorate([

@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Injectable, Logger } from '@nestjs/common';
 import * as path from 'path';
-import { processMedia, validateMedia } from '../../../config/uploads.config';
+import { processMedia, validateMedia } from '../../../config/uploads.config.js';
 let LocalStorageService = class LocalStorageService {
     logger = new Logger('LocalStorageService');
     basePath;

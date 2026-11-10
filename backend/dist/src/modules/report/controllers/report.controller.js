@@ -11,9 +11,9 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 import { Controller, Get, UseGuards } from '@nestjs/common';
-import { ReportService } from '../services/report.service';
-import { AuthGuard } from '../../../common/guards/auth.guard';
-import { GetUser } from '../../../common/decorators/get-user.decorator';
+import { ReportService } from '../services/report.service.js';
+import { AuthGuard } from '../../../common/guards/auth.guard.js';
+import { GetUser } from '../../../common/decorators/get-user.decorator.js';
 let ReportController = class ReportController {
     reportService;
     constructor(reportService) {

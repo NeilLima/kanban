@@ -1,5 +1,5 @@
-import { ColumnRepository } from '../repository/column.repository';
-import { CreateColumnDto, UpdateColumnDto } from '../dto/column.dto';
+import { ColumnRepository } from '../repository/column.repository.js';
+import { CreateColumnDto, UpdateColumnDto } from '../dto/column.dto.js';
 export declare class ColumnService {
     private readonly columnRepository;
     private readonly logger;

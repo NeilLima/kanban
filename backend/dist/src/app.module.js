@@ -6,20 +6,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { CoreModule } from './core/core.module';
-import { AuthModule } from './auth/auth.module';
-import { ProjectModule } from './modules/project/project.module';
-import { TaskModule } from './modules/task/task.module';
-import { ReportModule } from './modules/report/report.module';
-import { UserModule } from './modules/user/user.module';
-import { NotificationModule } from './modules/notification/notification.module';
-import { ColumnModule } from './modules/column/column.module';
-import { LabelModule } from './modules/label/label.module';
-import CorsConfig from './config/cors.config';
-import DatabaseConfig from './config/database.config';
-import JwtConfig from './config/jwt.config';
-import AuthConfig from './config/auth.config';
-import UploadsConfig from './config/uploads.config';
+import { CoreModule } from './core/core.module.js';
+import { AuthModule } from './auth/auth.module.js';
+import { ProjectModule } from './modules/project/project.module.js';
+import { TaskModule } from './modules/task/task.module.js';
+import { ReportModule } from './modules/report/report.module.js';
+import { UserModule } from './modules/user/user.module.js';
+import { NotificationModule } from './modules/notification/notification.module.js';
+import { ColumnModule } from './modules/column/column.module.js';
+import { LabelModule } from './modules/label/label.module.js';
+import { TeamModule } from './modules/team/team.module.js';
+import CorsConfig from './config/cors.config.js';
+import DatabaseConfig from './config/database.config.js';
+import JwtConfig from './config/jwt.config.js';
+import AuthConfig from './config/auth.config.js';
+import UploadsConfig from './config/uploads.config.js';
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -39,6 +40,7 @@ AppModule = __decorate([
             NotificationModule,
             ColumnModule,
             LabelModule,
+            TeamModule,
         ],
     })
 ], AppModule);

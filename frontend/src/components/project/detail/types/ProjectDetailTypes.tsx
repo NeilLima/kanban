@@ -16,6 +16,10 @@ export interface ProjectDetailState {
   showEdit: boolean;
   showAddTask: boolean;
   showAddMember: boolean;
+  showRegisterUser: boolean;
+  registerForm: { name: string; email: string; password: string };
+  registering: boolean;
+  registerError: string;
   users: UserOption[];
   membersCount: number;
 }
@@ -30,5 +34,8 @@ export interface ProjectDetailActions {
   handleCloseAddTask: () => void;
   handleAddMember: () => void;
   handleCloseAddMember: () => void;
+  handleToggleRegisterUser: () => void;
+  handleRegisterFormChange: (field: 'name' | 'email' | 'password', value: string) => void;
+  handleRegisterSubmit: (projectId: string) => void;
   refetch: () => void;
 }

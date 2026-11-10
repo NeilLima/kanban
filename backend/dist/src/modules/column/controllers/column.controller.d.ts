@@ -1,5 +1,5 @@
-import { ColumnService } from '../services/column.service';
-import { CreateColumnDto, UpdateColumnDto } from '../dto/column.dto';
+import { ColumnService } from '../services/column.service.js';
+import { CreateColumnDto, UpdateColumnDto } from '../dto/column.dto.js';
 export declare class ColumnController {
     private readonly columnService;
     constructor(columnService: ColumnService);

@@ -52,13 +52,13 @@ export default function Sidebar({ collapsed = false, onToggle, onNavigate }: Sid
       {/* Logo + Toggle */}
       <div className="d-flex align-items-center justify-content-between p-2 p-md-3" style={{ flexShrink: 0 }}>
         <div className="d-flex align-items-center gap-2" style={{ minWidth: 0 }}>
-          <div className="d-flex align-items-center justify-content-center flex-shrink-0" style={{ width: collapsed ? 32 : 'clamp(24px, 3vw, 36px)', height: collapsed ? 32 : 'clamp(24px, 3vw, 36px)', backgroundColor: '#3b82f6', borderRadius: 'clamp(4px, 0.6vw, 8px)' }}>
-            <span className="fw-bold text-white" style={{ fontSize: collapsed ? 16 : 'clamp(12px, 1.4vw, 18px)' }}>N</span>
+          <div className="d-flex align-items-center justify-content-center flex-shrink-0" style={{ width: collapsed ? 32 : '36px', height: collapsed ? 32 : '36px', backgroundColor: '#3b82f6', borderRadius: 'clamp(4px, 0.6vw, 8px)' }}>
+            <span className="fw-bold text-white" style={{ fontSize: collapsed ? 16 : '18px' }}>N</span>
           </div>
           {!collapsed && (
             <div className="d-none d-md-block" style={{ minWidth: 0 }}>
-              <h6 className="fw-bold text-white mb-0" style={{ fontSize: 'clamp(11px, 1.2vw, 15px)', letterSpacing: 0.5, whiteSpace: 'nowrap' }}>NEXUS</h6>
-              <small className="text-secondary" style={{ fontSize: 'clamp(8px, 0.7vw, 10px)' }}>TAREFAS</small>
+              <h6 className="fw-bold text-white mb-0" style={{ fontSize: '15px', letterSpacing: 0.5, whiteSpace: 'nowrap' }}>NEXUS</h6>
+              <small className="text-secondary" style={{ fontSize: '11px' }}>TAREFAS</small>
             </div>
           )}
         </div>
@@ -72,7 +72,7 @@ export default function Sidebar({ collapsed = false, onToggle, onNavigate }: Sid
       </div>
 
       {/* Menu Principal */}
-      {!collapsed && <div className="px-3 px-md-3 mb-1"><small className="text-secondary fw-semibold" style={{ fontSize: 'clamp(9px, 0.8vw, 11px)', textTransform: 'uppercase', letterSpacing: 0.5 }}>Principal</small></div>}
+      {!collapsed && <div className="px-3 px-md-3 mb-1"><small className="text-secondary fw-semibold" style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: 0.5 }}>Principal</small></div>}
       <ListGroup variant="flush" className="px-1 px-md-2 mb-1" style={{ flexShrink: 0 }}>
         {menuItems.map((item) => (
           <ListGroup.Item
@@ -84,13 +84,13 @@ export default function Sidebar({ collapsed = false, onToggle, onNavigate }: Sid
               cursor: 'pointer',
               backgroundColor: pathname === item.path ? 'rgba(59, 130, 246, 0.1)' : 'transparent',
               color: pathname === item.path ? '#3b82f6' : '#94a3b8',
-              padding: collapsed ? '8px' : 'clamp(4px, 0.5vw, 7px) clamp(6px, 0.8vw, 12px)',
+              padding: collapsed ? '8px' : '8px 12px',
               marginBottom: '1px',
               justifyContent: collapsed ? 'center' : 'flex-start'
             }}
           >
-            <i className={`bi ${item.icon}`} style={{ fontSize: collapsed ? 18 : 'clamp(12px, 1.2vw, 16px)' }}></i>
-            {!collapsed && <span style={{ fontSize: 'clamp(11px, 1vw, 14px)', fontWeight: 500, whiteSpace: 'nowrap' }}>{item.label}</span>}
+            <i className={`bi ${item.icon}`} style={{ fontSize: collapsed ? 18 : '16px' }}></i>
+            {!collapsed && <span style={{ fontSize: '14px', fontWeight: 500, whiteSpace: 'nowrap' }}>{item.label}</span>}
           </ListGroup.Item>
         ))}
       </ListGroup>
@@ -100,7 +100,7 @@ export default function Sidebar({ collapsed = false, onToggle, onNavigate }: Sid
         <div style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden' }}>
           {/* Favoritos */}
           <div className="px-3 px-md-3 mb-1">
-            <small className="text-secondary fw-semibold" style={{ fontSize: 'clamp(9px, 0.8vw, 11px)', textTransform: 'uppercase', letterSpacing: 0.5 }}>Favoritos</small>
+            <small className="text-secondary fw-semibold" style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: 0.5 }}>Favoritos</small>
           </div>
           <ListGroup variant="flush" className="px-1 px-md-2 mb-1">
             {favoriteItems.map((item) => (
@@ -111,12 +111,12 @@ export default function Sidebar({ collapsed = false, onToggle, onNavigate }: Sid
                 style={{ 
                   cursor: 'pointer',
                   color: '#94a3b8',
-                  padding: 'clamp(3px, 0.4vw, 6px) clamp(6px, 0.8vw, 12px)',
+                  padding: '6px 12px',
                   marginBottom: '1px'
                 }}
               >
                 <span style={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: item.color, flexShrink: 0 }}></span>
-                <span style={{ fontSize: 'clamp(10px, 0.9vw, 13px)', whiteSpace: 'nowrap' }}>{item.label}</span>
+                <span style={{ fontSize: '13px', whiteSpace: 'nowrap' }}>{item.label}</span>
               </ListGroup.Item>
             ))}
             {/* Ver todos */}
@@ -126,17 +126,17 @@ export default function Sidebar({ collapsed = false, onToggle, onNavigate }: Sid
               style={{ 
                 cursor: 'pointer',
                 color: '#94a3b8',
-                padding: 'clamp(3px, 0.4vw, 6px) clamp(6px, 0.8vw, 12px)',
+                padding: '6px 12px',
               }}
             >
               <i className="bi bi-chevron-down" style={{ fontSize: 11 }}></i>
-              <span style={{ fontSize: 'clamp(10px, 0.9vw, 13px)' }}>Ver todos</span>
+              <span style={{ fontSize: '13px' }}>Ver todos</span>
             </ListGroup.Item>
           </ListGroup>
 
           {/* Outros */}
           <div className="px-3 px-md-3 mb-1">
-            <small className="text-secondary fw-semibold" style={{ fontSize: 'clamp(9px, 0.8vw, 11px)', textTransform: 'uppercase', letterSpacing: 0.5 }}>Outros</small>
+            <small className="text-secondary fw-semibold" style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: 0.5 }}>Outros</small>
           </div>
           <ListGroup variant="flush" className="px-1 px-md-2 mb-1">
             {otherItems.map((item) => (
@@ -148,12 +148,12 @@ export default function Sidebar({ collapsed = false, onToggle, onNavigate }: Sid
                 style={{ 
                   cursor: 'pointer',
                   color: '#94a3b8',
-                  padding: 'clamp(3px, 0.4vw, 6px) clamp(6px, 0.8vw, 12px)',
+                  padding: '6px 12px',
                   marginBottom: '1px'
                 }}
               >
-                <i className={`bi ${item.icon}`} style={{ fontSize: 'clamp(12px, 1.1vw, 15px)' }}></i>
-                <span style={{ fontSize: 'clamp(10px, 0.9vw, 13px)', whiteSpace: 'nowrap' }}>{item.label}</span>
+                <i className={`bi ${item.icon}`} style={{ fontSize: '15px' }}></i>
+                <span style={{ fontSize: '13px', whiteSpace: 'nowrap' }}>{item.label}</span>
               </ListGroup.Item>
             ))}
           </ListGroup>
@@ -181,10 +181,10 @@ export default function Sidebar({ collapsed = false, onToggle, onNavigate }: Sid
       {/* Footer */}
       {!collapsed && (
         <div className="p-2 p-md-3 border-top" style={{ borderColor: 'rgba(255,255,255,0.05)', flexShrink: 0 }}>
-          <small className="text-secondary d-block" style={{ fontSize: 'clamp(8px, 0.7vw, 11px)' }}>
+          <small className="text-secondary d-block" style={{ fontSize: '11px' }}>
             Nexus Tarefas v2.0.0
           </small>
-          <small className="text-secondary d-block mt-1" style={{ fontSize: 'clamp(7px, 0.6vw, 10px)' }}>
+          <small className="text-secondary d-block mt-1" style={{ fontSize: '10px' }}>
             © 2024 Todos os direitos reservados.
           </small>
         </div>

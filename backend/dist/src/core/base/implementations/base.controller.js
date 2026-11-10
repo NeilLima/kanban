@@ -11,7 +11,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 import { Body, Delete, Get, HttpException, HttpStatus, Param, Patch, Post, Logger } from '@nestjs/common';
-import { IdFormatter } from '../../../config/id-formatter.config';
+import { IdFormatter } from '../../../config/id-formatter.config.js';
 export class BaseController {
     service;
     entityName;

@@ -1,4 +1,4 @@
-import { PrismaService } from '../../../core/prisma/prisma.service';
+import { PrismaService } from '../../../core/prisma/prisma.service.js';
 export declare class TaskRepository {
     private readonly prisma;
     constructor(prisma: PrismaService);
@@ -80,8 +80,8 @@ export declare class TaskRepository {
                 id: string;
                 createdAt: Date;
                 updatedAt: Date;
-                taskId: string;
                 parentId: string | null;
+                taskId: string;
                 content: string;
                 authorId: string;
             })[];
@@ -89,8 +89,8 @@ export declare class TaskRepository {
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            taskId: string;
             parentId: string | null;
+            taskId: string;
             content: string;
             authorId: string;
         })[];
@@ -102,8 +102,8 @@ export declare class TaskRepository {
                 projectId: string | null;
             };
         } & {
-            taskId: string;
             labelId: string;
+            taskId: string;
         })[];
         _count: {
             comments: number;
@@ -219,8 +219,8 @@ export declare class TaskRepository {
                 projectId: string | null;
             };
         } & {
-            taskId: string;
             labelId: string;
+            taskId: string;
         })[];
         _count: {
             comments: number;
@@ -290,8 +290,8 @@ export declare class TaskRepository {
                 projectId: string | null;
             };
         } & {
-            taskId: string;
             labelId: string;
+            taskId: string;
         })[];
         _count: {
             comments: number;
@@ -477,8 +477,8 @@ export declare class TaskRepository {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        taskId: string;
         parentId: string | null;
+        taskId: string;
         content: string;
         authorId: string;
     }>;
@@ -486,8 +486,8 @@ export declare class TaskRepository {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        taskId: string;
         parentId: string | null;
+        taskId: string;
         content: string;
         authorId: string;
     }>;
@@ -495,8 +495,8 @@ export declare class TaskRepository {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        taskId: string;
         parentId: string | null;
+        taskId: string;
         content: string;
         authorId: string;
     }>;

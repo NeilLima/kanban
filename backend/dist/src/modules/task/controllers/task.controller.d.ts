@@ -1,5 +1,5 @@
-import { TaskService } from '../services/task.service';
-import { CreateTaskDto, UpdateTaskDto, MoveTaskDto } from '../dto/task.dto';
+import { TaskService } from '../services/task.service.js';
+import { CreateTaskDto, UpdateTaskDto, MoveTaskDto } from '../dto/task.dto.js';
 export declare class TaskController {
     private readonly taskService;
     constructor(taskService: TaskService);
@@ -54,8 +54,8 @@ export declare class TaskController {
                 id: string;
                 createdAt: Date;
                 updatedAt: Date;
-                taskId: string;
                 parentId: string | null;
+                taskId: string;
                 content: string;
                 authorId: string;
             })[];
@@ -63,8 +63,8 @@ export declare class TaskController {
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            taskId: string;
             parentId: string | null;
+            taskId: string;
             content: string;
             authorId: string;
         })[];
@@ -76,8 +76,8 @@ export declare class TaskController {
                 projectId: string | null;
             };
         } & {
-            taskId: string;
             labelId: string;
+            taskId: string;
         })[];
         _count: {
             comments: number;
@@ -179,8 +179,8 @@ export declare class TaskController {
                 projectId: string | null;
             };
         } & {
-            taskId: string;
             labelId: string;
+            taskId: string;
         })[];
         _count: {
             comments: number;
@@ -250,8 +250,8 @@ export declare class TaskController {
                 projectId: string | null;
             };
         } & {
-            taskId: string;
             labelId: string;
+            taskId: string;
         })[];
         _count: {
             comments: number;
@@ -321,8 +321,8 @@ export declare class TaskController {
                 projectId: string | null;
             };
         } & {
-            taskId: string;
             labelId: string;
+            taskId: string;
         })[];
         _count: {
             comments: number;
@@ -489,8 +489,8 @@ export declare class TaskController {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        taskId: string;
         parentId: string | null;
+        taskId: string;
         content: string;
         authorId: string;
     }>;
@@ -500,8 +500,8 @@ export declare class TaskController {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        taskId: string;
         parentId: string | null;
+        taskId: string;
         content: string;
         authorId: string;
     }>;

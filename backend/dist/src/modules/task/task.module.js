@@ -7,10 +7,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { TaskController } from './controllers/task.controller';
-import { TaskService } from './services/task.service';
-import { TaskRepository } from './repository/task.repository';
-import { ProjectRepository } from '../project/repository/project.repository';
+import { TaskController } from './controllers/task.controller.js';
+import { TaskService } from './services/task.service.js';
+import { TaskRepository } from './repository/task.repository.js';
+import { ProjectRepository } from '../project/repository/project.repository.js';
 let TaskModule = class TaskModule {
 };
 TaskModule = __decorate([

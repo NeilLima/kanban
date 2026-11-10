@@ -5,8 +5,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import { Module, Global } from '@nestjs/common';
-import { StorageModule } from './storage/storage.module';
-import { PrismaModule } from './prisma/prisma.module';
+import { StorageModule } from './storage/storage.module.js';
+import { PrismaModule } from './prisma/prisma.module.js';
 let CoreModule = class CoreModule {
 };
 CoreModule = __decorate([

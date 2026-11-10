@@ -11,10 +11,10 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards, } from '@nestjs/common';
-import { ProjectService } from '../services/project.service';
-import { CreateProjectDto, UpdateProjectDto, CreateColumnDto, UpdateColumnDto, } from '../dto/project.dto';
-import { AuthGuard } from '../../../common/guards/auth.guard';
-import { GetUser } from '../../../common/decorators/get-user.decorator';
+import { ProjectService } from '../services/project.service.js';
+import { CreateProjectDto, UpdateProjectDto, CreateColumnDto, UpdateColumnDto, } from '../dto/project.dto.js';
+import { AuthGuard } from '../../../common/guards/auth.guard.js';
+import { GetUser } from '../../../common/decorators/get-user.decorator.js';
 let ProjectController = class ProjectController {
     projectService;
     constructor(projectService) {

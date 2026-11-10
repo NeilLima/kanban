@@ -25,7 +25,6 @@ export class RegisterDto {
   firstName: string;
 
   @IsString()
-  @IsNotEmpty({ message: 'Sobrenome é obrigatório' })
   lastName: string;
 
   @IsString()

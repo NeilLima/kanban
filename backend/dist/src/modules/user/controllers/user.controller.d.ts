@@ -1,5 +1,5 @@
-import { UserService } from '../services/user.service';
-import { UpdateUserDto } from '../dto/user.dto';
+import { UserService } from '../services/user.service.js';
+import { UpdateUserDto } from '../dto/user.dto.js';
 export declare class UserController {
     private readonly userService;
     constructor(userService: UserService);
@@ -88,11 +88,11 @@ export declare class UserController {
             id: string;
             createdAt: Date;
             userId: string;
-            message: string | null;
             title: string;
             projectId: string | null;
             taskId: string | null;
             type: import("@prisma/client").$Enums.NotificationType;
+            message: string | null;
             isRead: boolean;
         }[];
     } & {
@@ -168,11 +168,11 @@ export declare class UserController {
             id: string;
             createdAt: Date;
             userId: string;
-            message: string | null;
             title: string;
             projectId: string | null;
             taskId: string | null;
             type: import("@prisma/client").$Enums.NotificationType;
+            message: string | null;
             isRead: boolean;
         }[];
     } & {
@@ -282,11 +282,11 @@ export declare class UserController {
             id: string;
             createdAt: Date;
             userId: string;
-            message: string | null;
             title: string;
             projectId: string | null;
             taskId: string | null;
             type: import("@prisma/client").$Enums.NotificationType;
+            message: string | null;
             isRead: boolean;
         }[];
     } & {

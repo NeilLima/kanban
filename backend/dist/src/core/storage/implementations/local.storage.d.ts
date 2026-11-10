@@ -1,4 +1,4 @@
-import { StorageService } from '../interfaces/storage.interface';
+import { StorageService } from '../interfaces/storage.interface.js';
 export declare class LocalStorageService implements StorageService {
     private readonly logger;
     private readonly basePath;

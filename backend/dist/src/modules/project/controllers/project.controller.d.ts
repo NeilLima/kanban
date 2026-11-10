@@ -1,5 +1,5 @@
-import { ProjectService } from '../services/project.service';
-import { CreateProjectDto, UpdateProjectDto, CreateColumnDto, UpdateColumnDto } from '../dto/project.dto';
+import { ProjectService } from '../services/project.service.js';
+import { CreateProjectDto, UpdateProjectDto, CreateColumnDto, UpdateColumnDto } from '../dto/project.dto.js';
 export declare class ProjectController {
     private readonly projectService;
     constructor(projectService: ProjectService);
@@ -232,8 +232,8 @@ export declare class ProjectController {
                     projectId: string | null;
                 };
             } & {
-                taskId: string;
                 labelId: string;
+                taskId: string;
             })[];
             _count: {
                 comments: number;

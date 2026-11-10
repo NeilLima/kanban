@@ -1,4 +1,4 @@
-import { IdFormatter } from '../../../config/id-formatter.config';
+import { IdFormatter } from '../../../config/id-formatter.config.js';
 import { Logger } from '@nestjs/common';
 export class BaseRepositoryImpl {
     model;

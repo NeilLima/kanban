@@ -51,7 +51,6 @@ __decorate([
 ], RegisterDto.prototype, "firstName", void 0);
 __decorate([
     IsString(),
-    IsNotEmpty({ message: 'Sobrenome é obrigatório' }),
     __metadata("design:type", String)
 ], RegisterDto.prototype, "lastName", void 0);
 __decorate([

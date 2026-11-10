@@ -8,7 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Injectable } from '@nestjs/common';
-import { ReportRepository } from '../repository/report.repository';
+import { ReportRepository } from '../repository/report.repository.js';
 const DIA_MS = 86_400_000;
 const JANELA_DIAS = 7;
 const SEMANAS = 7;

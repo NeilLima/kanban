@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var ColumnService_1;
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
-import { ColumnRepository } from '../repository/column.repository';
+import { ColumnRepository } from '../repository/column.repository.js';
 let ColumnService = ColumnService_1 = class ColumnService {
     columnRepository;
     logger = new Logger(ColumnService_1.name);

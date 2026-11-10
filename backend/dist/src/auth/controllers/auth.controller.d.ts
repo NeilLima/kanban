@@ -1,12 +1,11 @@
-import { AuthService } from '../services/auth.service';
-import { LoginDto, RegisterDto } from '../dto/auth.dto';
+import { AuthService } from '../services/auth.service.js';
+import { LoginDto, RegisterDto } from '../dto/auth.dto.js';
 export declare class AuthController {
     private readonly authService;
     constructor(authService: AuthService);
     register(dto: RegisterDto): Promise<{
         user: {
             profile: {
-                id: string;
                 firstName: string;
                 lastName: string;
                 countryIso2: string | null;
@@ -14,13 +13,14 @@ export declare class AuthController {
                 city: string | null;
                 birthDate: Date | null;
                 gender: string | null;
+                id: string;
                 userId: string;
             } | null;
         } & {
-            id: string;
             email: string;
-            username: string | null;
             password: string;
+            id: string;
+            username: string | null;
             avatar: string | null;
             role: string;
             createdAt: Date;
@@ -30,10 +30,10 @@ export declare class AuthController {
     }>;
     login(dto: LoginDto): Promise<{
         user: {
-            id: string;
             email: string;
-            username: string | null;
             password: string;
+            id: string;
+            username: string | null;
             avatar: string | null;
             role: string;
             createdAt: Date;

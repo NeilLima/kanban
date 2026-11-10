@@ -18,7 +18,60 @@ const PRIORITY_LABELS: Record<string, string> = {
 export default function DetailComp({ taskId, show, onHide }: DetailTypes) {
   const { state, actions, STATUS_OPTIONS } = useDetail(taskId);
 
-  if (!show || state.loading || !state.task) return null;
+  if (!show) return null;
+
+  if (state.loading) {
+    return (
+      <div
+        style={{
+          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+          background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          zIndex: 1200,
+        }}
+        data-testid="detail-modal-loading"
+      >
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Carregando detalhes...</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (!state.task) {
+    return (
+      <div
+        style={{
+          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+          background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          padding: 16, zIndex: 1200,
+        }}
+        onClick={onHide}
+        data-testid="detail-modal-error"
+      >
+        <div
+          style={{
+            background: '#1e293b', border: '1px solid rgba(255,255,255,0.08)',
+            borderRadius: 14, padding: '24px 28px', textAlign: 'center',
+          }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <i className="bi bi-exclamation-triangle" style={{ fontSize: 28, color: '#f59e0b' }}></i>
+          <p style={{ color: '#f8fafc', fontSize: 14, marginTop: 12, marginBottom: 16 }}>
+            Não foi possível carregar os detalhes da tarefa.
+          </p>
+          <button
+            onClick={onHide}
+            style={{ background: '#3b82f6', border: 'none', color: '#fff', borderRadius: 8, padding: '8px 18px', fontSize: 13, cursor: 'pointer' }}
+            data-testid="detail-error-close"
+          >
+            Fechar
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -101,13 +154,44 @@ export default function DetailComp({ taskId, show, onHide }: DetailTypes) {
           </select>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginBottom: 20, fontSize: 12, color: '#94a3b8' }} data-testid="detail-meta">
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginBottom: 12, fontSize: 12, color: '#94a3b8' }} data-testid="detail-meta">
           <span>Prioridade: {PRIORITY_LABELS[state.task.priority] || state.task.priority}</span>
           {state.task.dueDate && <span>• Prazo: {new Date(state.task.dueDate).toLocaleDateString()}</span>}
-          {state.task.assignees && state.task.assignees.length > 0 && (
-            <span>• {state.task.assignees.length} responsável(is)</span>
-          )}
         </div>
+
+        {state.task.assignees && state.task.assignees.length > 0 && (
+          <div style={{ marginBottom: 20 }} data-testid="detail-participants">
+            <label style={{ display: 'block', color: '#94a3b8', fontSize: 12, marginBottom: 8, fontWeight: 500 }}>
+              Participantes ({state.task.assignees.length})
+            </label>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              {state.task.assignees.map((a, i) => (
+                <div key={i} className="d-flex align-items-center gap-2" data-testid={`detail-participant-${i}`}>
+                  <div
+                    className="d-flex align-items-center justify-content-center flex-shrink-0"
+                    style={{
+                      width: 26, height: 26, borderRadius: '50%',
+                      backgroundColor: a.color || '#3b82f6',
+                      color: '#fff', fontSize: 11, fontWeight: 600,
+                    }}
+                  >
+                    {(a.name || '?').charAt(0).toUpperCase()}
+                  </div>
+                  <div style={{ minWidth: 0 }}>
+                    <div style={{ color: '#f8fafc', fontSize: 13, fontWeight: 500, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                      {a.name}
+                    </div>
+                    {a.email && (
+                      <div style={{ color: '#64748b', fontSize: 11, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                        {a.email}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10 }}>
           <button

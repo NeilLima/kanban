@@ -1,5 +1,5 @@
-import { BaseEntity } from './entity.interface';
-import { FilterOptions, QueryOptions } from './query-options.interface';
+import { BaseEntity } from './entity.interface.js';
+import { FilterOptions, QueryOptions } from './query-options.interface.js';
 export interface BaseRepository<T extends BaseEntity> {
     create(data: Partial<T>): Promise<T>;
     findById(id: string, options?: QueryOptions): Promise<T | null>;
