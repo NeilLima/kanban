@@ -10,10 +10,10 @@ import {
   UseGuards,
 } from '@nestjs/common';
 
-import { NotificationService } from '../services/notification.service';
-import { CreateNotificationDto, UpdateNotificationDto } from '../dto/notification.dto';
-import { AuthGuard } from '../../../common/guards/auth.guard';
-import { GetUser } from '../../../common/decorators/get-user.decorator';
+import { NotificationService } from '../services/notification.service.js';
+import { CreateNotificationDto, UpdateNotificationDto } from '../dto/notification.dto.js';
+import { AuthGuard } from '../../../common/guards/auth.guard.js';
+import { GetUser } from '../../../common/decorators/get-user.decorator.js';
 
 @Controller('notifications')
 @UseGuards(AuthGuard)

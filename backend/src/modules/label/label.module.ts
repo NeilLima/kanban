@@ -3,9 +3,9 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
-import { LabelController } from './controllers/label.controller';
-import { LabelService } from './services/label.service';
-import { LabelRepository } from './repository/label.repository';
+import { LabelController } from './controllers/label.controller.js';
+import { LabelService } from './services/label.service.js';
+import { LabelRepository } from './repository/label.repository.js';
 
 @Module({
   imports: [

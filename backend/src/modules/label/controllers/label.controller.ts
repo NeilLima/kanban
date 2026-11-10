@@ -10,10 +10,10 @@ import {
   UseGuards,
 } from '@nestjs/common';
 
-import { LabelService } from '../services/label.service';
-import { CreateLabelDto, UpdateLabelDto } from '../dto/label.dto';
-import { AuthGuard } from '../../../common/guards/auth.guard';
-import { GetUser } from '../../../common/decorators/get-user.decorator';
+import { LabelService } from '../services/label.service.js';
+import { CreateLabelDto, UpdateLabelDto } from '../dto/label.dto.js';
+import { AuthGuard } from '../../../common/guards/auth.guard.js';
+import { GetUser } from '../../../common/decorators/get-user.decorator.js';
 
 @Controller('labels')
 @UseGuards(AuthGuard)

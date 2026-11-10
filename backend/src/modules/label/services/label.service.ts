@@ -6,8 +6,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 
-import { LabelRepository } from '../repository/label.repository';
-import { CreateLabelDto, UpdateLabelDto } from '../dto/label.dto';
+import { LabelRepository } from '../repository/label.repository.js';
+import { CreateLabelDto, UpdateLabelDto } from '../dto/label.dto.js';
 
 @Injectable()
 export class LabelService {

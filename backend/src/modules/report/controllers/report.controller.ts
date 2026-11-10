@@ -1,9 +1,9 @@
 /* eslint-disable prettier/prettier */
 import { Controller, Get, UseGuards } from '@nestjs/common';
 
-import { ReportService } from '../services/report.service';
-import { AuthGuard } from '../../../common/guards/auth.guard';
-import { GetUser } from '../../../common/decorators/get-user.decorator';
+import { ReportService } from '../services/report.service.js';
+import { AuthGuard } from '../../../common/guards/auth.guard.js';
+import { GetUser } from '../../../common/decorators/get-user.decorator.js';
 
 @Controller('reports')
 @UseGuards(AuthGuard)

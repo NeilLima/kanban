@@ -10,15 +10,15 @@ import {
   UseGuards,
 } from '@nestjs/common';
 
-import { ProjectService } from '../services/project.service';
+import { ProjectService } from '../services/project.service.js';
 import {
   CreateProjectDto,
   UpdateProjectDto,
   CreateColumnDto,
   UpdateColumnDto,
-} from '../dto/project.dto';
-import { AuthGuard } from '../../../common/guards/auth.guard';
-import { GetUser } from '../../../common/decorators/get-user.decorator';
+} from '../dto/project.dto.js';
+import { AuthGuard } from '../../../common/guards/auth.guard.js';
+import { GetUser } from '../../../common/decorators/get-user.decorator.js';
 
 @Controller('projects')
 @UseGuards(AuthGuard)

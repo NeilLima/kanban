@@ -7,9 +7,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable, Logger, ForbiddenException } from '@nestjs/common';
 
-import { TaskRepository } from '../repository/task.repository';
-import { ProjectRepository } from '../../project/repository/project.repository';
-import { CreateTaskDto, UpdateTaskDto, MoveTaskDto } from '../dto/task.dto';
+import { TaskRepository } from '../repository/task.repository.js';
+import { ProjectRepository } from '../../project/repository/project.repository.js';
+import { CreateTaskDto, UpdateTaskDto, MoveTaskDto } from '../dto/task.dto.js';
 
 @Injectable()
 export class TaskService {

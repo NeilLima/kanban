@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Injectable } from '@nestjs/common';
-import { ReportRepository } from '../repository/report.repository';
+import { ReportRepository } from '../repository/report.repository.js';
 
 const DIA_MS = 86_400_000;
 const JANELA_DIAS = 7;

@@ -6,8 +6,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { BadRequestException, Injectable, Logger, NotFoundException, ForbiddenException } from '@nestjs/common';
 
-import { UserRepository } from '../repository/user.repository';
-import { CreateUserDto, UpdateUserDto } from '../dto/user.dto';
+import { UserRepository } from '../repository/user.repository.js';
+import { CreateUserDto, UpdateUserDto } from '../dto/user.dto.js';
 
 @Injectable()
 export class UserService {

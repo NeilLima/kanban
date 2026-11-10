@@ -3,9 +3,9 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
-import { ReportController } from './controllers/report.controller';
-import { ReportService } from './services/report.service';
-import { ReportRepository } from './repository/report.repository';
+import { ReportController } from './controllers/report.controller.js';
+import { ReportService } from './services/report.service.js';
+import { ReportRepository } from './repository/report.repository.js';
 
 @Module({
   imports: [

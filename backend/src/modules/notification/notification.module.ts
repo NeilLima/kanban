@@ -3,9 +3,9 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
-import { NotificationController } from './controllers/notification.controller';
-import { NotificationService } from './services/notification.service';
-import { NotificationRepository } from './repository/notification.repository';
+import { NotificationController } from './controllers/notification.controller.js';
+import { NotificationService } from './services/notification.service.js';
+import { NotificationRepository } from './repository/notification.repository.js';
 
 @Module({
   imports: [

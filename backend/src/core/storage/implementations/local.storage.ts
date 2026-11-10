@@ -2,8 +2,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import * as fs from 'fs-extra';
 import * as path from 'path';
-import { StorageService } from '../interfaces/storage.interface';
-import { processMedia, validateMedia } from '../../../config/uploads.config';
+import { StorageService } from '../interfaces/storage.interface.js';
+import { processMedia, validateMedia } from '../../../config/uploads.config.js';
 
 /**
  * Implementação de armazenamento base64

@@ -10,10 +10,10 @@ import {
   UseGuards,
 } from '@nestjs/common';
 
-import { ColumnService } from '../services/column.service';
-import { CreateColumnDto, UpdateColumnDto } from '../dto/column.dto';
-import { AuthGuard } from '../../../common/guards/auth.guard';
-import { GetUser } from '../../../common/decorators/get-user.decorator';
+import { ColumnService } from '../services/column.service.js';
+import { CreateColumnDto, UpdateColumnDto } from '../dto/column.dto.js';
+import { AuthGuard } from '../../../common/guards/auth.guard.js';
+import { GetUser } from '../../../common/decorators/get-user.decorator.js';
 
 @Controller('columns')
 @UseGuards(AuthGuard)

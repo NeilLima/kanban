@@ -6,8 +6,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable, Logger, NotFoundException, ForbiddenException } from '@nestjs/common';
 
-import { NotificationRepository } from '../repository/notification.repository';
-import { CreateNotificationDto, UpdateNotificationDto } from '../dto/notification.dto';
+import { NotificationRepository } from '../repository/notification.repository.js';
+import { CreateNotificationDto, UpdateNotificationDto } from '../dto/notification.dto.js';
 
 @Injectable()
 export class NotificationService {

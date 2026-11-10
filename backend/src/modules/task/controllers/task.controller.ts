@@ -10,10 +10,10 @@ import {
   UseGuards,
 } from '@nestjs/common';
 
-import { TaskService } from '../services/task.service';
-import { CreateTaskDto, UpdateTaskDto, MoveTaskDto } from '../dto/task.dto';
-import { AuthGuard } from '../../../common/guards/auth.guard';
-import { GetUser } from '../../../common/decorators/get-user.decorator';
+import { TaskService } from '../services/task.service.js';
+import { CreateTaskDto, UpdateTaskDto, MoveTaskDto } from '../dto/task.dto.js';
+import { AuthGuard } from '../../../common/guards/auth.guard.js';
+import { GetUser } from '../../../common/decorators/get-user.decorator.js';
 
 @Controller('tasks')
 @UseGuards(AuthGuard)

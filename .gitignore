@@ -3,3 +3,4 @@
 setup-banco.bat
 setup-banco.ps1
 .vercel
+.env*

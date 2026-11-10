@@ -7,13 +7,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
 
-import { ProjectRepository } from '../repository/project.repository';
+import { ProjectRepository } from '../repository/project.repository.js';
 import {
   CreateProjectDto,
   UpdateProjectDto,
   CreateColumnDto,
   UpdateColumnDto,
-} from '../dto/project.dto';
+} from '../dto/project.dto.js';
 
 @Injectable()
 export class ProjectService {
