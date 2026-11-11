@@ -1,5 +1,0 @@
-C:\Users\victor\Documents\GitHub\kanban\frontend\src\components\task\main\components\TaskCreateModalComp.tsx
-C:\Users\victor\Documents\GitHub\kanban\frontend\src\components\task\main\services\TaskServices.tsx
-C:\Users\victor\Documents\GitHub\kanban\frontend\src\components\task\main\styles\TaskStyles.tsx
-C:\Users\victor\Documents\GitHub\kanban\frontend\src\components\task\main\types\TaskTypes.tsx
-C:\Users\victor\Documents\GitHub\kanban\frontend\src\components\task\main\utils\TaskUtils.tsx

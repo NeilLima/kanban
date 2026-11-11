@@ -4,3 +4,29 @@ setup-banco.bat
 setup-banco.ps1
 .vercel
 .env*
+
+# dependencias e build
+node_modules/
+dist/
+.next/
+out/
+build/
+coverage/
+
+# env e segredos
+.env
+.env.*
+!.env.example
+*.env
+_vercel-*.env
+
+# arquivos temporarios / saida de comandos
+*.log
+*.txt
+!README*.txt
+*-out.txt
+*-check*.txt
+*.tsbuildinfo
+.vercel
+setup-banco.bat
+setup-banco.ps1

@@ -1,6 +1,0 @@
-﻿C:\Users\victor\Documents\GitHub\kanban\frontend\src\services\README.md
-C:\Users\victor\Documents\GitHub\kanban\frontend\src\DOCUMENTACAO_GERAL.md
-C:\Users\victor\Documents\GitHub\kanban\frontend\AGENTS.md
-C:\Users\victor\Documents\GitHub\kanban\frontend\CLAUDE.md
-C:\Users\victor\Documents\GitHub\kanban\frontend\README.md
-C:\Users\victor\Documents\GitHub\kanban\backend\src\core\README.md

@@ -1,3 +1,0 @@
-🌱 Executando seed...
-✅ Projeto demo criado
-✅ Seed concluído. Login: demo@kanban.com / senha12345
