@@ -47,6 +47,12 @@ export class CreateTaskDto {
   @IsOptional()
   labelIds?: string[];
 
+  /** Nomes de etiquetas digitados pelo usuário — o backend resolve/cria
+   *  as Label do projeto e vincula à tarefa */
+  @IsArray()
+  @IsOptional()
+  tagNames?: string[];
+
   @IsEnum(['TODO', 'IN_PROGRESS', 'REVIEW', 'DONE'])
   @IsOptional()
   status?: 'TODO' | 'IN_PROGRESS' | 'REVIEW' | 'DONE';
@@ -106,6 +112,11 @@ export class UpdateTaskDto {
   @IsArray()
   @IsOptional()
   labelIds?: string[];
+
+  /** Nomes de etiquetas — resolve/cria Label do projeto e substitui as atuais */
+  @IsArray()
+  @IsOptional()
+  tagNames?: string[];
 }
 
 export class MoveTaskDto {
@@ -117,4 +128,19 @@ export class MoveTaskDto {
   @Min(0)
   @IsOptional()
   order?: number;
+}
+
+export class UploadAttachmentDto {
+  @IsString()
+  @IsNotEmpty({ message: 'Nome do arquivo é obrigatório' })
+  fileName: string;
+
+  @IsString()
+  @IsNotEmpty({ message: 'Tipo MIME é obrigatório' })
+  mimeType: string;
+
+  /** Conteúdo do arquivo em base64 (com ou sem prefixo data:) */
+  @IsString()
+  @IsNotEmpty({ message: 'Conteúdo do arquivo é obrigatório' })
+  data: string;
 }

@@ -4,7 +4,7 @@ import { DndContext, closestCorners } from '@dnd-kit/core';
 import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable';
 import { useBoard } from '../utils/BoardUtils';
 import ColumnComp from '../../column/components/ColumnComp';
-import DetailComp from '@/shared/kanban/detail/components/DetailComp';
+import DetailComp from '@/components/dashboard/detail/components/DetailComp';
 import { StyledBoard, StyledBoardScroll, StyledLoadingWrapper } from '../styles/BoardStyles';
 import type { BoardTypes } from '../types/BoardTypes';
 
@@ -48,8 +48,7 @@ export default function BoardComp({ projectId }: BoardTypes) {
       {selectedTaskId && (
         <DetailComp
           taskId={selectedTaskId}
-          show
-          onHide={handleCloseTaskModal}
+          onClose={handleCloseTaskModal}
         />
       )}
     </StyledBoard>

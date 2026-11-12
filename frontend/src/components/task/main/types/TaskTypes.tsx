@@ -13,6 +13,8 @@ export interface TaskCreateData {
   dueDate?: string;
   assigneeIds?: string[];
   projectId?: string;
+  /** Nomes das etiquetas digitados (vírgula) — backend resolve/cria Label */
+  tagNames?: string[];
   category?: string;
   color?: string;
   estimatedTime?: number;

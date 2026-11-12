@@ -409,3 +409,132 @@ export const StyledDeleteButton = styled.button`
     background: rgba(239, 68, 68, 0.1);
   }
 `;
+
+/* ===== Extras do painel de detalhe (abas reais) ===== */
+
+export const StyledProgressBar = styled.div`
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 10px;
+
+  > div {
+    height: 100%;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+    border-radius: 999px;
+    transition: width 0.3s ease;
+  }
+`;
+
+export const StyledProgressText = styled.div`
+  font-size: 11px;
+  color: #94a3b8;
+  margin-top: 4px;
+`;
+
+export const StyledHistoryItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 12px;
+  color: #cbd5e1;
+
+  .meta {
+    font-size: 10px;
+    color: #64748b;
+  }
+
+  .change {
+    color: #94a3b8;
+
+    s {
+      color: #f87171;
+    }
+  }
+`;
+
+export const StyledEmptyState = styled.div`
+  text-align: center;
+  color: #64748b;
+  font-size: 12px;
+  padding: 24px 8px;
+`;
+
+export const StyledIconAction = styled.button`
+  background: transparent;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  padding: 2px 4px;
+  font-size: 13px;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: #f8fafc;
+  }
+
+  &.danger:hover {
+    color: #ef4444;
+  }
+`;
+
+export const StyledFileRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+  .name {
+    flex: 1;
+    min-width: 0;
+    font-size: 13px;
+    color: #e2e8f0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+
+    &:hover {
+      color: #93c5fd;
+    }
+  }
+
+  .meta {
+    font-size: 10px;
+    color: #64748b;
+    white-space: nowrap;
+  }
+`;
+
+export const StyledEditGrid = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  label {
+    font-size: 11px;
+    color: #94a3b8;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+`;
+
+export const StyledEditActions = styled.div`
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+`;
+
+export const StyledReplyBadge = styled.span`
+  font-size: 10px;
+  color: #93c5fd;
+  background: rgba(59, 130, 246, 0.12);
+  border-radius: 999px;
+  padding: 2px 8px;
+  margin-left: 6px;
+`;

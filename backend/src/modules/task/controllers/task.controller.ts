@@ -7,11 +7,14 @@ import {
   Param,
   Patch,
   Post,
+  Res,
+  StreamableFile,
   UseGuards,
 } from '@nestjs/common';
+import type { Response } from 'express';
 
 import { TaskService } from '../services/task.service.js';
-import { CreateTaskDto, UpdateTaskDto, MoveTaskDto } from '../dto/task.dto.js';
+import { CreateTaskDto, UpdateTaskDto, MoveTaskDto, UploadAttachmentDto } from '../dto/task.dto.js';
 import { AuthGuard } from '../../../common/guards/auth.guard.js';
 import { GetUser } from '../../../common/decorators/get-user.decorator.js';
 
@@ -113,5 +116,54 @@ export class TaskController {
     @GetUser('userId') userId: string,
   ) {
     return this.taskService.removeComment(commentId, userId);
+  }
+
+  // ---- Anexos ----
+
+  @Post(':id/attachments')
+  uploadAttachment(
+    @Param('id') id: string,
+    @GetUser('userId') userId: string,
+    @Body() dto: UploadAttachmentDto,
+  ) {
+    return this.taskService.uploadAttachment(id, userId, dto);
+  }
+
+  @Get(':id/attachments')
+  listAttachments(
+    @Param('id') id: string,
+    @GetUser('userId') userId: string,
+  ) {
+    return this.taskService.listAttachments(id, userId);
+  }
+
+  /** Download/preview do arquivo — imagens e PDF abrem inline no browser */
+  @Get('attachments/:attachmentId/file')
+  async getAttachmentFile(
+    @Param('attachmentId') attachmentId: string,
+    @GetUser('userId') userId: string,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const file = await this.taskService.getAttachmentFile(attachmentId, userId);
+    const inline =
+      file.mimeType.startsWith('image/') ||
+      file.mimeType === 'application/pdf' ||
+      file.mimeType === 'text/plain';
+    res.setHeader('Content-Type', file.mimeType);
+    res.setHeader(
+      'Content-Disposition',
+      `${inline ? 'inline' : 'attachment'}; filename*=UTF-8''${encodeURIComponent(file.fileName)}`,
+    );
+    res.setHeader('Content-Length', file.buffer.length);
+    res.setHeader('Cache-Control', 'private, max-age=300');
+    return new StreamableFile(file.buffer);
+  }
+
+  @Delete('attachments/:attachmentId')
+  deleteAttachment(
+    @Param('attachmentId') attachmentId: string,
+    @GetUser('userId') userId: string,
+  ) {
+    return this.taskService.deleteAttachment(attachmentId, userId);
   }
 }

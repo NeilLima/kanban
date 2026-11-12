@@ -45,6 +45,25 @@ export class TaskRepository {
           orderBy: { createdAt: 'desc' },
           take: 50,
         },
+        /** 📎 Anexos SEM o storageKey (base64 gigante não vai no payload) */
+        attachments: {
+          select: {
+            id: true,
+            fileName: true,
+            mimeType: true,
+            size: true,
+            uploadedById: true,
+            createdAt: true,
+            uploadedBy: {
+              select: {
+                id: true,
+                email: true,
+                profile: { select: { firstName: true, lastName: true } },
+              },
+            },
+          },
+          orderBy: { createdAt: 'desc' as const },
+        },
       },
     });
     if (!task) throw new NotFoundException('Tarefa não encontrada');
@@ -186,5 +205,60 @@ export class TaskRepository {
       throw new NotFoundException('Sem permissão para excluir este comentário');
     }
     return this.prisma.comment.delete({ where: { id } });
+  }
+
+  // ---- Anexos ----
+
+  async createAttachment(data: {
+    taskId: string;
+    fileName: string;
+    mimeType: string;
+    size: number;
+    storageKey: string;
+    uploadedById: string;
+  }) {
+    return this.prisma.attachment.create({ data });
+  }
+
+  async findAttachmentById(id: string) {
+    return this.prisma.attachment.findUnique({
+      where: { id },
+      include: {
+        task: { select: { id: true, projectId: true, creatorId: true } },
+        uploadedBy: {
+          select: {
+            id: true,
+            email: true,
+            profile: { select: { firstName: true, lastName: true } },
+          },
+        },
+      },
+    });
+  }
+
+  async findAttachmentsByTask(taskId: string) {
+    return this.prisma.attachment.findMany({
+      where: { taskId },
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+
+  async deleteAttachment(id: string) {
+    return this.prisma.attachment.delete({ where: { id } });
+  }
+
+  // ---- Etiquetas (Label) por nome ----
+
+  /** Busca label existente do projeto pelo nome (case-insensitive) */
+  async findLabelByName(projectId: string, name: string) {
+    return this.prisma.label.findFirst({
+      where: { projectId, name: { equals: name, mode: 'insensitive' } },
+    });
+  }
+
+  async createLabel(projectId: string, name: string, color: string) {
+    return this.prisma.label.create({
+      data: { projectId, name, color },
+    });
   }
 }

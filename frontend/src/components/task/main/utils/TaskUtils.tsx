@@ -131,6 +131,11 @@ export function useTaskCreate(columnId: string, defaultProjectId?: string) {
     if (criarMutation.isPending) return;
 
     const assigneeIds = form.assigneeId ? [form.assigneeId] : undefined;
+    const tagNames = form.tags
+      .split(',')
+      .map((t) => t.trim())
+      .filter((t) => t.length > 0)
+      .slice(0, 10);
 
     // columnId pode vir como placeholder ('default-column', '', etc.) —
     // nesse caso omitimos e o backend usa a primeira coluna do projeto.
@@ -162,6 +167,7 @@ export function useTaskCreate(columnId: string, defaultProjectId?: string) {
       dueDate: form.dueDate || undefined,
       assigneeIds,
       projectId: resolvedProjectId,
+      tagNames: tagNames.length ? tagNames : undefined,
     };
 
     criarMutation.mutate(payload);

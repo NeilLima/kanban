@@ -1,7 +1,8 @@
-import { getById, create, update, remove } from '@/services/crudService';
+import { getById, create, update, remove, customRequest, fileToBase64 } from '@/services/crudService';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import type {
   Task,
+  TaskAttachment,
   Checklist,
   Comment,
   HistoryEntry,
@@ -9,7 +10,7 @@ import type {
   ApiTaskDetail,
 } from '../types/DetailTypes';
 
-function nomeDe(user?: { email?: string; profile?: { firstName?: string; lastName?: string } | null }): string {
+function nomeDe(user?: { email?: string; profile?: { firstName?: string; lastName?: string } | null } | null): string {
   if (!user) return 'Usuário';
   return (
     `${user.profile?.firstName ?? ''} ${user.profile?.lastName ?? ''}`.trim() ||
@@ -37,6 +38,19 @@ function mapApiTask(data: ApiTaskDetail): Task {
     projectId: data.projectId ?? '',
     columnId: data.columnId ?? '',
     assignees,
+    labels: (data.labels || [])
+      .map((l) => l.label)
+      .filter((l): l is { id: string; name: string; color?: string } => !!l)
+      .map((l) => ({ id: l.id, name: l.name, color: l.color })),
+    attachments: (data.attachments || []).map((a) => ({
+      id: a.id,
+      fileName: a.fileName,
+      mimeType: a.mimeType,
+      size: a.size,
+      uploadedById: a.uploadedById,
+      uploadedByName: nomeDe(a.uploadedBy),
+      createdAt: a.createdAt,
+    })),
     createdAt: data.createdAt ?? new Date().toISOString(),
     updatedAt: data.updatedAt ?? new Date().toISOString(),
   };
@@ -121,7 +135,14 @@ export function useDetailService(taskId: string) {
   });
 
   const addCommentMutation = useMutation({
-    mutationFn: (content: string) => create(`tasks/${taskId}/comments`, { content }),
+    mutationFn: ({ content, parentId }: { content: string; parentId?: string }) =>
+      create(`tasks/${taskId}/comments`, { content, parentId }),
+    onSuccess: invalidar,
+  });
+
+  const updateCommentMutation = useMutation({
+    mutationFn: ({ commentId, content }: { commentId: string; content: string }) =>
+      update('tasks/comments', commentId, { content }),
     onSuccess: invalidar,
   });
 
@@ -130,11 +151,36 @@ export function useDetailService(taskId: string) {
     onSuccess: invalidar,
   });
 
+  /** 📎 Upload de anexo: File → base64 → POST /tasks/:id/attachments */
+  const uploadAttachmentMutation = useMutation({
+    mutationFn: async (file: File) => {
+      const data = await fileToBase64(file);
+      return create(`tasks/${taskId}/attachments`, {
+        fileName: file.name,
+        mimeType: file.type || 'application/octet-stream',
+        data,
+      });
+    },
+    onSuccess: invalidar,
+  });
+
+  const removeAttachmentMutation = useMutation({
+    mutationFn: (attachmentId: string) => remove('tasks/attachments', attachmentId),
+    onSuccess: invalidar,
+  });
+
+  /** Baixa/abre o anexo: GET /tasks/attachments/:id/file (auth via axios) */
+  async function getAttachmentBlob(attachmentId: string): Promise<Blob> {
+    return customRequest<Blob>('get', `tasks/attachments/${attachmentId}/file`, null, {
+      responseType: 'blob',
+    });
+  }
+
   return {
     task,
     checklists,
     comments,
-    attachments: [],
+    attachments: task?.attachments ?? [],
     history,
     loading: isLoading,
     updateTask: (data: Record<string, unknown>) => updateTaskMutation.mutateAsync(data),
@@ -143,7 +189,13 @@ export function useDetailService(taskId: string) {
     toggleChecklist: (itemId: string, isDone: boolean) =>
       toggleChecklistMutation.mutateAsync({ itemId, isDone }),
     removeChecklist: (itemId: string) => removeChecklistMutation.mutateAsync(itemId),
-    addComment: (content: string) => addCommentMutation.mutateAsync(content),
+    addComment: (content: string, parentId?: string) =>
+      addCommentMutation.mutateAsync({ content, parentId }),
+    updateComment: (commentId: string, content: string) =>
+      updateCommentMutation.mutateAsync({ commentId, content }),
     removeComment: (commentId: string) => removeCommentMutation.mutateAsync(commentId),
+    uploadAttachment: (file: File) => uploadAttachmentMutation.mutateAsync(file),
+    removeAttachment: (attachmentId: string) => removeAttachmentMutation.mutateAsync(attachmentId),
+    getAttachmentBlob,
   };
 }

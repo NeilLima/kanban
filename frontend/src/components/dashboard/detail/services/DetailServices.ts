@@ -1,5 +1,6 @@
 ﻿import { useDetailService as useKanbanDetailService } from '@/shared/kanban/detail/services/DetailServices';
-import type { TaskDetailData } from '../types/DetailTypes';
+import { formatImageSize } from '@/services/crudService';
+import type { TaskDetailData, TaskCommentData } from '../types/DetailTypes';
 
 // Monta um rótulo de tempo relativo ("há 2h") a partir de uma data ISO.
 function tempoRelativo(iso?: string): string {
@@ -14,13 +15,43 @@ function tempoRelativo(iso?: string): string {
   return `há ${dias}d`;
 }
 
+const FIELD_LABELS: Record<string, string> = {
+  status: 'status',
+  priority: 'prioridade',
+  column: 'coluna',
+  title: 'título',
+  description: 'descrição',
+  dueDate: 'prazo',
+};
+
+function mapComment(c: {
+  id: string;
+  content: string;
+  userId?: string;
+  createdAt?: string;
+  authorName?: string;
+  replies?: { id: string; content: string; createdAt?: string; authorName?: string }[];
+}): TaskCommentData {
+  return {
+    id: c.id,
+    content: c.content,
+    author: c.authorName || 'Usuário',
+    time: tempoRelativo(c.createdAt),
+    userId: c.userId,
+    replies: (c.replies || []).map((r) => ({
+      id: r.id,
+      content: r.content,
+      author: r.authorName || 'Usuário',
+      time: tempoRelativo(r.createdAt),
+    })),
+  };
+}
+
 // Converte o estado real do board (shared/kanban/detail) para o shape do painel.
 function mapParaTaskDetail(
-  task: ReturnType<typeof useKanbanDetailService>['task'],
-  checklists: ReturnType<typeof useKanbanDetailService>['checklists'],
-  comments: ReturnType<typeof useKanbanDetailService>['comments'],
-  history: ReturnType<typeof useKanbanDetailService>['history'],
+  kanban: ReturnType<typeof useKanbanDetailService>,
 ): TaskDetailData | null {
+  const task = kanban.task;
   if (!task) return null;
   return {
     id: task.id,
@@ -29,23 +60,34 @@ function mapParaTaskDetail(
     priority: task.priority,
     dueDate: task.dueDate,
     description: task.description,
-    tags: (task.tags || []).map((nome) => ({ name: nome, color: task.color })),
+    tags: (task.labels?.length
+      ? task.labels.map((l) => ({ name: l.name, color: l.color || task.color }))
+      : (task.tags || []).map((nome) => ({ name: nome, color: task.color }))),
     assignees: (task.assignees || []).map((a) => ({
       name: a.name,
       email: a.email,
       color: a.color,
     })),
-    comments: comments.map((c) => ({
-      id: c.id,
-      content: c.content,
-      author: c.authorName || 'Usuário',
-      time: tempoRelativo(c.createdAt),
+    comments: kanban.comments.map(mapComment),
+    attachments: kanban.attachments.map((a) => ({
+      id: a.id,
+      name: a.fileName,
+      size: formatImageSize(a.size),
+      mimeType: a.mimeType,
+      uploadedByName: a.uploadedByName,
     })),
-    attachments: [],
-    checklist: checklists.map((item) => ({
+    checklist: kanban.checklists.map((item) => ({
       id: item.id,
       title: item.title,
       completed: item.completed,
+    })),
+    history: kanban.history.map((h) => ({
+      id: h.id,
+      field: FIELD_LABELS[h.field] || h.field,
+      oldValue: h.oldValue,
+      newValue: h.newValue,
+      userName: h.userName,
+      time: tempoRelativo(h.createdAt),
     })),
   };
 }
@@ -54,7 +96,9 @@ export function useDetailService(taskId: string) {
   const kanban = useKanbanDetailService(taskId);
 
   return {
-    task: mapParaTaskDetail(kanban.task, kanban.checklists, kanban.comments, kanban.history),
+    task: mapParaTaskDetail(kanban),
     loading: kanban.loading,
+    /** Ações reais do backend (checklist, comentários, anexos, edição, exclusão) */
+    kanban,
   };
 }
