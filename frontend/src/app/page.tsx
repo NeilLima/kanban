@@ -1,35 +1,25 @@
 'use client';
-import React from 'react';
-import { Box, Typography, Button, Container } from '@mui/material';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { Box, CircularProgress } from '@mui/material';
 import { useAuth } from '@/contexts/AuthContext';
 
+/**
+ * Rota inicial `/` → nunca mostra landing.
+ * Logado → /dashboard · Sem sessão → /login
+ */
 export default function HomePage() {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const router = useRouter();
 
+  useEffect(() => {
+    if (loading) return;
+    router.replace(user ? '/dashboard' : '/login');
+  }, [user, loading, router]);
+
   return (
-    <Container maxWidth="sm" sx={{ py: 8, textAlign: 'center' }}>
-      <Typography variant="h3" sx={{ fontWeight: 700, mb: 2 }}>
-        Kanban Board
-      </Typography>
-      <Typography variant="body1" sx={{ mb: 4, color: 'text.secondary' }}>
-        Gerencie seus projetos e tarefas de forma eficiente
-      </Typography>
-      {user ? (
-        <Button variant="contained" size="large" onClick={() => router.push('/dashboard')}>
-          Ir para Dashboard
-        </Button>
-      ) : (
-        <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center' }}>
-          <Button variant="contained" size="large" onClick={() => router.push('/login')}>
-            Login
-          </Button>
-          <Button variant="outlined" size="large" onClick={() => router.push('/register')}>
-            Cadastro
-          </Button>
-        </Box>
-      )}
-    </Container>
+    <Box sx={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <CircularProgress size={36} />
+    </Box>
   );
 }
