@@ -30,3 +30,4 @@ _vercel-*.env
 .vercel
 setup-banco.bat
 setup-banco.ps1
+.devtool/
