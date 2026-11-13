@@ -3,6 +3,7 @@ import React from 'react';
 import { InputGroup, Dropdown } from 'react-bootstrap';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
+import { useRouter } from 'next/navigation';
 import { useUnreadCountService } from '@/components/layout/services/HeaderServices';
 import { getInitials, getDisplayName } from '@/components/layout/utils/HeaderUtils';
 import {
@@ -36,8 +37,14 @@ import {
 
 export default function Header() {
   const { theme, toggleTheme } = useTheme();
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+  const router = useRouter();
   const { unreadCount } = useUnreadCountService();
+
+  const handleLogout = () => {
+    logout();
+    router.push('/login');
+  };
 
   const displayName = getDisplayName(user);
 
@@ -110,7 +117,13 @@ export default function Header() {
             <StyledMenuItem data-testid="header-profile-item">Perfil</StyledMenuItem>
             <StyledMenuItem data-testid="header-settings-item">Configurações</StyledMenuItem>
             <Dropdown.Divider />
-            <StyledMenuItem data-testid="header-logout-item">Sair</StyledMenuItem>
+            <StyledMenuItem
+              data-testid="header-logout-item"
+              onClick={handleLogout}
+              style={{ cursor: 'pointer' }}
+            >
+              Sair
+            </StyledMenuItem>
           </StyledMenu>
         </Dropdown>
       </StyledRightActions>

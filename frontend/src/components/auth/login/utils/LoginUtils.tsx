@@ -1,5 +1,5 @@
 'use client';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/contexts/ThemeContext';
@@ -26,9 +26,14 @@ export function useLogin() {
   // ============================================
   // 3️⃣ OBJETOS
   // ============================================
-  const { login } = useAuth();
+  const { login, user } = useAuth();
   const router = useRouter();
   const { theme } = useTheme();
+
+  /** Já logado → vai direto pro dashboard (a rota `/` sempre cai no login) */
+  useEffect(() => {
+    if (user) router.replace(DASHBOARD_ROUTE);
+  }, [user, router]);
 
   const state: LoginState = {
     email,
