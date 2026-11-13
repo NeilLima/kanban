@@ -1,6 +1,8 @@
 'use client';
 import React, { useState } from 'react';
 import { Form, InputGroup, Dropdown } from 'react-bootstrap';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface NavbarProps {
   onToggleSidebar?: () => void;
@@ -8,6 +10,13 @@ interface NavbarProps {
 
 export default function Navbar({ onToggleSidebar }: NavbarProps) {
   const [showProfile, setShowProfile] = useState(false);
+  const { user, logout } = useAuth();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    logout();
+    router.push('/login');
+  };
 
   return (
     <nav 
@@ -225,8 +234,8 @@ export default function Navbar({ onToggleSidebar }: NavbarProps) {
             }}
           >
             <Dropdown.Header style={{ padding: '8px 12px' }}>
-              <div className="fw-semibold text-white" style={{ fontSize: 13 }}>Victor</div>
-              <div className="text-secondary" style={{ fontSize: 11 }}>victor@nexus.com</div>
+              <div className="fw-semibold text-white" style={{ fontSize: 13 }}>{user?.name ?? 'Usuário'}</div>
+              <div className="text-secondary" style={{ fontSize: 11 }}>{user?.email ?? ''}</div>
             </Dropdown.Header>
             <Dropdown.Divider style={{ borderColor: 'rgba(255, 255, 255, 0.06)' }} />
             <Dropdown.Item style={{ color: '#94A3B8', fontSize: 13, padding: '6px 12px' }}>
@@ -239,7 +248,11 @@ export default function Navbar({ onToggleSidebar }: NavbarProps) {
               <i className="bi bi-question-circle me-2"></i>Ajuda
             </Dropdown.Item>
             <Dropdown.Divider style={{ borderColor: 'rgba(255, 255, 255, 0.06)' }} />
-            <Dropdown.Item style={{ color: '#ef4444', fontSize: 13, padding: '6px 12px' }}>
+            <Dropdown.Item
+              style={{ color: '#ef4444', fontSize: 13, padding: '6px 12px', cursor: 'pointer' }}
+              onClick={handleLogout}
+              data-testid="navbar-logout-item"
+            >
               <i className="bi bi-box-arrow-right me-2"></i>Sair
             </Dropdown.Item>
           </Dropdown.Menu>
