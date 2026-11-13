@@ -30,9 +30,14 @@ export function useLogin() {
   const router = useRouter();
   const { theme } = useTheme();
 
-  /** Já logado → vai direto pro dashboard (a rota `/` sempre cai no login) */
+  /** Já logado → vai direto pro dashboard (a rota `/` sempre cai no login).
+   *  Confere o TOKEN no localStorage também: logo após o logout o estado
+   *  `user` pode chegar stale na página de login — sem token = sem sessão. */
   useEffect(() => {
-    if (user) router.replace(DASHBOARD_ROUTE);
+    if (!user) return;
+    const hasSession =
+      typeof window !== 'undefined' && Boolean(localStorage.getItem('kanban-token'));
+    if (hasSession) router.replace(DASHBOARD_ROUTE);
   }, [user, router]);
 
   const state: LoginState = {
